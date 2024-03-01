@@ -19,7 +19,7 @@ if(isset($_GET['azione']) && isset($_GET['index'])){
 
 
 function showMembers($conn){
-    $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF FROM iscritto";
+    $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail FROM iscritto";
 
     $stmt = $conn->prepare($query);
     $stmt->execute();
@@ -60,7 +60,7 @@ function printToScreen($row, $counter){
     </div>
     <div class='action'>
     <a href='#' class='icon userdescrizioni w-button'>Button Text</a>
-    <a href='#' class='icon useremail w-button'>Button Text</a>
+    <a href='mailto:".$row['mail']."' class='icon useremail w-button'>Button Text</a>
     <a id='$counter' class='icon userremove w-button' onclick='AjaxRequest(".$counter.")'>Button Text</a>
     </div>
     ";
