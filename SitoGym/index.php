@@ -3,18 +3,15 @@ session_start();
 
 require('php/gestioneSegreteria.php');
 
-$conn = mysqli_connect('localhost','segreteria','password','gym');
-    
-if(!$conn){
-    die("Connessione fallita: " . mysqli_connect_error());
-}
+
+if(!isset($_SESSION['Utenti']))   //conterrà i codici fiscali degli utenti
+    $_SESSION['Utenti'];
 
 ?>
 
 <!DOCTYPE html>
 <!-- This site was created in Webflow. https://www.webflow.com --><!-- Last Published: Thu Feb 29 2024 17:18:46 GMT+0000 (Coordinated Universal Time) -->
-<html data-wf-domain="segreteria.webflow.io" data-wf-page="65db228c551539358abcad94"
-    data-wf-site="65db228c551539358abcad8e">
+
 
 <head>
     <meta charset="utf-8" />
@@ -23,7 +20,7 @@ if(!$conn){
     <meta content="Webflow" name="generator" />
     <link href="css/segreteriaStyle.css"
         rel="stylesheet" type="text/css" />
-        <script src="javascript/riempiUtenti.js"></script>
+        <script src="javascript/gestioneAjaxSegreteria.js"></script>
     <script>
         type="text/javascript">!function (o, c) { var n = c.documentElement, t = " w-mod-"; n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch") }(window, document);</script>
     <link href="https://assets-global.website-files.com/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
@@ -65,7 +62,7 @@ if(!$conn){
                 </div>
                  </div>
                     
-                <div class="tabella-preset tabella">
+                <div id="tabella-membri" class="tabella-preset tabella">
                     <!-- questa sezione viene riempita con php -->
                     <?php showMembers($conn); ?>
                 </div>
