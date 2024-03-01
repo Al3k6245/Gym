@@ -13,6 +13,7 @@ if(isset($_GET['azione']) && isset($_GET['index'])){
         session_start();
         deleteMember($_GET['index'], $conn);
         showMembers($conn);
+        aaaa
     }
 
 
