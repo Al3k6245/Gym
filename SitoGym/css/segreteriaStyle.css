@@ -3745,7 +3745,14 @@ textarea.w-input, textarea.w-select {
 }
 
 .icon.interventi {
+  max-height: none;
+  object-fit: fill;
+  background-color: rgba(0, 0, 0, 0);
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65e6fd1c4460910e7a92d346_Interventi.png");
+  justify-content: center;
+  padding-left: 25px;
+  display: block;
+  overflow: visible;
 }
 
 .icon.descrizione {
