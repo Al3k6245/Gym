@@ -91,7 +91,7 @@ if(!isset($_SESSION['Utenti'])){
         type="text/javascript"></script>
         <pre id="contenutoFile"></pre>
 
-
+<div data-w-id="1ead45e8-3280-9d48-6405-e79982937b5c" class="hoversection"> 
 <div class="hoversection-container">
 <img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e62ac5c95d93ef05800b38_Rectangle.png" loading="lazy" width="Auto" alt="" class="fotoprofilo"><a data-w-id="859845ff-4b55-b293-93ca-957b1f255837" href="#"
     class="icon exit w-button"></a>
@@ -108,7 +108,7 @@ if(!isset($_SESSION['Utenti'])){
       sdf3 - ad2f<br></div>
   </div>
 </div>
-
+</div>
 </body>
 
 </html>
