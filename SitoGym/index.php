@@ -14,15 +14,18 @@ if(!isset($_SESSION['Utenti'])){
 <!DOCTYPE html>
 <!-- This site was created in Webflow. https://www.webflow.com --><!-- Last Published: Thu Feb 29 2024 17:18:46 GMT+0000 (Coordinated Universal Time) -->
 
-
+ 
 <head>
     <meta charset="utf-8" />
     <title>GymWebSite</title>
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
+    <link href="css/segreteriaStyle.css"
+        rel="stylesheet" type="text/css" />
+        <script src="javascript/gestioneAjaxSegreteria.js"></script>
     <script>
-    <link href="https://assets-global.website-files.com/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="https://assets-global.website-files.com/img/webclip.png" rel="apple-touch-icon" />
+     type="text/javascript">!function (o, c) { var n = c.documentElement, t = " w-mod-"; n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch") }(window, document);</script>
+
 </head>
 
 <body class="body">
@@ -31,6 +34,13 @@ if(!isset($_SESSION['Utenti'])){
             <div class="container-titolo">
                 <h1 class="h1">Dashboard</h1>
             </div>
+            <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a><a href="#Clienti"
+                    class="container-sezioni clienti w-button">Clienti</a><a href="#"
+                    class="container-sezioni allenatori w-button">Allenatori</a><a href="#"
+                    class="container-sezioni personale w-button">Personale</a>
+                <form action="/search" class="search allineato w-form"><input class="search-input w-input"
+                        maxlength="256" name="query" placeholder="Search…" type="search" id="Ricerca"
+                        required="" /><input type="submit" class="search-button w-button" value="Search" /></form>
             </div>
 
             <section id="Clienti" class="sezione"> //PULSANTE CLIENTI
