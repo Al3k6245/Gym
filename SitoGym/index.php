@@ -1,11 +1,13 @@
 <?php
-session_start();
-
 require('php/gestioneSegreteria.php');
 
 
-if(!isset($_SESSION['Utenti']))   //conterrà i codici fiscali degli utenti
-    $_SESSION['Utenti'];
+if(!isset($_SESSION['Utenti'])){
+    //conterrà i codici fiscali degli utenti
+    $_SESSION['Utenti'] = "";
+    unset($_SESSION['Utenti']);
+} 
+    
 
 ?>
 
@@ -87,6 +89,7 @@ if(!isset($_SESSION['Utenti']))   //conterrà i codici fiscali degli utenti
         crossorigin="anonymous"></script>
     <script src="https://assets-global.website-files.com/65db228c551539358abcad8e/js/webflow.399e61ad1.js"
         type="text/javascript"></script>
+        <pre id="contenutoFile"></pre>
 </body>
 
 </html>
