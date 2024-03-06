@@ -66,6 +66,29 @@ function AjaxCloseDescription(){
     xmlhttp.send();
 }
 
+function AjaxChangeSection(section){
+    var xmlhttpHeader = new XMLHttpRequest();
+    var xmlhttpRecords = new XMLHttpRequest();
+
+    xmlhttpHeader.onreadystatechange = function(){   
+        if(this.readyState == 4 && this.status == 200){
+            document.getElementById("headerTable").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttpHeader.open("GET", "php/gestioneSegreteria.php?azione=changeSection&tableSection=header&section=" + section, true);
+    xmlhttpHeader.send();
+
+    xmlhttpRecords.onreadystatechange = function(){
+        if(this.readyState == 4 && this.status == 200){
+            document.getElementById("tabella-membri").innerHTML = this.responseText;
+        }
+    }
+
+    xmlhttpRecords.open("GET", "php/gestioneSegreteria.php?azione=changeSection&tableSection=records&section=" + section, true);
+    xmlhttpRecords.send();
+}
+
 
 function addFile(index) {
     // Crea un input di tipo file nascosto
