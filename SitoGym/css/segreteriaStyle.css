@@ -3750,7 +3750,8 @@ textarea.w-input, textarea.w-select {
   background-color: rgba(0, 0, 0, 0);
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65e6fd1c4460910e7a92d346_Interventi.png");
   justify-content: center;
-  padding-left: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
   display: block;
   overflow: visible;
 }
@@ -4020,6 +4021,8 @@ textarea.w-input, textarea.w-select {
   grid-row-gap: 0px;
   opacity: 1;
   color: #38708b;
+  object-fit: contain;
+  object-position: 50% 50%;
   background-color: #21272a;
   border-radius: 20px;
   flex-flow: column;
@@ -4095,6 +4098,14 @@ textarea.w-input, textarea.w-select {
   margin-bottom: 0;
   font-size: 20px;
   font-style: italic;
+}
+
+.name.intesta.descrizione {
+  color: var(--white);
+  justify-content: center;
+  align-items: center;
+  padding-left: 0%;
+  font-size: 40px;
 }
 
 .intestazioneblack {
@@ -4200,19 +4211,29 @@ textarea.w-input, textarea.w-select {
   position: static;
 }
 
-.div-block-7 {
+.descrizione-interveti {
   z-index: 1;
-  width: auto;
-  height: 100%;
+  width: 100%;
+  height: 650px;
   background-color: var(--buttoncolor);
+  border-radius: 20px;
   margin-top: 0;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 0;
+  margin-right: 0;
   position: absolute;
   top: 0%;
   bottom: 0%;
   left: 0%;
   right: 0%;
+}
+
+.paragraph {
+  color: #fff;
+  -webkit-text-stroke-color: white;
+  margin-top: 60px;
+  margin-left: 40px;
+  margin-right: 40px;
+  font-size: 20px;
 }
 
 @media screen and (min-width: 1920px) {

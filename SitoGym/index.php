@@ -138,28 +138,34 @@ if (!isset($_SESSION['Utenti'])) {
 
     </section>
 
-    <! //MOSTRA INTERVENTI->
-        <div class="hoversection big">
-            <div class="hoversection-container"><a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
-                <div class="name intesta">Interventi di </div>
-                <div class="name tecnico">Serpelloni Leonardo</div>
-                <div class="tabella-interventi">
-                    <div class="interventi">
-                        <div id="w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94" class="tabella-intestazioni minore">Data</div>
-                        <div id="w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94" class="tabella-intestazioni minore">Nome Macchinario</div>
-                        <div id="w-node-a514b3bb-cfd0-6fb3-fddf-6d29a7782c59-8abcad94" class="tabella-intestazioni minore">Marca</div>
-                        <div id="w-node-bb7b5282-8931-1bd8-3e8c-095c21447dd0-8abcad94" class="tabella-intestazioni minore">Descrizione</div>
-                    </div>
-                    <div class="interventi righe">
-                        <div id="w-node-_2d0bdefd-89a6-a043-2285-ceab9d119dfa-8abcad94" class="tabella-testo">26/12/2023</div>
-                        <div id="w-node-_7540a0cb-0461-bcda-e8e0-bdf317e75018-8abcad94" class="tabella-testo">Panca A</div>
-                        <div id="w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94" class="tabella-testo">Tecnogym</div><a id="w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94" href="#" class="icon descrizione w-button"></a>
-                    </div>
+    <!-- //MOSTRA INTERVENTI-->
+    <div class="hoversection big">
+        <div class="hoversection-container"><a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
+        <!--Descrizione Interventi-->
+            <div class="descrizione-interveti"><a data-w-id="635d1423-b80a-96ca-e31e-cb140af1169a" href="#" class="icon exit w-button"></a>
+                <div class="name intesta descrizione">Descrizione</div>
+                <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
+            </div>
+        <!--==================-->
+            <div class="name intesta">Interventi di </div>
+            <div class="name tecnico">Serpelloni Leonardo</div>
+            <div class="tabella-interventi">
+                <div class="interventi">
+                    <div id="w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94" class="tabella-intestazioni minore">Data</div>
+                    <div id="w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94" class="tabella-intestazioni minore">Nome Macchinario</div>
+                    <div id="w-node-a514b3bb-cfd0-6fb3-fddf-6d29a7782c59-8abcad94" class="tabella-intestazioni minore">Marca</div>
+                    <div id="w-node-bb7b5282-8931-1bd8-3e8c-095c21447dd0-8abcad94" class="tabella-intestazioni minore">Descrizione</div>
+                </div>
+                <div class="interventi righe">
+                    <div id="w-node-_2d0bdefd-89a6-a043-2285-ceab9d119dfa-8abcad94" class="tabella-testo">26/12/2023</div>
+                    <div id="w-node-_7540a0cb-0461-bcda-e8e0-bdf317e75018-8abcad94" class="tabella-testo">Panca A</div>
+                    <div id="w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94" class="tabella-testo">Tecnogym</div><a id="w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94" href="#" class="icon descrizione w-button"></a>
                 </div>
             </div>
         </div>
+    </div>
 
-        <! //MOSTRA UTENTE->
+    <! //MOSTRA UTENTE->
 
         <div data-w-id="1ead45e8-3280-9d48-6405-e79982937b5c" class="hoversection">
             <div class="hoversection-container"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e62ac5c95d93ef05800b38_Rectangle.png" loading="lazy" width="Auto" alt="" class="fotoprofilo"><a data-w-id="859845ff-4b55-b293-93ca-957b1f255837" href="#" class="icon exit w-button"></a>
