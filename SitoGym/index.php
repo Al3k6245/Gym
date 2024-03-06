@@ -28,11 +28,11 @@ if(!isset($_SESSION['Utenti'])){
                 t = " w-mod-";
             n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")
         }(window, document);
-    </script>
+    </script> 
 
 </head>
 
-<body class="body">
+<body class="body">  
     <section id="Home" class="content">
         <div class="container-dashboard">
             <div class="container-titolo">
@@ -141,7 +141,7 @@ if(!isset($_SESSION['Utenti'])){
     </section>
 
     <! //MOSTRA INTERVENTI->
-        <div class="hoversection big">
+     <!--   <div class="hoversection big">
             <div class="hoversection-container"><a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
                 <div class="name intesta">Interventi di </div>
                 <div class="name tecnico">Serpelloni Leonardo</div>
@@ -159,26 +159,13 @@ if(!isset($_SESSION['Utenti'])){
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  -->
 
         <! //MOSTRA UTENTE->
 
-        <div data-w-id="1ead45e8-3280-9d48-6405-e79982937b5c" class="hoversection">
-            <div class="hoversection-container"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e62ac5c95d93ef05800b38_Rectangle.png" loading="lazy" width="Auto" alt="" class="fotoprofilo"><a data-w-id="859845ff-4b55-b293-93ca-957b1f255837" href="#" class="icon exit w-button"></a>
-                <div class="name">Serpelloni Leonardo</div>
-                <div class="intestazioneblack">Codice Fiscale </div>
-                <div class="testowhite">SRPLRD05TL250W<br></div>
-                <div class="intestazioneblack">Data di Nascita</div>
-                <div class="testowhite">26/12/2005<br></div>
-                <div class="intestazioneblack">Contatti</div>
-                <div class="testowhite">youremail@gmail.com<br></div>
-                <div class="intestazioneblack">Password Account</div>
-                <div class="password">
-                    <div data-w-id="78352fc8-7684-5c14-63af-2a5582d1e910" style="filter: blur(0px);" class="testowhite password">as5s - sdf3 - ad2f<br></div>
-                </div>
-            </div>
+        <div id="info">
+            
         </div>
-
 
         <div style="display:none" class="menu-descrizioni">
             <div class="descrizione">Home</div>

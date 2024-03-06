@@ -38,17 +38,31 @@ function AjaxAddDocument(index){
     }
 }
 
-function AjaxDownloadDocument(index){
+
+function AjaxViewDescription(index){
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function(){   
         if(this.readyState == 4 && this.status == 200){
             console.log(this.responseText);
-            document.body.innerHTML += this.responseText;
+            document.getElementById("info").innerHTML = this.responseText;
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=downloadFile&index=" + index, true);
+    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=viewUserInfo&index=" + index, true);
+    xmlhttp.send();
+}
+
+function AjaxCloseDescription(){
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function(){   
+        if(this.readyState == 4 && this.status == 200){
+            document.getElementById("info").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=closeUserInfo", true);
     xmlhttp.send();
 }
 

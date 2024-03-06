@@ -21,6 +21,12 @@ if(isset($_GET['index']) && isset($_GET['azione'])){
         case 'downloadFile':
             downloadFile(getFromDbFilePath($_GET['index'],$conn));
             break;
+        case 'viewUserInfo':
+            displayInfo($_GET['index'], $conn);
+            break;
+        case 'closeUserInfo':
+            echo '';
+            break;
     }
         
 }
@@ -68,7 +74,6 @@ function printToScreen($row, $counter){
     <div class='action'>
     <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$counter.")'>Button Text</a>
     <a href='".$row['docIdentificativi']."'class='icon download w-button' download>Button Text</a>
-    <a href='uploads/GIT.pdf' class='icon download w-button' download>Button Text</a>
     </div>
     <div class='tabella-testo'>".$row['DataN']."</div>
     <div class='action'>
@@ -76,7 +81,7 @@ function printToScreen($row, $counter){
     <a href='#' class='icon pericolo w-button'>Button Text</a>
     </div>
     <div class='action'>
-    <a href='#' class='icon userdescrizioni w-button'>Button Text</a>
+    <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$counter.")'>Button Text</a>
     <a href='mailto:".$row['mail']."' class='icon useremail w-button'>Button Text</a>
     <a id='$counter' class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'>Button Text</a>
     </div>
@@ -144,22 +149,43 @@ function getFromDbFilePath($index, $conn){
     $result = $stmt->get_result();
 
     
-    $stmt->close();
+    $stmt->close(); 
 
     $row = $result->fetch_assoc();
 
     return '../'.$row['docIdentificativi']; 
 }
 
-function downloadFile($file_path){
-    $fileName = basename($file_path);
-    echo $fileName;
-    /*header('Content-Type: application/pdf');
-    header("Content-Transfer-Encoding: binary");
-    header("Content-disposition: attachment; filename=".basename($file_path));
-    //readfile($file_path);*/
+function displayInfo($index, $conn){
+    $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail, docIdentificativi, psw FROM iscritto WHERE codF = ?";
 
-    echo "<a href=".$file_path." download></a>";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $_SESSION['Utenti'][$index]);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $row = $result->fetch_assoc();
+
+    print '<div data-w-id="1ead45e8-3280-9d48-6405-e79982937b5c" class="hoversection">
+    <div class="hoversection-container"><img src="uploads/fotoProva.jpg" loading="lazy" width="Auto" alt="" class="fotoprofilo">
+    <a data-w-id="859845ff-4b55-b293-93ca-957b1f255837" class="icon exit w-button" onclick="AjaxCloseDescription()"></a>
+        <div class="name">'.$row['cognome'].' '.$row['nome'].'</div>
+        <div class="intestazioneblack">Codice Fiscale </div>
+        <div class="testowhite">'.$row['codF'].'<br></div>
+        <div class="intestazioneblack">Data di Nascita</div>
+        <div class="testowhite">'.$row['DataN'].'<br></div>
+        <div class="intestazioneblack">Contatti</div>
+        <div class="testowhite">'.$row['mail'].'<br></div>
+        <div class="intestazioneblack">Password Account</div>
+        <div class="password">
+            <div data-w-id="78352fc8-7684-5c14-63af-2a5582d1e910" style="filter: blur(0px);" class="testowhite password">'.$row['psw'].'<br></div>
+        </div>
+        </div>
+    </div>';
+
+    $stmt->close();
 }
 
 ?>
