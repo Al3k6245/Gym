@@ -2,19 +2,19 @@
 require('php/gestioneSegreteria.php');
 
 
-if(!isset($_SESSION['Utenti'])){
+if (!isset($_SESSION['Utenti'])) {
     //conterrà i codici fiscali degli utenti
     $_SESSION['Utenti'] = "";
     unset($_SESSION['Utenti']);
-} 
-    
+}
+
 
 ?>
 
 <!DOCTYPE html>
 <!-- This site was created in Webflow. https://www.webflow.com --><!-- Last Published: Thu Feb 29 2024 17:18:46 GMT+0000 (Coordinated Universal Time) -->
 
- 
+
 <head>
     <meta charset="utf-8" />
     <title>GymWebSite</title>
@@ -28,23 +28,18 @@ if(!isset($_SESSION['Utenti'])){
                 t = " w-mod-";
             n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")
         }(window, document);
-    </script> 
+    </script>
 
 </head>
 
-<body class="body">  
+<body class="body">
     <section id="Home" class="content">
         <div class="container-dashboard">
             <div class="container-titolo">
                 <h1 class="h1">Dashboard</h1>
             </div>
-            <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a><a href="#Clienti"
-                    class="container-sezioni clienti w-button">Clienti</a><a href="#"
-                    class="container-sezioni allenatori w-button">Allenatori</a><a href="#"
-                    class="container-sezioni personale w-button">Personale</a>
-                <form action="/search" class="search allineato w-form"><input class="search-input w-input"
-                        maxlength="256" name="query" placeholder="Search…" type="search" id="Ricerca"
-                        required="" /><input type="submit" class="search-button w-button" value="Search" /></form>
+            <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a><a href="#Clienti" class="container-sezioni clienti w-button">Clienti</a><a href="#" class="container-sezioni allenatori w-button">Allenatori</a><a href="#" class="container-sezioni personale w-button">Personale</a>
+                <form action="/search" class="search allineato w-form"><input class="search-input w-input" maxlength="256" name="query" placeholder="Search…" type="search" id="Ricerca" required="" /><input type="submit" class="search-button w-button" value="Search" /></form>
             </div>
 
             <section id="Clienti" class="sezione">
@@ -143,12 +138,12 @@ if(!isset($_SESSION['Utenti'])){
     <!-- //MOSTRA INTERVENTI-->
     <div class="hoversection big">
         <div class="hoversection-container"><a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
-        <!--Descrizione Interventi-->
+            <!--Descrizione Interventi-->
             <div class="descrizione-interveti"><a data-w-id="635d1423-b80a-96ca-e31e-cb140af1169a" href="#" class="icon exit w-button"></a>
                 <div class="name intesta descrizione">Descrizione</div>
                 <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
             </div>
-        <!--==================-->
+            <!--==================-->
             <div class="name intesta">Interventi di </div>
             <div class="name tecnico">Serpelloni Leonardo</div>
             <div class="tabella-interventi">
@@ -167,25 +162,67 @@ if(!isset($_SESSION['Utenti'])){
         </div>
     </div>
 
-    <! //MOSTRA UTENTE->
+    <!-- //MOSTRA UTENTE-->
 
-        <div id="info">
-            
-        </div>
+    <div id="info">
 
-        <div style="display:none" class="menu-descrizioni">
-            <div class="descrizione">Home</div>
-            <div class="descrizione">AddCliente</div>
-        </div>
-        <nav data-w-id="93085ae0-f7f2-eb6d-a80c-8ff237c72caf" class="menu-icone">
-            <div class="notifications-3"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65db2680c536bfa0459743bc_Vectors-Wrapper.svg" loading="lazy" width="24" height="24" alt="" class="vectors-wrapper-2" />
-                <div class="badge-4">
-                    <div class="text-21">9</div>
+    </div>
+
+
+    <!--Mostr Turni-->
+    <div class="hoversection">
+        <div class="hoversection-container">
+            <div class="aggiungiturno"><a data-w-id="635d1423-b80a-96ca-e31e-cb140af1169a" href="#" class="icon exit w-button"></a>
+                <div class="addturnoform w-form">
+                    <form id="email-form" name="email-form" data-name="Email Form" method="get" class="addturnoformcontainer" data-wf-page-id="65db228c551539358abcad94" data-wf-element-id="dae9bfdd-ed37-0bac-d5e4-b5ad2583b806" aria-label="Email Form">
+                        <div class="giorno"><label for="Giorno-della-Settimana" class="field-label">Giorno</label><select id="Giorno-della-Settimana" name="Giorno-della-Settimana" data-name="Giorno della Settimana" required="" class="select-giorno w-select">
+                                <option value="Lunedì">Lunedì</option>
+                                <option value="Martedì">Martedì</option>
+                                <option value="Mercoledì">Mercoledì</option>
+                                <option value="Giovedì">Giovedì</option>
+                                <option value="Venerdì">Venerdì</option>
+                                <option value="Sabato">Sabato</option>
+                                <option value="Domenica">Domenica</option>
+                            </select></div>
+                        <div class="orario"><label for="Orario" class="field-label-2">Orario</label><select id="Orario" name="Orario" data-name="Orario" required="" class="select-orario w-select">
+                                <option value="7:00 - 12:00">7:00 - 12:00</option>
+                                <option value="12:00 - 17:00">12:00 - 17:00</option>
+                                <option value="17:00 - 22:00">17:00 - 22:00</option>
+                            </select></div><input type="submit" data-wait="Please wait..." class="aggiungiturnoformsubmit w-button" value="Aggiungi">
+                    </form>
+                    <div class="w-form-done" tabindex="-1" role="region" aria-label="Email Form success"></div>
+                    <div class="w-form-fail" tabindex="-1" role="region" aria-label="Email Form failure"></div>
                 </div>
-            </div><a href="#" class="menu-sezioni _0 w-button"></a><a href="#" class="menu-sezioni _1 w-button"></a>
-        </nav>
-        <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=65db228c551539358abcad8e" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-        <script src="https://assets-global.website-files.com/65db228c551539358abcad8e/js/webflow.399e61ad1.js" type="text/javascript"></script>
+            </div><a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
+            <div class="name intesta">Tuni di </div>
+            <div class="name tecnico">Serpelloni Leonardo</div>
+            <div class="tabella-interventi">
+                <div class="interventi">
+                    <div id="w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94" class="tabella-intestazioni minore">Giorno</div>
+                    <div id="w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94" class="tabella-intestazioni minore">Orario</div>
+                </div>
+                <div class="interventi righe">
+                    <div id="w-node-_2d0bdefd-89a6-a043-2285-ceab9d119dfa-8abcad94" class="tabella-testo">Lunedì</div>
+                    <div id="w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94" class="tabella-testo">8:00 - 12:00</div><a id="w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94" href="#" class="icon deleteturno w-button"></a>
+                </div>
+            </div><a href="#" class="addturno w-button">Aggiungi Turno</a>
+        </div>
+    </div>
+
+    
+    <div style="display:none" class="menu-descrizioni">
+        <div class="descrizione">Home</div>
+        <div class="descrizione">AddCliente</div>
+    </div>
+    <nav data-w-id="93085ae0-f7f2-eb6d-a80c-8ff237c72caf" class="menu-icone">
+        <div class="notifications-3"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65db2680c536bfa0459743bc_Vectors-Wrapper.svg" loading="lazy" width="24" height="24" alt="" class="vectors-wrapper-2" />
+            <div class="badge-4">
+                <div class="text-21">9</div>
+            </div>
+        </div><a href="#" class="menu-sezioni _0 w-button"></a><a href="#" class="menu-sezioni _1 w-button"></a>
+    </nav>
+    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=65db228c551539358abcad8e" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://assets-global.website-files.com/65db228c551539358abcad8e/js/webflow.399e61ad1.js" type="text/javascript"></script>
 </body>
 
 </html>
