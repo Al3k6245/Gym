@@ -2105,6 +2105,7 @@ textarea.w-input, textarea.w-select {
   --buttoncolor: #21272a;
   --h2button: 28px;
   --section-selected: #001d6c;
+  --hover: rgba(0, 29, 108, .69);
   --background-search: #f2f4f8;
   --padding-interno-tabella-laterale: 20px;
   --abbonamento: #697077;
@@ -3380,17 +3381,29 @@ textarea.w-input, textarea.w-select {
   padding-left: 4px;
   padding-right: 4px;
   line-height: 140%;
+  transition: transform .2s;
   display: flex;
+}
+
+.container-sezioni:hover {
+  color: rgba(0, 29, 108, .72);
+  transform: translate(0, -4px);
 }
 
 .container-sezioni.selected {
   border-bottom: 3px solid var(--section-selected);
+  color: var(--section-selected);
   flex-wrap: nowrap;
   flex: none;
   align-content: center;
   align-items: center;
   margin-top: 5px;
   display: flex;
+}
+
+.container-sezioni.selected:hover {
+  color: var(--section-selected);
+  transform: none;
 }
 
 .container-sezioni.clienti {
@@ -3407,6 +3420,19 @@ textarea.w-input, textarea.w-select {
   padding-left: 40px;
 }
 
+.container-sezioni.clienti:hover {
+  color: rgba(0, 29, 108, .69);
+}
+
+.container-sezioni.clienti.selected {
+  color: var(--section-selected);
+}
+
+.container-sezioni.clienti.selected:hover {
+  color: var(--section-selected);
+  transform: none;
+}
+
 .container-sezioni.allenatori {
   width: auto;
   max-width: none;
@@ -3421,9 +3447,18 @@ textarea.w-input, textarea.w-select {
   padding-left: 36px;
 }
 
+.container-sezioni.allenatori:hover {
+  color: var(--hover);
+}
+
 .container-sezioni.allenatori.selected {
   color: var(--section-selected);
   margin-bottom: 2px;
+  transition-property: none;
+}
+
+.container-sezioni.allenatori.selected:hover {
+  transform: none;
 }
 
 .container-sezioni.personale {
@@ -3437,6 +3472,20 @@ textarea.w-input, textarea.w-select {
   background-size: 25px;
   justify-content: center;
   padding-left: 36px;
+}
+
+.container-sezioni.personale:hover {
+  color: var(--hover);
+}
+
+.container-sezioni.personale.selected {
+  border-bottom-color: var(--section-selected);
+  color: var(--section-selected);
+  transition-property: none;
+}
+
+.container-sezioni.personale.selected:hover {
+  transform: none;
 }
 
 .h2 {
@@ -3777,6 +3826,16 @@ textarea.w-input, textarea.w-select {
   background-size: 20px;
 }
 
+.icon.down {
+  background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65df06d211108e7b1e501550_arrow_down.png");
+  background-size: 20px;
+}
+
+.icon.up {
+  background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65df06d23a88d02378f7ce24_arrow_up.png");
+  background-size: 20px;
+}
+
 .image {
   width: 50px;
   height: 50px;
@@ -3785,15 +3844,10 @@ textarea.w-input, textarea.w-select {
 .ordinamentoupdown {
   color: var(--buttoncolor);
   background-color: rgba(0, 0, 0, 0);
-  background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65df06d211108e7b1e501550_arrow_down.png");
-  background-position: 100%;
-  background-repeat: no-repeat;
-  background-size: 20px;
-  background-attachment: scroll;
   justify-content: center;
   align-items: center;
   margin-left: 0;
-  padding: 0 10% 0 0;
+  padding: 0 0% 0 0;
   font-size: 20px;
   font-weight: 700;
   line-height: 140%;
@@ -4195,7 +4249,7 @@ textarea.w-input, textarea.w-select {
   grid-row-gap: 2px;
   background-color: #f2f4f8;
   grid-template-rows: 40px;
-  grid-template-columns: 190px 190px 40px;
+  grid-template-columns: 140px 190px 180px 100px;
   grid-auto-rows: 40px;
   grid-auto-columns: 1fr;
   grid-auto-flow: row dense;
@@ -4210,7 +4264,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .interventi.righe {
-  height: 420px;
+  height: 480px;
   grid-row-gap: 0px;
   grid-template-rows: 40px;
   grid-auto-rows: 40px;
@@ -4532,6 +4586,120 @@ textarea.w-input, textarea.w-select {
   margin-top: 15px;
 }
 
+.container-sezioni-selected {
+  width: auto;
+  height: 100%;
+  max-width: none;
+  min-width: auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  color: var(--buttoncolor);
+  font-size: var(--h2button);
+  background-color: rgba(56, 152, 236, 0);
+  border: 1px solid rgba(0, 0, 0, 0);
+  order: 0;
+  justify-content: center;
+  align-self: auto;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  line-height: 140%;
+  display: flex;
+}
+
+.container-sezioni-selected.selected {
+  border-bottom: 3px solid var(--section-selected);
+  flex-wrap: nowrap;
+  flex: none;
+  align-content: center;
+  align-items: center;
+  margin-top: 5px;
+  display: flex;
+}
+
+.container-sezioni-selected.clienti {
+  width: auto;
+  max-width: none;
+  min-width: 100px;
+  color: var(--buttoncolor);
+  font-size: var(--h2button);
+  background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65de2a448c609771901a81ff_Vectors-Wrapper.svg");
+  background-position: 2%;
+  background-repeat: no-repeat;
+  background-size: 30px;
+  justify-content: center;
+  padding-left: 40px;
+}
+
+.container-sezioni-selected.allenatori {
+  width: auto;
+  max-width: none;
+  min-width: 130px;
+  border-bottom-width: 3px;
+  border-bottom-color: var(--section-selected);
+  color: var(--section-selected);
+  font-size: var(--h2button);
+  background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65de2f68da6d9aaa251dd3c9_Vectors-Wrapper.svg");
+  background-position: 2%;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  justify-content: center;
+  padding-left: 36px;
+}
+
+.container-sezioni-selected.allenatori.selected {
+  color: var(--section-selected);
+  margin-bottom: 2px;
+}
+
+.container-sezioni-selected.personale {
+  width: auto;
+  max-width: none;
+  min-width: 135px;
+  color: var(--buttoncolor);
+  background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65de302b11a94911392eccc3_Vectors-Wrapper.svg");
+  background-position: 2%;
+  background-repeat: no-repeat;
+  background-size: 25px;
+  justify-content: center;
+  padding-left: 36px;
+}
+
+.turni {
+  max-height: 480px;
+  grid-column-gap: 2px;
+  grid-row-gap: 2px;
+  background-color: #f2f4f8;
+  grid-template-rows: 40px;
+  grid-template-columns: 190px 190px 40px;
+  grid-auto-rows: 40px;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: row dense;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: grid;
+  overflow: scroll;
+}
+
+.turni.righe {
+  height: 420px;
+  grid-row-gap: 0px;
+  grid-template-rows: 40px;
+  grid-auto-rows: 40px;
+  grid-auto-flow: row;
+  align-content: start;
+  align-items: stretch;
+  justify-items: stretch;
+  margin-top: 0;
+  padding-top: 0;
+}
+
 @media screen and (min-width: 1920px) {
   .content {
     top: 0%;
@@ -4552,6 +4720,6 @@ textarea.w-input, textarea.w-select {
   }
 }
 
-#w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94, #w-node-b93641eb-4e20-97e4-b67a-f8a3cfa75ef0-8abcad94, #w-node-_8ff9f816-7a02-1223-d680-7b0a78005161-8abcad94, #w-node-f9085910-da57-6f33-8ef5-d7a036b922fd-8abcad94, #w-node-_77fa6106-1215-cab2-2c21-f097827640c5-8abcad94, #w-node-_7c636b47-6c3b-9ba5-456d-9587c9010c02-8abcad94, #w-node-_331035c0-2673-7786-554c-b0f5cbfe67ed-8abcad94, #w-node-f67c4198-9cf5-4fb6-08c0-04b32d7fe8f7-8abcad94, #w-node-_082e4b66-476c-e935-ab10-7038955556d5-8abcad94, #w-node-_6adf7b4b-b2fd-0f2a-f07c-539b273224e1-8abcad94, #w-node-a0cd2457-5e69-ce4e-e4b0-6fc22bbfc450-8abcad94, #w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94, #w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94, #w-node-e7771a4b-9469-392e-d7b8-c90f02efb3fe-8abcad94, #w-node-_27d9fb1c-f083-b5ad-516d-12a995222779-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f2-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f4-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f6-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f8-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fa-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fc-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fe-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94, #w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a0a-8abcad94, #w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186756-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186757-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186759-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675b-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675d-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675f-8abcad94, #w-node-_35828d87-f20d-a151-91a1-b8bd56674064-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186763-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186766-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186768-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18676d-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186773-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186778-8abcad94, #w-node-_111048e3-30a4-1baf-272f-ec6dc7bca0ea-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186782-8abcad94, #w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94, #w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94, #w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94, #w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94 {
+#w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94, #w-node-b93641eb-4e20-97e4-b67a-f8a3cfa75ef0-8abcad94, #w-node-f9085910-da57-6f33-8ef5-d7a036b922fd-8abcad94, #w-node-_77fa6106-1215-cab2-2c21-f097827640c5-8abcad94, #w-node-_7c636b47-6c3b-9ba5-456d-9587c9010c02-8abcad94, #w-node-_331035c0-2673-7786-554c-b0f5cbfe67ed-8abcad94, #w-node-f67c4198-9cf5-4fb6-08c0-04b32d7fe8f7-8abcad94, #w-node-_082e4b66-476c-e935-ab10-7038955556d5-8abcad94, #w-node-_6adf7b4b-b2fd-0f2a-f07c-539b273224e1-8abcad94, #w-node-a0cd2457-5e69-ce4e-e4b0-6fc22bbfc450-8abcad94, #w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94, #w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94, #w-node-e7771a4b-9469-392e-d7b8-c90f02efb3fe-8abcad94, #w-node-_27d9fb1c-f083-b5ad-516d-12a995222779-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f2-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f4-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f6-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f8-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fa-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fc-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fe-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94, #w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a0a-8abcad94, #w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186756-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186757-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186759-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675b-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675d-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675f-8abcad94, #w-node-_35828d87-f20d-a151-91a1-b8bd56674064-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186763-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186766-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186768-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18676d-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186773-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186778-8abcad94, #w-node-_111048e3-30a4-1baf-272f-ec6dc7bca0ea-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186782-8abcad94, #w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94, #w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94, #w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94, #w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94 {
   grid-area: span 1 / span 1 / span 1 / span 1;
 }

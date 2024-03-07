@@ -210,11 +210,11 @@ if (!isset($_SESSION['Utenti'])) {
             <div class="name intesta">Tuni di </div>
             <div class="name tecnico">Serpelloni Leonardo</div>
             <div class="tabella-interventi">
-                <div class="interventi">
+                <div class="turni">
                     <div id="w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94" class="tabella-intestazioni minore">Giorno</div>
                     <div id="w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94" class="tabella-intestazioni minore">Orario</div>
                 </div>
-                <div class="interventi righe">
+                <div class="turni righe">
                     <div id="w-node-_2d0bdefd-89a6-a043-2285-ceab9d119dfa-8abcad94" class="tabella-testo">Lunedì</div>
                     <div id="w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94" class="tabella-testo">8:00 - 12:00</div><a id="w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94" href="#" class="icon deleteturno w-button"></a>
                 </div>
