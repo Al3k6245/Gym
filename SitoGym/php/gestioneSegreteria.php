@@ -9,9 +9,9 @@ if(!isset($conn)){
     }
 }
 
+// ------------------------------------------------------- GESTIONE DELLE RICHIESTE AJAX ----------------------------------------------------------------------------
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){   
-    //è stata fatta una richiesta GET dall'ajax
 
     if(isset($_GET['azione'])){
 
@@ -27,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 break;
 
             case 'viewUserInfo':
-                displayInfo($_GET['index'], $conn);
+                displayInfo($_GET['userType'], $_GET['index'], $conn);
                 break;
 
             case 'closeUserInfo':
@@ -56,11 +56,13 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 }  
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['file']) && isset($_POST['index'])){
-    addDocument($_POST['index'], $conn);
+    addDocument($_POST['userType'],$_POST['index'], $conn);
 }
 else{
     //implementare codice per far capire che il caricamento non è andato a buon fine
 }
+
+// ----------------------------------------------------------------- FINE GESTIONE RICHIESTE AJAX --------------------------------------------------------------------
 
 
 function showMembers($conn){
@@ -73,8 +75,13 @@ function showMembers($conn){
 
     $counter = 1;   //ai vari pulsanti assegno un numero come id in modo da sapere che riga l'utente sta andando a scegliere
 
+    $userType = 0;   //0 => Cliente   1 => Allenatore    2 => Personale
+
     if($result){
         while($row = $result->fetch_assoc()){
+
+            //-------------------------------------------------------------- RIGA ISCRITTO ----------------------------------------------------------------------
+
             print "
             <div class='badge'>
             <div class='immagineprofilo'></div>
@@ -85,21 +92,21 @@ function showMembers($conn){
         </div>
         <div  class='tabella-testo'>".$row['ScadenzaAbb']."</div>
         <div class='action'>
-        <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$counter.")'>Button Text</a>
+        <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'>Button Text</a>
         <a href='".$row['docIdentificativi']."'class='icon download w-button' download>Button Text</a>
         </div>
         <div class='tabella-testo'>".$row['DataN']."</div>
         <div class='action'>
-        <a href='#' class='icon allerta w-button'>Button Text</a>
-        <a href='#' class='icon pericolo w-button'>Button Text</a>
+        <a class='icon allerta w-button'>Button Text</a>
+        <a class='icon pericolo w-button'>Button Text</a>
         </div>
         <div class='action'>
-        <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$counter.")'>Button Text</a>
+        <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(0,".$counter.")'>Button Text</a>
         <a href='mailto:".$row['mail']."' class='icon useremail w-button'>Button Text</a>
         <a id='$counter' class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'>Button Text</a>
         </div>
         ";
-            saveFiscalCodeOnSession($row['codF'], $counter, 'Utenti');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e altre features
+            saveFiscalCodeOnSession($row['codF'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e altre features
             $counter++;
         }
     }
@@ -116,41 +123,66 @@ function deleteMember($index, $conn){
     $query = "DELETE FROM iscritto WHERE codF = ?";
     
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $_SESSION['Utenti'][$index]);
+    $stmt->bind_param("s", $_SESSION['iscritto'][$index]);
 
     $stmt->execute(); 
     $stmt->close();
 
     //eliminazione dalla sessione
-    unset($_SESSION['Utenti'][$index]);
+    unset($_SESSION['iscritto'][$index]);
     $counter = 1;
-    foreach ($_SESSION['Utenti'] as $key => $value) {
+    foreach ($_SESSION['iscritto'] as $key => $value) {
         $key = $counter;
         $counter++;
     }
 }
 
-function addDocument($index, $conn){
+function addDocument($userType ,$index, $conn){
 
     if($_FILES['file']['error'] == 0){  //il file è stato caricato correttamente
 
         $filePath = 'uploads/'.$_FILES['file']['name'];  //al momento salvo tutti i file nella cartella uploads ma ci sarà da creare le cartelle per utente
+        $table;
 
         move_uploaded_file($_FILES['file']['tmp_name'], '../'.$filePath);
 
-        echo $filePath;
-        echo $_SESSION['Utenti'][$index];
+        switch($userType){
+
+            case 0:
+                $table = 'iscritto';
+                break;
+
+            case 1:
+                $table = 'allenatori';
+                break;
+
+            case 2:
+                $table = 'tecnici';
+                break;
+        }
     
-        $query = "UPDATE iscritto SET docIdentificativi = '$filePath' WHERE codF = ?";
+        $query = "UPDATE $table SET docIdentificativi = '$filePath' WHERE codF = ?";
         
         $stmt = $conn->prepare($query);
     
         if ($stmt === false) {
+            //compare una finestra che dà errore
             echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
             exit;
         }
-    
-        $stmt->bind_param("s", $_SESSION['Utenti'][$index]);
+        
+        switch($userType){
+            case 0:  
+                $stmt->bind_param("s", $_SESSION['iscritto'][$index]);
+                break;
+            case 1:
+                $stmt->bind_param("s", $_SESSION['allenatori'][$index]);
+                break;
+            case 2:
+                $stmt->bind_param("s", $_SESSION['tecnici'][$index]);
+                break;
+        }
+        
 
         $stmt->execute();
         $stmt->close();
@@ -176,17 +208,41 @@ function getFromDbFilePath($index, $conn){
     return '../'.$row['docIdentificativi']; 
 }
 
-function displayInfo($index, $conn){
-    $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail, docIdentificativi, psw, imgProfilo FROM iscritto WHERE codF = ?";
+function displayInfo($user, $index, $conn){
+    $userTable;
+
+    switch($user){
+        case 0:
+            $userTable = 'iscritto';
+            break;
+        case 1:
+            $userTable = 'allenatori';
+            break;
+        case 2:
+            $userTable = 'tecnici';
+            break;
+    }
+
+    $query = "SELECT nome, cognome, DataN, codF, mail, psw, imgProfilo FROM $userTable WHERE codF = ?";
 
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $_SESSION['Utenti'][$index]);
+
+    
+    if ($stmt === false) {
+        //compare una finestra che dà errore
+        echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
+        exit;
+    }
+    
+    $stmt->bind_param("s", $_SESSION[$userTable][$index]);
 
     $stmt->execute();
 
     $result = $stmt->get_result();
 
     $row = $result->fetch_assoc();
+    
+    // ------------------------------------------------ SCHEDA INFORMAZIONI  --------------------------------------------------------------------------
 
     print '<div data-w-id="1ead45e8-3280-9d48-6405-e79982937b5c" class="hoversection">
     <div class="hoversection-container"><img src="'.$row['imgProfilo'].'" loading="lazy" width="Auto" alt="" class="fotoprofilo">
@@ -209,7 +265,7 @@ function displayInfo($index, $conn){
 }
 
 function displayTrainers($conn){
-    $query = "SELECT codF, nome, cognome, docIdentificativi, valutazione FROM allenatori";
+    $query = "SELECT codF, nome, cognome, mail, docIdentificativi, valutazione FROM allenatori";
     $stmt = $conn->prepare($query);
 
     $stmt->execute();
@@ -217,8 +273,12 @@ function displayTrainers($conn){
     $result = $stmt->get_result();
 
     $counter = 1;
+    $userType = 1;
 
     while($row = $result->fetch_assoc()){
+
+        // ---------------------------------------------------------------- RIGA ALLENATORE  -------------------------------------------------------------
+
         print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
         <div class="immagineprofilo"></div>
         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
@@ -226,21 +286,31 @@ function displayTrainers($conn){
             <div class="tabella-intestazioni abbonamento">Trainer</div>
         </div>
     </div>
-        <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d02cb1d41240f646949d_star.png" loading="lazy" alt="" class="star"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d02cb1d41240f646949d_star.png" loading="lazy" alt="" class="star"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d02cb1d41240f646949d_star.png" loading="lazy" alt="" class="star"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d02cb1d41240f646949d_star.png" loading="lazy" alt="" class="star"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d02cb1d41240f646949d_star.png" loading="lazy" alt="" class="star"></div>
-            <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a0a-8abcad94" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$counter.')">Button Text</a><a href="'.$row['docIdentificativi'].'" class="icon download w-button" download>Button Text</a></div>
+        <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars">'.loadStars($row['valutazione']).'</div>
+            <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a0a-8abcad94" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')">Button Text</a><a href="'.$row['docIdentificativi'].'" class="icon download w-button" download>Button Text</a></div>
             <! //TURNI->
                 <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="AddCertificato" href="#" class="icon turni w-button">Button Text</a><a href="#" class="icon addturni w-button">Button Text</a></div>
                 <! //STATO->
                     <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"><a href="#" class="icon allerta w-button">Button Text</a><a href="#" class="icon pericolo w-button">Button Text</a></div>
                     <! //SOLITI BOTTONI->
-                        <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon userdescrizioni w-button">Button Text</a><a href="#" class="icon useremail w-button">Button Text</a><a href="#" class="icon userremove w-button">Button Text</a></div>';
+                        <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')">Button Text</a><a href="mailto:'.$row['mail'].'" class="icon useremail w-button">Button Text</a><a href="" class="icon userremove w-button">Button Text</a></div>';
 
-        saveFiscalCodeOnSession($row['codF'], $counter, 'Allenatori');
+        saveFiscalCodeOnSession($row['codF'], $counter, 'allenatori');
 
         $counter++;
     }   
         
     $stmt->close();
+}
+
+function loadStars($valutazione){
+    $stars = '';
+
+    for($i=0;$i<$valutazione;$i++){
+        $stars = $stars.'<img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d02cb1d41240f646949d_star.png" loading="lazy" alt="" class="star">';
+    }
+
+    return $stars;
 }
 
 ?>

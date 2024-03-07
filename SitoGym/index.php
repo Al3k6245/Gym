@@ -2,10 +2,10 @@
 require('php/gestioneSegreteria.php');
 
 
-if(!isset($_SESSION['Utenti'])){
+if(!isset($_SESSION['iscritto'])){
     //conterrà i codici fiscali degli utenti
-    $_SESSION['Utenti'] = "";
-    unset($_SESSION['Utenti']);
+    $_SESSION['iscritto'] = "";
+    unset($_SESSION['iscritto']);
 }
     
 
@@ -23,18 +23,18 @@ if(!isset($_SESSION['Utenti'])){
     <script src="javascript/gestioneAjaxSegreteria.js"></script>
 </head>
 
-<body class="body">  
+<body class="body" onload="changeSection('Clienti')">  
     <section id="Home" class="content">
         <div class="container-dashboard">
             <div class="container-titolo">
                 <h1 class="h1">Dashboard</h1>
             </div>
             <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
-            <a class="container-sezioni clienti w-button" onclick="changeSection('Clienti','Nome','Data di Prossimo Pagamento','Certificato Medico','Nascita','Stato','Azioni')">Clienti</a>
-                    <a class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori','Nome','Valutazione','Certificato Medico','Turni','Stato','Azioni')">Allenatori</a>
-                    <a href="#" class="container-sezioni personale w-button" onclick="changeSection('Personale','Nome','','','','Interventi','Azioni')">Personale</a>
+            <a class="container-sezioni clienti w-button" onclick="changeSection('Clienti')">Clienti</a>
+                    <a class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori')">Allenatori</a>
+                    <a href="#" class="container-sezioni personale w-button" onclick="changeSection('Personale')">Personale</a>
                 <form action="/search" class="search allineato w-form"><input class="search-input w-input"
-                        maxlength="256" name="query" placeholder="Search…" type="search" id="Ricerca"
+                        maxlength="256" name="query" placeholder="Search" type="search" id="Ricerca"
                         required="" /><input type="submit" class="search-button w-button" value="Search" /></form>
             </div>
 
@@ -53,7 +53,6 @@ if(!isset($_SESSION['Utenti'])){
 
                     <div id="tabella-membri" class="tabella-preset tabella">
                         <!-- questa sezione viene riempita con php -->
-                        <?php showMembers($conn); ?>
                     </div>
 
 
