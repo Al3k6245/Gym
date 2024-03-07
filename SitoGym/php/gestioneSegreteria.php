@@ -35,26 +35,25 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 break;
                 
             case 'changeSection':
+                
+                switch($_GET['section']){
+                    
+                    case 'Clienti':
+                        showMembers($conn);
+                        break;
+                        
+                    case 'Allenatori':
+                        displayTrainers($conn);
+                        break;
 
-                if($_GET['tableSection'] == 'header')
-                    changeSectionHeader($_GET['section']);
-                else{
-                    switch($_GET['section']){
-
-                        case 'Clienti':
-                            showMembers($conn);
-                            break;
-    
-                        case 'Allenatori':
-                            displayTrainers($conn);
-                            break;
+                    case 'Personale':
+                        
+                        break;
                     }
-                }
-              
                 break;
         }
-    }  
-}
+    }
+}  
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['file']) && isset($_POST['index'])){
     addDocument($_POST['index'], $conn);
@@ -207,30 +206,6 @@ function displayInfo($index, $conn){
     </div>';
 
     $stmt->close();
-}
-
-function changeSectionHeader($sectionName){  //cambia le intestazioni delle colonne della tabella in segreteria
-    $columnsHeaders;
-    switch($sectionName){
-        case 'Clienti':
-            $columnsHeaders = array('Nome','Data di Prossimo Pagamento','Certificato Medico','Nascita','Azioni','Stato');
-            break;
-        case 'Allenatori':
-            $columnsHeaders = array('Nome','Valutazione','Certificato Medico','Turni','Stato','Azioni');    
-            break;
-        case 'Personale':
-            $columnsHeaders = array('Nome','','','','Interventi','Azioni');    
-            break;
-    }
-    print '  <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94" class="ordinamento">
-    <a id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f2-8abcad94"class="icon w-button">Button Text</a>
-    <a id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f4-8abcad94" href="#" class="ordinamentoupdown w-button">'.$columnsHeaders[0].'</a>
-    </div>
-    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f6-8abcad94" class="tabella-intestazioni">'.$columnsHeaders[1].'</div>
-    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f8-8abcad94" class="tabella-intestazioni">'.$columnsHeaders[2].'</div>
-    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fa-8abcad94" class="tabella-intestazioni">'.$columnsHeaders[3].'</div>
-    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fc-8abcad94" class="tabella-intestazioni">'.$columnsHeaders[4].'</div>
-    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fe-8abcad94" class="tabella-intestazioni">'.$columnsHeaders[5].'</div>';
 }
 
 function displayTrainers($conn){

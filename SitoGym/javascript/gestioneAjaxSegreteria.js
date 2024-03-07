@@ -67,26 +67,16 @@ function AjaxCloseDescription(){
 }
 
 function AjaxChangeSection(section){
-    var xmlhttpHeader = new XMLHttpRequest();
-    var xmlhttpRecords = new XMLHttpRequest();
+    var xmlhttp = new XMLHttpRequest();
 
-    xmlhttpHeader.onreadystatechange = function(){   
-        if(this.readyState == 4 && this.status == 200){
-            document.getElementById("headerTable").innerHTML = this.responseText;
-        }
-    };
-
-    xmlhttpHeader.open("GET", "php/gestioneSegreteria.php?azione=changeSection&tableSection=header&section=" + section, true);
-    xmlhttpHeader.send();
-
-    xmlhttpRecords.onreadystatechange = function(){
+    xmlhttp.onreadystatechange = function(){   
         if(this.readyState == 4 && this.status == 200){
             document.getElementById("tabella-membri").innerHTML = this.responseText;
         }
-    }
+    };
 
-    xmlhttpRecords.open("GET", "php/gestioneSegreteria.php?azione=changeSection&tableSection=records&section=" + section, true);
-    xmlhttpRecords.send();
+    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=changeSection&section=" + section, true);
+    xmlhttp.send();
 }
 
 
@@ -111,4 +101,17 @@ function addFile(index) {
         //Rimuovi l'input dopo aver letto il file
         document.body.removeChild(input);
     });
+  }
+
+  function changeSection(sectionName, header1, header2, header3, header4, header5, header6){
+    //cambia le intestazioni delle varie sezioni
+    document.getElementById("firstCol").innerHTML = header1;
+    document.getElementById("secondCol").innerHTML = header2;
+    document.getElementById("thirdCol").innerHTML = header3;
+    document.getElementById("fourthCol").innerHTML = header4;
+    document.getElementById("fifthCol").innerHTML = header5;
+    document.getElementById("sixthCol").innerHTML = header6;
+
+    //chiamata Ajax per mostrare gli utenti rispettivi delle sezioni
+    AjaxChangeSection(sectionName);
   }

@@ -14,7 +14,6 @@ if(!isset($_SESSION['Utenti'])){
 <!DOCTYPE html>
 <!-- This site was created in Webflow. https://www.webflow.com --><!-- Last Published: Thu Feb 29 2024 17:18:46 GMT+0000 (Coordinated Universal Time) -->
 
- 
 <head>
     <meta charset="utf-8" />
     <title>GymWebSite</title>
@@ -22,14 +21,6 @@ if(!isset($_SESSION['Utenti'])){
     <meta content="Webflow" name="generator" />
     <link href="css/segreteriaStyle.css" rel="stylesheet" type="text/css" />
     <script src="javascript/gestioneAjaxSegreteria.js"></script>
-    <script>
-        type = "text/javascript" > ! function(o, c) {
-            var n = c.documentElement,
-                t = " w-mod-";
-            n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")
-        }(window, document);
-    </script> 
-
 </head>
 
 <body class="body">  
@@ -39,9 +30,9 @@ if(!isset($_SESSION['Utenti'])){
                 <h1 class="h1">Dashboard</h1>
             </div>
             <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
-            <a class="container-sezioni clienti w-button" onclick="AjaxChangeSection('Clienti')">Clienti</a>
-                    <a class="container-sezioni allenatori w-button" onclick="AjaxChangeSection('Allenatori')">Allenatori</a>
-                    <a href="#" class="container-sezioni personale w-button" onclick="AjaxChangeSection('Personale')">Personale</a>
+            <a class="container-sezioni clienti w-button" onclick="changeSection('Clienti','Nome','Data di Prossimo Pagamento','Certificato Medico','Nascita','Stato','Azioni')">Clienti</a>
+                    <a class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori','Nome','Valutazione','Certificato Medico','Turni','Stato','Azioni')">Allenatori</a>
+                    <a href="#" class="container-sezioni personale w-button" onclick="changeSection('Personale','Nome','','','','Interventi','Azioni')">Personale</a>
                 <form action="/search" class="search allineato w-form"><input class="search-input w-input"
                         maxlength="256" name="query" placeholder="Search…" type="search" id="Ricerca"
                         required="" /><input type="submit" class="search-button w-button" value="Search" /></form>
@@ -49,7 +40,15 @@ if(!isset($_SESSION['Utenti'])){
 
                 <! //PULSANTE CLIENTI ->
                     <div id="headerTable" class="tabella-preset intestazione">
-                        <?php changeSectionHeader('Clienti'); ?>
+                        <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94" class="ordinamento">
+                        <a id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f2-8abcad94"class="icon w-button">Button Text</a>
+                        <a id="firstCol" href="#" class="ordinamentoupdown w-button">Nome</a>
+                        </div>
+                        <div id="secondCol" class="tabella-intestazioni">Data di Prossimo Pagamento</div>
+                        <div id="thirdCol" class="tabella-intestazioni">Certificato Medico</div>
+                        <div id="fourthCol" class="tabella-intestazioni">Nascita</div>
+                        <div id="fifthCol" class="tabella-intestazioni">Azioni</div>
+                        <div id="sixthCol" class="tabella-intestazioni">Stato</div>
                     </div>
 
                     <div id="tabella-membri" class="tabella-preset tabella">
