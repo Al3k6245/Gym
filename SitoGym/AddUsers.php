@@ -249,7 +249,7 @@ if (!isset($_SESSION['Utenti'])) {
                 </div><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65dd97675fe879d00396195d_Vectors-Wrapper.svg" loading="lazy" width="700" height="100" alt="" class="vectors-wrapper-10">
                 <div class="form-block-2 w-form">
                     <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-container" data-wf-page-id="65e6e5aa5619ced63ab2bb7d" data-wf-element-id="14554ff0-479b-3e98-6316-b8a69d741743" aria-label="Email Form">
-                        <div class="text-block-form">Tipo di Utenza</div><select id="Type" name="Type" data-name="Type" class="w-select">
+                        <div class="text-block-form">Tipo di Utenza</div><select id="Type" name="Type" data-name="Type" class="select-field-2 w-select">
                             <option value="Cliete">Cliete</option>
                             <option value="Allenatore">Allenatore</option>
                             <option value="Tecnico">Tecnico</option>
@@ -258,23 +258,28 @@ if (!isset($_SESSION['Utenti'])) {
                         <div class="sezioneform">
                             <div class="input">
                                 <div class="intestazione-form">Nome</div><input class="input-nomecognome w-input" maxlength="256" name="Nome" data-name="Nome" placeholder="" type="text" id="Nome" required="">
+                                <div class="error smaller">Errore Errore Errore Errore Errore</div>
                             </div>
                             <div class="input">
                                 <div class="intestazione-form">Cognome</div><input class="input-nomecognome w-input" maxlength="256" name="Nome-2" data-name="Nome 2" placeholder="" type="text" id="Nome-2" required="">
+                                <div class="error smaller">Errore Errore Errore Errore Errore</div>
                             </div>
                         </div>
                         <div class="sezioneform">
                             <div class="input">
                                 <div class="intestazione-form">Codice Fiscale</div><input class="input-codicefiscale w-input" maxlength="256" name="Nome-3" data-name="Nome 3" placeholder="" type="text" id="Nome-3" required="">
+                                <div class="error smaller">Errore Errore Errore Errore Errore</div>
                             </div>
                         </div>
                         <div class="text-block-form">Dati di Contatto</div>
                         <div class="sezioneform">
                             <div class="input">
                                 <div class="intestazione-form">Numero di Telefono</div><input class="input-numero w-input" maxlength="256" name="Nome-4" data-name="Nome 4" placeholder="" type="tel" id="Nome-4" required="">
+                                <div class="error smaller">Errore Errore Errore Errore Errore</div>
                             </div>
                             <div class="input">
                                 <div class="intestazione-form">E-Mail</div><input class="input-email w-input" maxlength="256" name="Nome-2" data-name="Nome 2" placeholder="" type="email" id="Nome-2" required="">
+                                <div class="error smaller">Errore Errore Errore Errore Errore</div>
                             </div>
                         </div>
                         <div class="text-block-form">Documenti Identificativi</div><a href="#" class="add-documenti w-button">+ Documenti</a>
@@ -282,13 +287,20 @@ if (!isset($_SESSION['Utenti'])) {
                         <div class="sezioneform">
                             <div class="input">
                                 <div class="intestazione-form">Coordinate Bancarie</div><input class="input-iban w-input" maxlength="256" name="Nome-3" data-name="Nome 3" placeholder="IBAN" type="text" id="Nome-3" required="">
+                                <div class="error smaller">Errore Errore Errore Errore Errore</div>
                             </div>
                         </div>
+                        <div class="text-block-form">Tipo di Abbonamento</div><select id="AbbonamentoType" name="AbbonamentoType" data-name="AbbonamentoType" class="select-field w-select">
+                            <option value="Silver">Silver</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Platinum">Platinum</option>
+                        </select>
                         <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button">+ Certificazione</a>
                         <div class="text-block-form">Azienda Patner</div>
                         <div class="sezioneform">
                             <div class="input">
                                 <div class="intestazione-form">Nome Azienda</div><input class="input-azienda w-input" maxlength="256" name="Nome-3" data-name="Nome 3" placeholder="TecnoGym" type="text" id="Nome-3" required="">
+                                <div class="error smaller">Errore Errore Errore Errore Errore</div>
                             </div>
                         </div><input type="submit" data-wait="Please wait..." class="addcertificazione centrato w-button" value="Aggiungi Utente">
                     </form>
