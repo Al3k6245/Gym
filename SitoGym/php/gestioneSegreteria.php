@@ -22,10 +22,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 showMembers($conn);
                 break;
 
-            case 'downloadFile':
-                downloadFile(getFromDbFilePath($_GET['index'],$conn));
-                break;
-
             case 'viewUserInfo':
                 displayInfo($_GET['userType'], $_GET['index'], $conn);
                 break;
@@ -219,24 +215,6 @@ function addDocument($userType ,$index, $conn){
         
     }
    
-}
-
-function getFromDbFilePath($index, $conn){
-    $query = "SELECT docIdentificativi FROM iscritto WHERE codF = ?";
-
-    $stmt = $conn->prepare($query);
-
-    $stmt->bind_param("s", $_SESSION['Utenti'][$index]);
-
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    
-    $stmt->close(); 
-
-    $row = $result->fetch_assoc();
-
-    return '../'.$row['docIdentificativi']; 
 }
 
 function displayInfo($user, $index, $conn){
