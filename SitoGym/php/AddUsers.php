@@ -1,10 +1,8 @@
 <?php
-
+require "gestioneAddUsers.php";
 ?>
 
 <!DOCTYPE html>
-
-
 
 <head>
     <meta charset="utf-8" />
@@ -12,7 +10,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content="Webflow" name="generator" />
     <link href="../css/segreteriaStyle.css" rel="stylesheet" type="text/css" />
-    <script src="javascript/gestioneAjaxSegreteria.js"></script>
+    <script src="../javascript/gestioneAddUser.js"></script>
 
 </head>
 
@@ -232,8 +230,8 @@
                 </div><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65dd97675fe879d00396195d_Vectors-Wrapper.svg" loading="lazy" width="700" height="100" alt="" class="vectors-wrapper-10">
                 <div class="form-block-2 w-form">
                     <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-container" data-wf-page-id="65e6e5aa5619ced63ab2bb7d" data-wf-element-id="14554ff0-479b-3e98-6316-b8a69d741743" aria-label="Email Form">
-                        <div class="text-block-form">Tipo di Utenza</div><select id="Type" name="Type" data-name="Type" class="w-select">
-                            <option value="Cliete">Cliete</option>
+                        <div class="text-block-form">Tipo di Utenza</div><select id="Type" name="Type" data-name="Type" class="w-select" onchange="changeUserType()">
+                            <option value="Cliente">Cliente</option>
                             <option value="Allenatore">Allenatore</option>
                             <option value="Tecnico">Tecnico</option>
                         </select>
@@ -261,19 +259,19 @@
                             </div>
                         </div>
                         <div class="text-block-form">Documenti Identificativi</div><a href="#" class="add-documenti w-button">+ Documenti</a>
+                        <div id="metodoPagamento"> 
                         <div class="text-block-form">Metodo di Pagamento</div>
                         <div class="sezioneform">
                             <div class="input">
                                 <div class="intestazione-form">Coordinate Bancarie</div><input class="input-iban w-input" maxlength="256" name="Nome-3" data-name="Nome 3" placeholder="IBAN" type="text" id="Nome-3" required="">
                             </div>
                         </div>
+                        </div>
                         <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button">+ Certificazione</a>
-                        <div class="text-block-form">Azienda Patner</div>
-                        <div class="sezioneform">
-                            <div class="input">
-                                <div class="intestazione-form">Nome Azienda</div><input class="input-azienda w-input" maxlength="256" name="Nome-3" data-name="Nome 3" placeholder="TecnoGym" type="text" id="Nome-3" required="">
-                            </div>
-                        </div><input type="submit" data-wait="Please wait..." class="addcertificazione centrato w-button" value="Aggiungi Utente">
+                        <div id="Azienda">
+                            <!-- SEZIONE PER METTERE L'AZIENDA PARTNER (TECNICO) -------------------------->
+                        </div>
+                        <input type="submit" data-wait="Please wait..." class="addcertificazione centrato w-button" value="Aggiungi Utente">
                     </form>
                     <div class="w-form-done" tabindex="-1" role="region" aria-label="Email Form success">
                         <div>Thank you! Your submission has been received!</div>
