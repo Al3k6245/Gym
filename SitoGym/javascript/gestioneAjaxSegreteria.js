@@ -39,7 +39,7 @@ function AjaxAddDocument(userType, index){
     }
 }
 
-function AjaxViewDescription(userType, index){
+function AjaxViewDescription(userType, index){   // userType ========>  0 => Cliente   1 => Allenatore    2 => Personale
     var xmlhttp = new XMLHttpRequest();
 
     xmlhttp.onreadystatechange = function(){   
@@ -76,6 +76,45 @@ function AjaxChangeSection(section){
     };
 
     xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=changeSection&section=" + section, true);
+    xmlhttp.send();
+}
+
+function AjaxViewTrainerShifts(index){    //chiamata per visualizzare i turni di lavoro degli allenatori 
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function(){   
+        if(this.readyState == 4 && this.status == 200){
+            document.getElementById("info").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=viewShifts&index=" + index, true);
+    xmlhttp.send();
+}
+
+function AjaxDeleteShift(day, trainerIndex){
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function(){   
+        if(this.readyState == 4 && this.status == 200){
+            document.getElementById("info").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=deleteShift&shiftDay=" + day + "&trainerIndex=" + trainerIndex, true);
+    xmlhttp.send();
+}
+
+function AjaxAddShift(trainerIndex){   //per mostrare l'hoversection di aggiunta turni
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function(){   
+        if(this.readyState == 4 && this.status == 200){
+            document.getElementById("info").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=addShift&trainerIndex=" + trainerIndex, true);
     xmlhttp.send();
 }
 
