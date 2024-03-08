@@ -3968,7 +3968,7 @@ textarea.w-input, textarea.w-select {
   height: auto;
   min-width: 100px;
   border: 3px solid var(--buttoncolor);
-  object-fit: contain;
+  object-fit: fill;
   background-image: none;
   border-radius: 20px;
   order: 1;
@@ -4206,7 +4206,7 @@ textarea.w-input, textarea.w-select {
 .fotoprofilo {
   width: 150px;
   border: 3px solid var(--selected);
-  object-fit: none;
+  object-fit: fill;
   border-radius: 20px;
   margin-bottom: -45px;
   position: relative;
