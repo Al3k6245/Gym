@@ -2111,6 +2111,7 @@ textarea.w-input, textarea.w-select {
   --abbonamento: #697077;
   --intestazioni: #a6a6a6;
   --black: black;
+  --blue-button: #0f62fe;
   --navbar-title-sections: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
@@ -3692,6 +3693,7 @@ textarea.w-input, textarea.w-select {
 }
 
 .tabella-preset.intestazione {
+  margin-bottom: 0;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -3741,7 +3743,10 @@ textarea.w-input, textarea.w-select {
 }
 
 .icon.add {
+  width: 25px;
+  height: 25px;
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65df144868550759e78fd422_Add.png");
+  border-width: 0;
 }
 
 .icon.download {
@@ -3836,6 +3841,10 @@ textarea.w-input, textarea.w-select {
   background-size: 20px;
 }
 
+.icon.turni-button {
+  background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d18717075d1f3c993e2e_Turni.png");
+}
+
 .image {
   width: 50px;
   height: 50px;
@@ -3862,7 +3871,7 @@ textarea.w-input, textarea.w-select {
   justify-content: flex-start;
   align-items: center;
   display: flex;
-  position: static;
+  position: relative;
 }
 
 .tabella-intestazioni {
@@ -3881,6 +3890,7 @@ textarea.w-input, textarea.w-select {
   flex-wrap: nowrap;
   flex: 0 auto;
   align-content: space-around;
+  align-self: auto;
   font-size: 18px;
 }
 
@@ -3908,10 +3918,25 @@ textarea.w-input, textarea.w-select {
   order: -1;
 }
 
+.immagineprofilo.big {
+  width: 100px;
+  height: auto;
+  border: 3px solid var(--buttoncolor);
+  object-fit: contain;
+  border-radius: 20px;
+  order: 1;
+  margin-top: 0;
+  margin-left: 15px;
+}
+
 .datipersonali {
-  flex-flow: column wrap;
-  align-content: center;
-  justify-content: center;
+  width: 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  flex-flow: column;
+  order: 0;
+  align-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   display: flex;
 }
@@ -4312,22 +4337,28 @@ textarea.w-input, textarea.w-select {
   width: 100%;
   max-width: none;
   grid-row-gap: 24px;
+  color: #21272a;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   margin-left: auto;
   margin-right: auto;
   padding: 48px 200px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 110%;
   text-decoration: none;
   display: flex;
 }
 
-.top-4 {
+.immagineprofilo-content {
   width: 100%;
+  grid-column-gap: 30px;
   grid-row-gap: 16px;
-  flex-direction: column;
-  justify-content: center;
+  flex-flow: row;
+  justify-content: flex-start;
   align-items: flex-start;
+  margin-left: 25%;
   text-decoration: none;
   display: flex;
 }
@@ -4426,11 +4457,13 @@ textarea.w-input, textarea.w-select {
 }
 
 .vectors-wrapper-10 {
+  width: 100%;
   height: 100px;
   object-fit: cover;
   flex: 0 auto;
   justify-content: center;
   align-items: center;
+  margin-bottom: -70px;
   text-decoration: none;
   display: flex;
 }
@@ -4700,6 +4733,399 @@ textarea.w-input, textarea.w-select {
   padding-top: 0;
 }
 
+.div-block-7 {
+  align-self: center;
+}
+
+.inserisci {
+  border-radius: 0;
+}
+
+.add {
+  width: 150px;
+  border: 3px solid var(--blue-button);
+  color: var(--blue-button);
+  background-color: #fff;
+  border-radius: 0;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 12px;
+  font-size: 20px;
+  font-weight: 400;
+  display: flex;
+}
+
+.div-block-8 {
+  align-self: center;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.text-block {
+  margin-bottom: 10px;
+}
+
+.input {
+  flex-flow: column;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+}
+
+.intestazione {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.form-container {
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0%;
+  padding-right: 0;
+  display: flex;
+}
+
+.form-block-2 {
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+}
+
+.input-nomecognome {
+  width: 300px;
+  height: 45px;
+  border-bottom: 2px solid var(--intestazioni);
+  background-color: var(--sfondo);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.add-foto {
+  width: 150px;
+  border: 3px solid var(--blue-button);
+  color: var(--blue-button);
+  background-color: #fff;
+  border-radius: 0;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 12px;
+  font-size: 20px;
+  font-weight: 400;
+  display: flex;
+}
+
+.sezioneform {
+  width: 100%;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  flex-flow: row;
+  align-content: space-between;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 20px;
+  display: flex;
+}
+
+.tabella-intestazioni-dashboard {
+  color: var(--buttoncolor);
+  justify-content: center;
+  align-items: center;
+  padding-left: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 140%;
+  display: flex;
+}
+
+.tabella-intestazioni-dashboard.cognomenome {
+  min-width: 100%;
+  flex-wrap: nowrap;
+  flex: 0 auto;
+  align-content: space-around;
+  justify-content: flex-start;
+  align-self: flex-start;
+  align-items: center;
+  font-size: 18px;
+}
+
+.tabella-intestazioni-dashboard.abbonamento {
+  color: var(--abbonamento);
+  font-size: 18px;
+}
+
+.tabella-intestazioni-dashboard.interventi {
+  font-size: 5px;
+}
+
+.tabella-intestazioni-dashboard.minore {
+  font-size: 18px;
+}
+
+.intestazione-form {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.input-codicefiscale {
+  width: 620px;
+  height: 45px;
+  border-bottom: 2px solid var(--intestazioni);
+  background-color: var(--sfondo);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.text-block-form {
+  margin-top: 50px;
+  margin-bottom: 5px;
+}
+
+.add-documenti {
+  width: 150px;
+  border: 3px solid var(--blue-button);
+  color: var(--blue-button);
+  background-color: #fff;
+  border-radius: 0;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+  padding-left: 12px;
+  font-size: 20px;
+  font-weight: 400;
+  display: flex;
+}
+
+.input-iban {
+  width: 620px;
+  height: 45px;
+  border-bottom: 2px solid var(--intestazioni);
+  background-color: var(--sfondo);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.input-email, .input-numero {
+  width: 300px;
+  height: 45px;
+  border-bottom: 2px solid var(--intestazioni);
+  background-color: var(--sfondo);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.addcertificazione {
+  width: 180px;
+  border: 3px solid var(--blue-button);
+  color: var(--blue-button);
+  background-color: #fff;
+  border-radius: 0;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
+  padding-left: 12px;
+  font-size: 20px;
+  font-weight: 400;
+  display: flex;
+}
+
+.addcertificazione.centrato {
+  align-self: center;
+  margin-top: 45px;
+}
+
+.input-azienda {
+  width: 620px;
+  height: 45px;
+  border-bottom: 2px solid var(--intestazioni);
+  background-color: var(--sfondo);
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.ordinamentotype {
+  width: 60%;
+  height: auto;
+  min-width: 210px;
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+  color: var(--buttoncolor);
+  object-fit: fill;
+  background-color: rgba(33, 39, 42, .84);
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 0;
+  display: flex;
+  position: absolute;
+  top: 100%;
+  bottom: auto;
+  left: 0;
+  right: auto;
+  overflow: visible;
+}
+
+.ordinamentotypeoptions {
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0);
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 18px;
+  transition: transform .2s;
+  display: flex;
+}
+
+.ordinamentotypeoptions:hover {
+  background-color: rgba(33, 39, 42, .56);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  transform: translate(10px);
+}
+
+.titoloesercizio {
+  border-bottom: 2px solid var(--intestazioni);
+  border-radius: 0;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.esercizio {
+  width: 310px;
+  height: auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background-color: var(--background-search);
+  object-fit: contain;
+  flex-flow: column;
+  padding: 15px;
+  display: flex;
+}
+
+.muscoli {
+  color: var(--selected);
+  padding-left: 0;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.muscolicontent {
+  margin-bottom: 10px;
+  padding-left: 15px;
+}
+
+.attrezzaturacontent {
+  padding-left: 0;
+}
+
+.attrezzatura {
+  font-size: 15px;
+}
+
+.attrezzatura-titolo {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tabella-esercizio-intestazioni {
+  width: 100%;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  background-color: rgba(166, 166, 166, .33);
+  border: 1px solid #a6a6a6;
+  grid-template-rows: 30px;
+  grid-template-columns: 60px 110px 110px;
+  grid-auto-rows: 50px;
+  grid-auto-columns: 1fr;
+  margin-top: 20px;
+  padding-left: 0;
+  padding-right: 0;
+  display: grid;
+}
+
+.intestazionetabellaesercizio {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  display: flex;
+}
+
+.tabella-esercizio-record {
+  width: 100%;
+  height: auto;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  object-fit: fill;
+  background-color: rgba(166, 166, 166, .11);
+  border: 1px solid #a6a6a6;
+  grid-template-rows: 30px;
+  grid-template-columns: 60px 110px 110px;
+  grid-auto-rows: 40px;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: row;
+  align-content: center;
+  justify-content: center;
+  align-self: auto;
+  align-items: stretch;
+  justify-items: stretch;
+  margin-top: 0;
+  padding: 10px 0;
+  display: grid;
+}
+
+.recordtabellaesercizio {
+  width: 110px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-size: 16px;
+  display: flex;
+}
+
+.recordtabellaesercizio.serie {
+  width: 60px;
+  height: 30px;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  flex-flow: column;
+  margin-bottom: 0;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.grindesercizi {
+  width: 100%;
+  height: auto;
+  max-width: 1590px;
+  clear: left;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto auto auto auto;
+  grid-auto-columns: auto;
+  grid-auto-flow: row;
+  align-items: stretch;
+  justify-items: stretch;
+  margin-top: 60px;
+  display: grid;
+  overflow: scroll;
+}
+
 @media screen and (min-width: 1920px) {
   .content {
     top: 0%;
@@ -4720,6 +5146,11 @@ textarea.w-input, textarea.w-select {
   }
 }
 
-#w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94, #w-node-b93641eb-4e20-97e4-b67a-f8a3cfa75ef0-8abcad94, #w-node-f9085910-da57-6f33-8ef5-d7a036b922fd-8abcad94, #w-node-_77fa6106-1215-cab2-2c21-f097827640c5-8abcad94, #w-node-_7c636b47-6c3b-9ba5-456d-9587c9010c02-8abcad94, #w-node-_331035c0-2673-7786-554c-b0f5cbfe67ed-8abcad94, #w-node-f67c4198-9cf5-4fb6-08c0-04b32d7fe8f7-8abcad94, #w-node-_082e4b66-476c-e935-ab10-7038955556d5-8abcad94, #w-node-_6adf7b4b-b2fd-0f2a-f07c-539b273224e1-8abcad94, #w-node-a0cd2457-5e69-ce4e-e4b0-6fc22bbfc450-8abcad94, #w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94, #w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94, #w-node-e7771a4b-9469-392e-d7b8-c90f02efb3fe-8abcad94, #w-node-_27d9fb1c-f083-b5ad-516d-12a995222779-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f2-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f4-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f6-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f8-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fa-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fc-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fe-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94, #w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a0a-8abcad94, #w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186756-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186757-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186759-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675b-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675d-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675f-8abcad94, #w-node-_35828d87-f20d-a151-91a1-b8bd56674064-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186763-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186766-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186768-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18676d-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186773-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186778-8abcad94, #w-node-_111048e3-30a4-1baf-272f-ec6dc7bca0ea-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186782-8abcad94, #w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94, #w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94, #w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94, #w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94 {
+#w-node-fc24f30d-1aec-d2a5-d3ff-2037b8c12f21-8abcad94, #w-node-fc24f30d-1aec-d2a5-d3ff-2037b8c12f22-8abcad94, #w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94, #w-node-f9085910-da57-6f33-8ef5-d7a036b922fd-8abcad94, #w-node-_77fa6106-1215-cab2-2c21-f097827640c5-8abcad94, #w-node-_7c636b47-6c3b-9ba5-456d-9587c9010c02-8abcad94, #w-node-_331035c0-2673-7786-554c-b0f5cbfe67ed-8abcad94, #w-node-f67c4198-9cf5-4fb6-08c0-04b32d7fe8f7-8abcad94, #w-node-_082e4b66-476c-e935-ab10-7038955556d5-8abcad94, #w-node-_6adf7b4b-b2fd-0f2a-f07c-539b273224e1-8abcad94, #w-node-a0cd2457-5e69-ce4e-e4b0-6fc22bbfc450-8abcad94, #w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94, #w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94, #w-node-e7771a4b-9469-392e-d7b8-c90f02efb3fe-8abcad94, #w-node-_27d9fb1c-f083-b5ad-516d-12a995222779-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f2-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f4-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f6-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f8-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fa-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fc-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fe-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94, #w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a0a-8abcad94, #w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94, #w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186756-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186757-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186759-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675b-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675d-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675f-8abcad94, #w-node-_35828d87-f20d-a151-91a1-b8bd56674064-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186763-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186766-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186768-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18676d-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186773-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186778-8abcad94, #w-node-_111048e3-30a4-1baf-272f-ec6dc7bca0ea-8abcad94, #w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186782-8abcad94, #w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94, #w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94, #w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94, #w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94 {
   grid-area: span 1 / span 1 / span 1 / span 1;
+}
+
+#w-node-_0d2f7ea7-7340-30ef-3183-e26b9baf5485-3ab2bb7d, #w-node-_6533e957-45c4-825d-61e1-b9b8c432c410-3ab2bb7d, #w-node-fcd2c055-390a-9682-a17d-92d2a3448a71-3ab2bb7d, #w-node-fc832516-7366-2c6b-16ac-e34ce02c93e0-3ab2bb7d, #w-node-fc832516-7366-2c6b-16ac-e34ce02c93e2-3ab2bb7d, #w-node-fc832516-7366-2c6b-16ac-e34ce02c93e4-3ab2bb7d, #w-node-cbead8d0-c85a-9f92-33f0-ac28ffce585d-3ab2bb7d, #w-node-_80dd30e7-3882-6266-35d3-04110f01c391-3ab2bb7d, #w-node-_3dd09f1a-5a5c-629e-e282-371192357fa9-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d1d-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d1f-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d21-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d24-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d26-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d28-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d2a-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d2c-3ab2bb7d, #w-node-_97d4c80f-453d-dfcd-46eb-b59e76732d2e-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc30-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc32-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc34-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc37-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc39-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc3b-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc3d-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc3f-3ab2bb7d, #w-node-_2424041a-aaab-56b8-2b6e-edc97f64bc41-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bb3-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bb5-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bb7-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bba-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bbc-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bbe-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bc0-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bc2-3ab2bb7d, #w-node-_3169a467-614b-ff0c-cf9c-3823945b0bc4-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef27a-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef27c-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef27e-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef281-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef283-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef285-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef287-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef289-3ab2bb7d, #w-node-_667a6a01-b49e-385f-a47d-de84861ef28b-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d978260c-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d978260e-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d9782610-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d9782613-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d9782615-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d9782617-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d9782619-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d978261b-3ab2bb7d, #w-node-_07aebbb4-c4c6-1f8f-7192-d215d978261d-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f524822207-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f524822209-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f52482220b-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f52482220e-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f524822210-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f524822212-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f524822214-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f524822216-3ab2bb7d, #w-node-_8cf09b97-8192-1bcc-1ebc-68f524822218-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1efd-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1eff-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1f01-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1f04-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1f06-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1f08-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1f0a-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1f0c-3ab2bb7d, #w-node-beed0947-4e5f-c98f-c6cb-75e9ddbe1f0e-3ab2bb7d {
+  align-self: center;
+  justify-self: center;
 }
