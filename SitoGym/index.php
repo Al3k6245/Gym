@@ -9,10 +9,11 @@ if(!isset($_SESSION['iscritto'])){
 }
     
 
+
 ?>
 
 <!DOCTYPE html>
-<!-- This site was created in Webflow. https://www.webflow.com --><!-- Last Published: Thu Feb 29 2024 17:18:46 GMT+0000 (Coordinated Universal Time) -->
+
 
 <head>
     <meta charset="utf-8" />
@@ -59,15 +60,22 @@ if(!isset($_SESSION['iscritto'])){
                     <!--
             <section class="sezione" id="Allenatori">
                 <! //PULSANTE ALLENATORI->
+
                     <div class="tabella-preset intestazione">
-                        <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94" class="ordinamento"><a id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f2-8abcad94" href="#" class="icon w-button">Button T\ext</a><a id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f4-8abcad94" href="#" class="ordinamentoupdown w-button">Nome</a></div>
+                        <div id="w-node-fc24f30d-1aec-d2a5-d3ff-2037b8c12f21-8abcad94" class="ordinamento"><a id="w-node-fc24f30d-1aec-d2a5-d3ff-2037b8c12f22-8abcad94" href="#" class="icon w-button">Button T\ext</a>
+                            <div id="w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94" class="ordinamentotype"><a href="#" class="ordinamentotypeoptions w-button">Nome</a><a href="#" class="ordinamentotypeoptions w-button">Cognome</a><a href="#" class="ordinamentotypeoptions w-button">Prossimo Pagamento</a></div>
+                            <div class="tabella-intestazioni">Nome</div><a id="AddCertificato" href="#" class="icon down w-button">Button Text</a>
+                        </div>
+                       
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f6-8abcad94" class="tabella-intestazioni">Valutazione</div>
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f8-8abcad94" class="tabella-intestazioni">Certificato Medico</div>
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fa-8abcad94" class="tabella-intestazioni">Turni</div>
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fc-8abcad94" class="tabella-intestazioni">Stato</div>
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fe-8abcad94" class="tabella-intestazioni">Azioni</div>
+                       
                     </div>
                     <div class="tabella-preset tabella">
+                        <!--
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
                             <div class="immagineprofilo"></div>
                             <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
@@ -85,6 +93,7 @@ if(!isset($_SESSION['iscritto'])){
                                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"><a href="#" class="icon allerta w-button">Button Text</a><a href="#" class="icon pericolo w-button">Button Text</a></div>
                                         <! //SOLITI BOTTONI->
                                             <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon userdescrizioni w-button">Button Text</a><a href="#" class="icon useremail w-button">Button Text</a><a href="#" class="icon userremove w-button">Button Text</a></div>
+                            -->
                     </div>
             </section>
     -->
@@ -93,27 +102,39 @@ if(!isset($_SESSION['iscritto'])){
             <section class="sezione" id="Tecnici">
                 <! //PULSANTE TECNICI->
                     <div class="tabella-preset intestazione">
- 
+
+                        <div id="w-node-fc24f30d-1aec-d2a5-d3ff-2037b8c12f21-8abcad94" class="ordinamento"><a id="w-node-fc24f30d-1aec-d2a5-d3ff-2037b8c12f22-8abcad94" href="#" class="icon w-button">Button T\ext</a>
+                            <div id="w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94" class="ordinamentotype"><a href="#" class="ordinamentotypeoptions w-button">Nome</a><a href="#" class="ordinamentotypeoptions w-button">Cognome</a><a href="#" class="ordinamentotypeoptions w-button">Prossimo Pagamento</a></div>
+                            <div class="tabella-intestazioni">Nome</div><a id="AddCertificato" href="#" class="icon down w-button">Button Text</a>
+                        </div>
+                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675b-8abcad94" class="tabella-intestazioni"></div>
+                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675d-8abcad94" class="tabella-intestazioni"></div>
+                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675f-8abcad94" class="tabella-intestazioni"></div>
+                        <div id="w-node-_35828d87-f20d-a151-91a1-b8bd56674064-8abcad94" class="tabella-intestazioni">Interventi</div>
+                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186763-8abcad94" class="tabella-intestazioni">Azioni</div>
+
                     </div>
                     <div class="tabella-preset tabella">
-                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186766-8abcad94" class="badge">
-                            <div class="immagineprofilo"></div>
-                            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186768-8abcad94" class="datipersonali">
-                                <div class="tabella-intestazioni cognomenome">Serpelloni Leonardo</div>
-                                <div class="tabella-intestazioni abbonamento">Tecnogym</div>
+                    
+                            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186766-8abcad94" class="badge">
+                                <div class="immagineprofilo"></div>
+                                <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186768-8abcad94" class="datipersonali">
+                                    <div class="tabella-intestazioni cognomenome">Serpelloni Leonardo</div>
+                                    <div class="tabella-intestazioni abbonamento">Tecnogym</div>
+                                </div>
                             </div>
-                        </div>
-                        <! //RIMANGONO PER CREARE GLI SPAZZI NELLA TABELLA->
-                            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18676d-8abcad94" class="action"></div>
-                            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186773-8abcad94" class="action"></div>
-                            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186778-8abcad94" class="action"></div>
-                            <! //=============->
-                                <! //VISUALIZZA INTEVENTI VA CONNESSO ALL'HOVER SELECTION INFONDO QUELLO GIUSTO OBV->
-                                    <div id="w-node-_111048e3-30a4-1baf-272f-ec6dc7bca0ea-8abcad94" class="action"><a id="Interventi" href="#" class="icon interventi w-button">Button Text</a></div>
-                                    <! //SOLITI BOTTONI->
-                                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186782-8abcad94" class="action"><a data-w-id="ed621fd0-2ab0-9e83-5b52-f24c8a186783" href="#" class="icon userdescrizioni w-button">Button Text</a><a href="#" class="icon useremail w-button">Button Text</a><a href="#" class="icon userremove w-button">Button Text</a></div>
+                            <! //RIMANGONO PER CREARE GLI SPAZZI NELLA TABELLA->
+                                <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18676d-8abcad94" class="action"></div>
+                                <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186773-8abcad94" class="action"></div>
+                                <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186778-8abcad94" class="action"></div>
+                                <! //=============->
+                                    <! //VISUALIZZA INTEVENTI VA CONNESSO ALL'HOVER SELECTION INFONDO QUELLO GIUSTO OBV->
+                                        <div id="w-node-_111048e3-30a4-1baf-272f-ec6dc7bca0ea-8abcad94" class="action"><a id="Interventi" href="#" class="icon interventi w-button">Button Text</a></div>
+                                        <! //SOLITI BOTTONI->
+                                            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186782-8abcad94" class="action"><a data-w-id="ed621fd0-2ab0-9e83-5b52-f24c8a186783" href="#" class="icon userdescrizioni w-button">Button Text</a><a href="#" class="icon useremail w-button">Button Text</a><a href="#" class="icon userremove w-button">Button Text</a></div>
+                            -->
                     </div>
-            </section> -->
+            </section> 
         </div>
 
 
@@ -128,7 +149,7 @@ if(!isset($_SESSION['iscritto'])){
                 <div class="name intesta descrizione">Descrizione</div>
                 <p class="paragraph">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem imperdiet. Nunc ut sem vitae risus tristique posuere.</p>
             </div>
-       ==================
+            
             <div class="name intesta">Interventi di </div>
             <div class="name tecnico">Serpelloni Leonardo</div>
             <div class="tabella-interventi">
@@ -161,10 +182,9 @@ if(!isset($_SESSION['iscritto'])){
             <div class="descrizione">AddCliente</div>
         </div>
     </div>
-</div>
-
-
-    <!--Mostr Turni-->
+   
+    <!--MOSTRA TURNI-->
+    <!--
     <div class="hoversection">
         <div class="hoversection-container">
             <div class="aggiungiturno"><a data-w-id="635d1423-b80a-96ca-e31e-cb140af1169a" href="#" class="icon exit w-button"></a>
@@ -189,7 +209,7 @@ if(!isset($_SESSION['iscritto'])){
                     <div class="w-form-fail" tabindex="-1" role="region" aria-label="Email Form failure"></div>
                 </div>
             </div><a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
-            <div class="name intesta">Tuni di </div>
+            <div class="name intesta">Turni di </div>
             <div class="name tecnico">Serpelloni Leonardo</div>
             <div class="tabella-interventi">
                 <div class="turni">
@@ -203,7 +223,7 @@ if(!isset($_SESSION['iscritto'])){
             </div><a href="#" class="addturno w-button">Aggiungi Turno</a>
         </div>
     </div>
-
+    -->
 
     <div style="display:none" class="menu-descrizioni">
         <div class="descrizione">Home</div>

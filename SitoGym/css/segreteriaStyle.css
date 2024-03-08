@@ -2115,6 +2115,51 @@ textarea.w-input, textarea.w-select {
   --navbar-title-sections: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
+.w-checkbox {
+  margin-bottom: 5px;
+  padding-left: 20px;
+  display: block;
+}
+
+.w-checkbox:before {
+  content: " ";
+  grid-area: 1 / 1 / 2 / 2;
+  display: table;
+}
+
+.w-checkbox:after {
+  content: " ";
+  clear: both;
+  grid-area: 1 / 1 / 2 / 2;
+  display: table;
+}
+
+.w-checkbox-input {
+  float: left;
+  margin: 4px 0 0 -20px;
+  line-height: normal;
+}
+
+.w-checkbox-input--inputType-custom {
+  width: 12px;
+  height: 12px;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+}
+
+.w-checkbox-input--inputType-custom.w--redirected-checked {
+  background-color: #3898ec;
+  background-image: url("https://d3e54v103j8qbb.cloudfront.net/static/custom-checkbox-checkmark.589d534424.svg");
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-color: #3898ec;
+}
+
+.w-checkbox-input--inputType-custom.w--redirected-focus {
+  box-shadow: 0 0 3px 1px #3898ec;
+}
+
 .section {
   justify-content: flex-start;
   align-items: flex-start;
@@ -3921,8 +3966,10 @@ textarea.w-input, textarea.w-select {
 .immagineprofilo.big {
   width: 100px;
   height: auto;
+  min-width: 100px;
   border: 3px solid var(--buttoncolor);
-  object-fit: contain;
+  object-fit: fill;
+  background-image: none;
   border-radius: 20px;
   order: 1;
   margin-top: 0;
@@ -4159,7 +4206,7 @@ textarea.w-input, textarea.w-select {
 .fotoprofilo {
   width: 150px;
   border: 3px solid var(--selected);
-  object-fit: none;
+  object-fit: fill;
   border-radius: 20px;
   margin-bottom: -45px;
   position: relative;
@@ -4799,8 +4846,9 @@ textarea.w-input, textarea.w-select {
 .input-nomecognome {
   width: 300px;
   height: 45px;
-  border-bottom: 2px solid var(--intestazioni);
+  border-bottom: 2px solid var(--underline);
   background-color: var(--sfondo);
+  color: var(--buttoncolor);
   font-size: 18px;
   font-weight: 400;
 }
@@ -4817,6 +4865,11 @@ textarea.w-input, textarea.w-select {
   font-size: 20px;
   font-weight: 400;
   display: flex;
+}
+
+.add-foto:hover {
+  background-color: var(--blue-button);
+  color: var(--white);
 }
 
 .sezioneform {
@@ -4875,8 +4928,9 @@ textarea.w-input, textarea.w-select {
 .input-codicefiscale {
   width: 620px;
   height: 45px;
-  border-bottom: 2px solid var(--intestazioni);
+  border-bottom: 2px solid var(--underline);
   background-color: var(--sfondo);
+  color: var(--buttoncolor);
   font-size: 18px;
   font-weight: 400;
 }
@@ -4901,11 +4955,17 @@ textarea.w-input, textarea.w-select {
   display: flex;
 }
 
+.add-documenti:hover {
+  background-color: var(--blue-button);
+  color: var(--white);
+}
+
 .input-iban {
   width: 620px;
   height: 45px;
-  border-bottom: 2px solid var(--intestazioni);
+  border-bottom: 2px solid var(--underline);
   background-color: var(--sfondo);
+  color: var(--buttoncolor);
   font-size: 18px;
   font-weight: 400;
 }
@@ -4913,8 +4973,9 @@ textarea.w-input, textarea.w-select {
 .input-email, .input-numero {
   width: 300px;
   height: 45px;
-  border-bottom: 2px solid var(--intestazioni);
+  border-bottom: 2px solid var(--underline);
   background-color: var(--sfondo);
+  color: var(--buttoncolor);
   font-size: 18px;
   font-weight: 400;
 }
@@ -4934,6 +4995,11 @@ textarea.w-input, textarea.w-select {
   display: flex;
 }
 
+.addcertificazione:hover {
+  background-color: var(--blue-button);
+  color: var(--white);
+}
+
 .addcertificazione.centrato {
   align-self: center;
   margin-top: 45px;
@@ -4942,8 +5008,9 @@ textarea.w-input, textarea.w-select {
 .input-azienda {
   width: 620px;
   height: 45px;
-  border-bottom: 2px solid var(--intestazioni);
+  border-bottom: 2px solid var(--underline);
   background-color: var(--sfondo);
+  color: var(--buttoncolor);
   font-size: 18px;
   font-weight: 400;
 }
@@ -5124,6 +5191,144 @@ textarea.w-input, textarea.w-select {
   margin-top: 60px;
   display: grid;
   overflow: scroll;
+}
+
+.container-allpage {
+  width: 100vw;
+  height: 100vh;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.login-container {
+  width: 610px;
+  height: 660px;
+  border: 1.5px solid var(--underline);
+  flex-flow: column;
+  justify-content: flex-start;
+  align-self: auto;
+  align-items: center;
+  margin: 0 auto;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  display: flex;
+}
+
+.text-block-2 {
+  font-size: 42px;
+}
+
+.login-titolo {
+  margin-bottom: 20px;
+  font-size: 42px;
+  font-weight: 700;
+}
+
+.login-sottotitolo {
+  font-size: 18px;
+}
+
+.login-email {
+  width: 100%;
+  height: 45px;
+  border-bottom: 2px solid var(--underline);
+  background-color: var(--sfondo);
+  color: var(--buttoncolor);
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.login-input {
+  width: 75%;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.login-form {
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 0;
+  display: flex;
+}
+
+.login-sezioneform {
+  width: 100%;
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  flex-flow: column;
+  align-content: space-between;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  display: flex;
+}
+
+.login-form-container {
+  width: 100%;
+  margin-top: 60px;
+}
+
+.login-intestazioni {
+  color: #21272a;
+  align-self: flex-start;
+  margin-bottom: 10px;
+  font-size: 18px;
+  line-height: 110%;
+}
+
+.error {
+  color: red;
+  align-self: flex-start;
+  padding-left: 10px;
+}
+
+.error.smaller {
+  font-size: 16px;
+}
+
+.checkbox-field {
+  width: 75%;
+  grid-column-gap: 8px;
+  grid-row-gap: 8px;
+  justify-content: flex-start;
+  align-self: center;
+  align-items: center;
+  margin-left: 0;
+  padding-left: 20px;
+  display: flex;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.checkbox-label {
+  align-self: center;
+  margin-top: 5px;
+}
+
+.submit-button-2 {
+  width: 75%;
+  background-color: #0f62fe;
+  margin-top: 15px;
+  font-size: 16px;
+  transition: box-shadow .2s, transform .2s;
+}
+
+.submit-button-2:hover {
+  transform: scale(1.02);
+  box-shadow: 4px 3px 5px rgba(0, 0, 0, .2);
+}
+
+.select-field, .select-field-2 {
+  margin-top: 10px;
 }
 
 @media screen and (min-width: 1920px) {
