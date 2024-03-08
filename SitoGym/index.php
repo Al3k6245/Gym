@@ -8,6 +8,7 @@ if (!isset($_SESSION['Utenti'])) {
     unset($_SESSION['Utenti']);
 }
 
+    
 
 ?>
 
@@ -38,36 +39,27 @@ if (!isset($_SESSION['Utenti'])) {
             <div class="container-titolo">
                 <h1 class="h1">Dashboard</h1>
             </div>
-            <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a><a href="#Clienti" class="container-sezioni clienti w-button">Clienti</a><a href="#" class="container-sezioni allenatori w-button">Allenatori</a><a href="#" class="container-sezioni personale w-button">Personale</a>
-                <form action="/search" class="search allineato w-form"><input class="search-input w-input" maxlength="256" name="query" placeholder="Search…" type="search" id="Ricerca" required="" /><input type="submit" class="search-button w-button" value="Search" /></form>
+            <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
+            <a class="container-sezioni clienti w-button" onclick="AjaxChangeSection('Clienti')">Clienti</a>
+                    <a class="container-sezioni allenatori w-button" onclick="AjaxChangeSection('Allenatori')">Allenatori</a>
+                    <a href="#" class="container-sezioni personale w-button" onclick="AjaxChangeSection('Personale')">Personale</a>
+                <form action="/search" class="search allineato w-form"><input class="search-input w-input"
+                        maxlength="256" name="query" placeholder="Search…" type="search" id="Ricerca"
+                        required="" /><input type="submit" class="search-button w-button" value="Search" /></form>
             </div>
 
-            <section id="Clienti" class="sezione">
                 <! //PULSANTE CLIENTI ->
-                    <div class="tabella-preset intestazione">
-                        <div id="w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94" class="ordinamento"><a id="w-node-b93641eb-4e20-97e4-b67a-f8a3cfa75ef0-8abcad94" href="#" class="icon w-button">Button T\ext</a><a id="w-node-_8ff9f816-7a02-1223-d680-7b0a78005161-8abcad94" href="#" class="ordinamentoupdown w-button">Nome</a></div>
-                        <div id="w-node-f9085910-da57-6f33-8ef5-d7a036b922fd-8abcad94" class="tabella-intestazioni">Data di
-                            Prossimo Pagamento</div>
-                        <div id="w-node-_331035c0-2673-7786-554c-b0f5cbfe67ed-8abcad94" class="tabella-intestazioni">Stato
-                        </div>
-                        <div id="w-node-_331035c0-2673-7786-554c-b0f5cbfe67ed-8abcad94" class="tabella-intestazioni">Nascita
-                        </div>
-                        <div id="w-node-_77fa6106-1215-cab2-2c21-f097827640c5-8abcad94" class="tabella-intestazioni">
-                            Certificato Medico</div>
-                        <div id="w-node-_7c636b47-6c3b-9ba5-456d-9587c9010c02-8abcad94" class="tabella-intestazioni">
-                            <div id="w-node-f67c4198-9cf5-4fb6-08c0-04b32d7fe8f7-8abcad94" class="tabella-intestazioni">Azioni
-                            </div>
-                        </div>
+                    <div id="headerTable" class="tabella-preset intestazione">
+                        <?php changeSectionHeader('Clienti'); ?>
                     </div>
 
                     <div id="tabella-membri" class="tabella-preset tabella">
                         <!-- questa sezione viene riempita con php -->
                         <?php showMembers($conn); ?>
                     </div>
-            </section>
 
 
-
+                    <!--
             <section class="sezione" id="Allenatori">
                 <! //PULSANTE ALLENATORI->
                     <div class="tabella-preset intestazione">
@@ -98,18 +90,13 @@ if (!isset($_SESSION['Utenti'])) {
                                             <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon userdescrizioni w-button">Button Text</a><a href="#" class="icon useremail w-button">Button Text</a><a href="#" class="icon userremove w-button">Button Text</a></div>
                     </div>
             </section>
+    -->
 
-
-
+ <!--
             <section class="sezione" id="Tecnici">
                 <! //PULSANTE TECNICI->
                     <div class="tabella-preset intestazione">
-                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186756-8abcad94" class="ordinamento"><a id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186757-8abcad94" href="#" class="icon w-button">Button T\ext</a><a id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186759-8abcad94" href="#" class="ordinamentoupdown w-button">Nome</a></div>
-                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675b-8abcad94" class="tabella-intestazioni"></div>
-                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675d-8abcad94" class="tabella-intestazioni"></div>
-                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18675f-8abcad94" class="tabella-intestazioni"></div>
-                        <div id="w-node-_35828d87-f20d-a151-91a1-b8bd56674064-8abcad94" class="tabella-intestazioni">Interventi</div>
-                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186763-8abcad94" class="tabella-intestazioni">Azioni</div>
+ 
                     </div>
                     <div class="tabella-preset tabella">
                         <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186766-8abcad94" class="badge">
@@ -129,13 +116,14 @@ if (!isset($_SESSION['Utenti'])) {
                                     <! //SOLITI BOTTONI->
                                         <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186782-8abcad94" class="action"><a data-w-id="ed621fd0-2ab0-9e83-5b52-f24c8a186783" href="#" class="icon userdescrizioni w-button">Button Text</a><a href="#" class="icon useremail w-button">Button Text</a><a href="#" class="icon userremove w-button">Button Text</a></div>
                     </div>
-            </section>
+            </section> -->
         </div>
 
 
     </section>
 
     <!-- //MOSTRA INTERVENTI-->
+    <!--
     <div class="hoversection big">
         <div class="hoversection-container"><a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
             <!--Descrizione Interventi-->
