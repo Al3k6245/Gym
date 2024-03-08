@@ -86,14 +86,13 @@ function showMembers($conn){
             <div class='badge'>
             <div class='immagineprofilo'></div>
             <div class='datipersonali'>
-                <div class='tabella-intestazioni cognomenome'>" .$row['nome']. "" .$row['cognome']. "</div>
+                <div class='tabella-intestazioni cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
                 <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
             </div>
         </div>
         <div  class='tabella-testo'>".$row['ScadenzaAbb']."</div>
         <div class='action'>
-        <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'>Button Text</a>
-        <a href='".$row['docIdentificativi']."'class='icon download w-button' download>Button Text</a>
+        <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'>Button Text</a>".loadDownloadButton($row['docIdentificativi'])."
         </div>
         <div class='tabella-testo'>".$row['DataN']."</div>
         <div class='action'>
@@ -135,32 +134,60 @@ function deleteMember($index, $conn){
         $key = $counter;
         $counter++;
     }
+
+    //eliminazione della cartella dell'utente all'interno della cartella /uploads/iscritto 
 }
 
 function addDocument($userType ,$index, $conn){
 
     if($_FILES['file']['error'] == 0){  //il file è stato caricato correttamente
 
-        $filePath = 'uploads/'.$_FILES['file']['name'];  //al momento salvo tutti i file nella cartella uploads ma ci sarà da creare le cartelle per utente
-        $table;
-
-        move_uploaded_file($_FILES['file']['tmp_name'], '../'.$filePath);
-
         switch($userType){
 
             case 0:
                 $table = 'iscritto';
+                $userTypeFolder = 'Iscritti';
                 break;
 
             case 1:
                 $table = 'allenatori';
+                $userTypeFolder = 'Allenatori';
                 break;
 
             case 2:
                 $table = 'tecnici';
+                $userTypeFolder = 'Tecnici';
                 break;
         }
+        
+        //-------------------    QUERY PER OTTENERE NOME E COGNOME UTENTE PER POTER SALVARE NELLA CARTELLA GIUSTA IL DOCUMENTO  -------------------------------------
+        $query = "SELECT nome, cognome FROM $table WHERE codF = ?";
+        
+        $stmt = $conn->prepare($query);
     
+        if ($stmt === false) {
+            //compare una finestra che dà errore
+            echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
+            exit;
+        }
+        
+        $stmt->bind_param("s", $_SESSION[$table][$index]);
+
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+
+        $row = $result->fetch_assoc();
+
+        $userFolderName = strtoupper($row['cognome'])."_".strtoupper($row['nome']); //PER ORA FACCIO FINTA CHE CI SIA GIA' LA CARTELLA MA VERREBBE CREATA QUANDO SI AGGIUNGE L'UTENTE
+
+        $filePath = "uploads/".$userTypeFolder."/".$userFolderName."/".$_FILES['file']['name'];
+         
+        $stmt->close();
+
+        move_uploaded_file($_FILES['file']['tmp_name'], '../'.$filePath);
+    
+        // ---------------------------- QUERY PER CARICARE IL PERCORSO DEL DOCUMENTO NEL DATABASE ----------------------------------------------
         $query = "UPDATE $table SET docIdentificativi = '$filePath' WHERE codF = ?";
         
         $stmt = $conn->prepare($query);
@@ -171,21 +198,13 @@ function addDocument($userType ,$index, $conn){
             exit;
         }
         
-        switch($userType){
-            case 0:  
-                $stmt->bind_param("s", $_SESSION['iscritto'][$index]);
-                break;
-            case 1:
-                $stmt->bind_param("s", $_SESSION['allenatori'][$index]);
-                break;
-            case 2:
-                $stmt->bind_param("s", $_SESSION['tecnici'][$index]);
-                break;
-        }
-        
+        $stmt->bind_param("s", $_SESSION[$table][$index]);
 
         $stmt->execute();
         $stmt->close();
+
+        //aggiungo il pulsante download se non è già stato caricato prima
+        
     }
    
 }
@@ -287,7 +306,7 @@ function displayTrainers($conn){
         </div>
     </div>
         <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars">'.loadStars($row['valutazione']).'</div>
-            <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a0a-8abcad94" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')">Button Text</a><a href="'.$row['docIdentificativi'].'" class="icon download w-button" download>Button Text</a></div>
+            <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')">Button Text</a>'.loadDownloadButton($row['docIdentificativi']).'</div>
             <! //TURNI->
                 <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="AddCertificato" href="#" class="icon turni w-button">Button Text</a><a href="#" class="icon addturni w-button">Button Text</a></div>
                 <! //STATO->
@@ -311,6 +330,13 @@ function loadStars($valutazione){
     }
 
     return $stars;
+}
+
+function loadDownloadButton($docPath){  //carica il pulsante download del file solamente se per lo specifico utente è stato caricato un documento
+    if($docPath != NULL)
+        return '<a href="'.$docPath.'" class="icon download w-button" download>Button Text</a>';
+
+    return "";
 }
 
 ?>
