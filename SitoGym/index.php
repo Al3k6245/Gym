@@ -1,11 +1,19 @@
 <?php
 require('php/gestioneSegreteria.php');
 
-
+/*
 if(!isset($_SESSION['iscritto'])){
     //conterrà i codici fiscali degli utenti
     $_SESSION['iscritto'] = "";
     unset($_SESSION['iscritto']);
+} */
+
+if(!isset($_SESSION['sezioneAttuale']))
+    $_SESSION['sezioneAttuale'] = 'Clienti';
+
+
+function writeSection(){
+    return "'".$_SESSION['sezioneAttuale']."'";
 }
     
 
@@ -23,7 +31,7 @@ if(!isset($_SESSION['iscritto'])){
     <script src="javascript/gestioneAjaxSegreteria.js"></script>
 </head>
 
-<body class="body" onload="changeSection('Clienti')">  
+<body class="body" onload="changeSection(<?php echo writeSection() ?>)">  
     <section id="Home" class="content">
         <div class="container-dashboard">
             <div class="container-titolo">
@@ -32,9 +40,9 @@ if(!isset($_SESSION['iscritto'])){
             <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
             <a class="container-sezioni clienti w-button" onclick="changeSection('Clienti')">Clienti</a>
                     <a class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori')">Allenatori</a>
-                <form action="/search" class="search allineato w-form"><input class="search-input w-input"
+                <div class="search allineato w-form"><input class="search-input w-input"
                         maxlength="256" name="query" placeholder="Search" type="search" id="Ricerca"
-                        required="" /><input type="submit" class="search-button w-button" value="Search" /></form>
+                        required="" onkeyup="AjaxResearch('Ricerca')"><input type="button" class="search-button w-button" value="Search"></div>
             </div>
 
                 <!-- //PULSANTE CLIENTI -->

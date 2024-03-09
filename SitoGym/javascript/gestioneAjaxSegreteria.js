@@ -118,6 +118,21 @@ function AjaxAddShift(trainerIndex){   //per mostrare l'hoversection di aggiunta
     xmlhttp.send();
 }
 
+function AjaxResearch(inputId){
+    let inputValue = document.getElementById(inputId).value;
+
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function(){   
+        if(this.readyState == 4 && this.status == 200){
+            document.getElementById("tabella-membri").innerHTML = this.responseText;
+        }
+    };
+
+    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=search&input=" + inputValue, true);
+    xmlhttp.send();
+}
+
 function addFile(userType, index) {
     // Crea un input di tipo file nascosto
     var input = document.createElement('input');

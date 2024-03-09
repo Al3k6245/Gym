@@ -36,12 +36,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                     
                     case 'Clienti':
                         showMembers($conn);
+                        $_SESSION['sezioneAttuale'] = 'Clienti';
                         break;
                         
                     case 'Allenatori':
                         displayTrainers($conn);
+                        $_SESSION['sezioneAttuale'] = 'Allenatori';
                         break;
                     }
+                
+
                 break;
             
             case 'viewShifts':
@@ -54,6 +58,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
             case 'addShift':
                 addShift($_GET['trainerIndex'], $conn);
+                break;
+
+            case 'search':
+                Research($_GET['input'], $conn);
                 break;
         }
     }
@@ -79,7 +87,7 @@ function showMembers($conn){
 
     $counter = 1;   //ai vari pulsanti assegno un numero come id in modo da sapere che riga l'utente sta andando a scegliere
 
-    $userType = 0;   //0 => Cliente   1 => Allenatore    2 => Personale
+    $userType = 0;   //0 => Cliente   1 => Allenatore    
 
     if($result){
         while($row = $result->fetch_assoc()){
@@ -388,6 +396,81 @@ function deleteShift($day, $trainerIndex, $conn){
 
 function displayAddShifts($trainerIndex, $conn){
 
+}
+
+function Research($input, $conn){
+
+    if($_SESSION['sezioneAttuale'] == 'Clienti')
+        $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail, docIdentificativi FROM iscritto WHERE nome LIKE ? OR cognome LIKE ?";
+    else
+        $query = "SELECT codF, nome, cognome, mail, docIdentificativi FROM allenatori WHERE nome LIKE ? OR cognome LIKE ?";
+
+    $bindParameter = $input.'%';
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ss", $bindParameter, $bindParameter);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $counter = 1;   //ai vari pulsanti assegno un numero come id in modo da sapere che riga l'utente sta andando a scegliere
+
+    $userType = 0;   //0 => Cliente   1 => Allenatore    
+
+    if($result){
+        while($row = $result->fetch_assoc()){
+
+            //-------------------------------------------------------------- RIGA ISCRITTO ----------------------------------------------------------------------
+        if($_SESSION['sezioneAttuale'] == 'Clienti'){
+                print "
+                <div class='badge'>
+                <div class='immagineprofilo'></div>
+                <div class='datipersonali'>
+                    <div class='tabella-intestazioni cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
+                    <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
+                </div>
+            </div>
+            <div  class='tabella-testo'>".$row['ScadenzaAbb']."</div>
+            <div class='action'>
+            <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'>Button Text</a>".loadDownloadButton($row['docIdentificativi'])."
+            </div>
+            <div class='tabella-testo'>".$row['DataN']."</div>
+            <div class='action'>
+            <a class='icon allerta w-button'>Button Text</a>
+            <a class='icon pericolo w-button'>Button Text</a>
+            </div>
+            <div class='action'>
+            <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(0,".$counter.")'>Button Text</a>
+            <a href='mailto:".$row['mail']."' class='icon useremail w-button'>Button Text</a>
+            <a id='$counter' class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'>Button Text</a>
+            </div>
+            ";
+                saveFiscalCodeOnSession($row['codF'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e     altre features
+            }
+            else{
+                print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
+                <div class="immagineprofilo"></div>
+                <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
+                    <div class="tabella-intestazioni cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
+                    <div class="tabella-intestazioni abbonamento">Trainer</div>
+                </div>
+            </div>
+                <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
+                    <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')">Button Text</    a>'.loadDownloadButton($row['docIdentificativi']).'</div>
+                        <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button"     onclick="AjaxViewTrainerShifts('.$counter.')">Button Text</a></div>
+                        <! //STATO->
+                            <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
+                            <! //SOLITI BOTTONI->
+                                <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#"  class="icon userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')">Button Text</a><a href="mailto:'.$row['mail'].'" class="icon useremail w-button">Button Text</a><a href="" class="icon userremove w-button">Button Text</a></div>';
+            
+                saveFiscalCodeOnSession($row['codF'], $counter, 'allenatori');
+            }
+            $counter++;
+        }
+    }
+
+    $stmt->close();
 }
 
 
