@@ -32,7 +32,6 @@ if(!isset($_SESSION['iscritto'])){
             <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
             <a class="container-sezioni clienti w-button" onclick="changeSection('Clienti')">Clienti</a>
                     <a class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori')">Allenatori</a>
-                    <a href="#" class="container-sezioni personale w-button" onclick="changeSection('Personale')">Personale</a>
                 <form action="/search" class="search allineato w-form"><input class="search-input w-input"
                         maxlength="256" name="query" placeholder="Search" type="search" id="Ricerca"
                         required="" /><input type="submit" class="search-button w-button" value="Search" /></form>

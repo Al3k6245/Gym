@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($conn)){
-    $conn = mysqli_connect('localhost','segreteria','password','gym');
+    $conn = mysqli_connect('localhost','root','','gym');
     
     if(!$conn){
         die("Connessione fallita: " . mysqli_connect_error());
@@ -40,10 +40,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                         
                     case 'Allenatori':
                         displayTrainers($conn);
-                        break;
-
-                    case 'Personale':
-                        displayTechnicals($conn);
                         break;
                     }
                 break;
@@ -161,11 +157,6 @@ function addDocument($userType ,$index, $conn){
                 $table = 'allenatori';
                 $userTypeFolder = 'Allenatori';
                 break;
-
-            case 2:
-                $table = 'tecnici';
-                $userTypeFolder = 'Tecnici';
-                break;
         }
         
         //-------------------    QUERY PER OTTENERE NOME E COGNOME UTENTE PER POTER SALVARE NELLA CARTELLA GIUSTA IL DOCUMENTO  -------------------------------------
@@ -227,9 +218,6 @@ function displayInfo($user, $index, $conn){
         case 1:
             $userTable = 'allenatori';
             break;
-        case 2:
-            $userTable = 'tecnici';
-            break;
     }
 
     $query = "SELECT nome, cognome, DataN, codF, mail, psw, imgProfilo FROM $userTable WHERE codF = ?";
@@ -274,7 +262,7 @@ function displayInfo($user, $index, $conn){
 }
 
 function displayTrainers($conn){
-    $query = "SELECT codF, nome, cognome, mail, docIdentificativi, valutazione FROM allenatori";
+    $query = "SELECT codF, nome, cognome, mail, docIdentificativi FROM allenatori";
     $stmt = $conn->prepare($query);
 
     $stmt->execute();
@@ -295,11 +283,11 @@ function displayTrainers($conn){
             <div class="tabella-intestazioni abbonamento">Trainer</div>
         </div>
     </div>
-        <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars">'.loadStars($row['valutazione']).'</div>
+        <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
             <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')">Button Text</a>'.loadDownloadButton($row['docIdentificativi']).'</div>
-                <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.$counter.')">Button Text</a><a href="#" class="icon addturni w-button">Button Text</a></div>
+                <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.$counter.')">Button Text</a></div>
                 <! //STATO->
-                    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"><a href="#" class="icon allerta w-button">Button Text</a><a href="#" class="icon pericolo w-button">Button Text</a></div>
+                    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
                     <! //SOLITI BOTTONI->
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')">Button Text</a><a href="mailto:'.$row['mail'].'" class="icon useremail w-button">Button Text</a><a href="" class="icon userremove w-button">Button Text</a></div>';
 
@@ -311,15 +299,6 @@ function displayTrainers($conn){
     $stmt->close();
 }
 
-function loadStars($valutazione){
-    $stars = '';
-
-    for($i=0;$i<$valutazione;$i++){
-        $stars = $stars.'<img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d02cb1d41240f646949d_star.png" loading="lazy" alt="" class="star">';
-    }
-
-    return $stars;
-}
 
 function loadDownloadButton($docPath){  //carica il pulsante download del file solamente se per lo specifico utente è stato caricato un documento
     if($docPath != NULL)
@@ -330,8 +309,8 @@ function loadDownloadButton($docPath){  //carica il pulsante download del file s
 
 function displayShifts($index, $conn){  //mostra i turni di lavoro
     $query = "SELECT nome, cognome, giornoSettimana, oraInizio, oraFine FROM allenatori
-              JOIN turno
-              WHERE codF = ?";
+              INNER JOIN turno ON turno.codF = allenatori.codF
+              WHERE allenatori.codF = ?";
 
     $stmt = $conn->prepare($query);
     
@@ -411,44 +390,5 @@ function displayAddShifts($trainerIndex, $conn){
 
 }
 
-function displayTechnicals($conn){
-    $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail, docIdentificativi FROM iscritto";
-
-    $stmt = $conn->prepare($query);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    $counter = 1;   //ai vari pulsanti assegno un numero come id in modo da sapere che riga l'utente sta andando a scegliere
-
-    $userType = 2;   //0 => Cliente   1 => Allenatore    2 => Personale
-
-    if($result){
-        while($row = $result->fetch_assoc()){
-
-            //-------------------------------------------------------------- RIGA TECNICO ----------------------------------------------------------------------
-
-            print  '<div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186766-8abcad94" class="badge">
-            <div class="immagineprofilo"></div>
-            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186768-8abcad94" class="datipersonali">
-                <div class="tabella-intestazioni cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
-                <div class="tabella-intestazioni abbonamento">Tecnogym</div>
-            </div>
-        </div> 
-
-            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a18676d-8abcad94" class="action"></div>
-            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186773-8abcad94" class="action"></div>
-            <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186778-8abcad94" class="action"></div>
-                    <div id="w-node-_111048e3-30a4-1baf-272f-ec6dc7bca0ea-8abcad94" class="action"><a id="Interventi" href="#" class="icon interventi w-button">Button Text</a></div>
-
-                        <div id="w-node-ed621fd0-2ab0-9e83-5b52-f24c8a186782-8abcad94" class="action"><a data-w-id="ed621fd0-2ab0-9e83-5b52-f24c8a186783" href="#" class="icon userdescrizioni w-button" AjaxViewDescription=('.$userType.','.$counter.')>Button Text</a><a href="mailto:'.$row['mail'].'" class="icon useremail w-button">Button Text</a><a href="#" class="icon userremove w-button">Button Text</a></div>';
-
-            saveFiscalCodeOnSession($row['codF'], $counter, 'tecnici');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e altre features
-            $counter++;
-        }
-    }
-
-    $stmt->close();
-}
 
 ?>

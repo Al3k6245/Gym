@@ -151,11 +151,7 @@ function addFile(userType, index) {
             break;
 
         case 'Allenatori':
-            columns = ['Nome','Valutazione','Certificato Medico','Turni','Stato','Azioni'];
-            break;
-
-        case 'Personale':
-            columns = ['Nome','','','','Interventi','Azioni'];
+            columns = ['Nome','','Certificato Medico','Turni','','Azioni'];
             break;
     }
     
