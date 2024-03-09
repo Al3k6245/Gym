@@ -59,7 +59,10 @@ if (!isset($_SESSION['Utenti'])) {
 
 
                     <div id="w-node-fc24f30d-1aec-d2a5-d3ff-2037b8c12f21-8abcad94" class="ordinamento"><a id="w-node-fc24f30d-1aec-d2a5-d3ff-2037b8c12f22-8abcad94" href="#" class="icon w-button">Button T\ext</a>
-                        <div id="w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94" class="ordinamentotype"><a href="#" class="ordinamentotypeoptions w-button">Nome</a><a href="#" class="ordinamentotypeoptions w-button">Cognome</a><a href="#" class="ordinamentotypeoptions w-button">Prossimo Pagamento</a></div>
+                        <div id="w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94" class="ordinamentotype">
+                            <a href="#" class="ordinamentotypeoptions w-button">Nome</a>
+                            <a href="#" class="ordinamentotypeoptions w-button">Cognome</a>
+                        </div>
                         <div class="tabella-intestazioni">Nome</div><a id="AddCertificato" href="#" class="icon down w-button">Button Text</a>
                     </div>
 
@@ -87,13 +90,13 @@ if (!isset($_SESSION['Utenti'])) {
                             <div id="w-node-_7a4c6629-342e-5245-d2aa-78ab28c0b1a4-8abcad94" class="ordinamentotype"><a href="#" class="ordinamentotypeoptions w-button">Nome</a><a href="#" class="ordinamentotypeoptions w-button">Cognome</a><a href="#" class="ordinamentotypeoptions w-button">Prossimo Pagamento</a></div>
                             <div class="tabella-intestazioni">Nome</div><a id="AddCertificato" href="#" class="icon down w-button">Button Text</a>
                         </div>
-                       
+
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f6-8abcad94" class="tabella-intestazioni">Valutazione</div>
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f8-8abcad94" class="tabella-intestazioni">Certificato Medico</div>
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fa-8abcad94" class="tabella-intestazioni">Turni</div>
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fc-8abcad94" class="tabella-intestazioni">Stato</div>
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39fe-8abcad94" class="tabella-intestazioni">Azioni</div>
-                       
+
                     </div>
                     <div class="tabella-preset tabella">
                         <!--
@@ -210,13 +213,15 @@ if (!isset($_SESSION['Utenti'])) {
     -->
 
     <!--MOSTRA TURNI-->
-    <!--
+
     <div class="hoversection">
         <div class="hoversection-container">
-            <div class="aggiungiturno"><a data-w-id="635d1423-b80a-96ca-e31e-cb140af1169a" href="#" class="icon exit w-button"></a>
+            <div class="aggiungiturno">
                 <div class="addturnoform w-form">
-                    <form id="email-form" name="email-form" data-name="Email Form" method="get" class="addturnoformcontainer" data-wf-page-id="65db228c551539358abcad94" data-wf-element-id="dae9bfdd-ed37-0bac-d5e4-b5ad2583b806" aria-label="Email Form">
-                        <div class="giorno"><label for="Giorno-della-Settimana" class="field-label">Giorno</label><select id="Giorno-della-Settimana" name="Giorno-della-Settimana" data-name="Giorno della Settimana" required="" class="select-giorno w-select">
+                    <div class="addturnoformcontainer">
+                        <div class="giorno">
+                            <label for="Giorno-della-Settimana" class="field-label">Giorno</label>
+                            <select id="Giorno-della-Settimana" name="Giorno-della-Settimana" data-name="Giorno della Settimana" required class="select-giorno w-select">
                                 <option value="Lunedì">Lunedì</option>
                                 <option value="Martedì">Martedì</option>
                                 <option value="Mercoledì">Mercoledì</option>
@@ -224,17 +229,22 @@ if (!isset($_SESSION['Utenti'])) {
                                 <option value="Venerdì">Venerdì</option>
                                 <option value="Sabato">Sabato</option>
                                 <option value="Domenica">Domenica</option>
-                            </select></div>
-                        <div class="orario"><label for="Orario" class="field-label-2">Orario</label><select id="Orario" name="Orario" data-name="Orario" required="" class="select-orario w-select">
+                            </select>
+                        </div>
+                        <div class="orario">
+                            <label for="Orario" class="field-label-2">Orario</label>
+                            <select id="Orario" name="Orario" data-name="Orario" required class="select-orario w-select">
                                 <option value="7:00 - 12:00">7:00 - 12:00</option>
                                 <option value="12:00 - 17:00">12:00 - 17:00</option>
                                 <option value="17:00 - 22:00">17:00 - 22:00</option>
-                            </select></div><input type="submit" data-wait="Please wait..." class="aggiungiturnoformsubmit w-button" value="Aggiungi">
-                    </form>
-                    <div class="w-form-done" tabindex="-1" role="region" aria-label="Email Form success"></div>
-                    <div class="w-form-fail" tabindex="-1" role="region" aria-label="Email Form failure"></div>
+                            </select>
+                        </div>
+                        <input type="submit" class="aggiungiturnoformsubmit w-button" value="Aggiungi">
+                    </div>
+
                 </div>
-            </div><a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
+            </div>
+            <a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button"></a>
             <div class="name intesta">Turni di </div>
             <div class="name tecnico">Serpelloni Leonardo</div>
             <div class="tabella-interventi">
@@ -246,10 +256,10 @@ if (!isset($_SESSION['Utenti'])) {
                     <div id="w-node-_2d0bdefd-89a6-a043-2285-ceab9d119dfa-8abcad94" class="tabella-testo">Lunedì</div>
                     <div id="w-node-fad7ae6d-ec01-1eb5-5327-b54c141faa3b-8abcad94" class="tabella-testo">8:00 - 12:00</div><a id="w-node-_964ec2b4-ac3a-134a-2e87-78228df2a022-8abcad94" href="#" class="icon deleteturno w-button"></a>
                 </div>
-            </div><a href="#" class="addturno w-button">Aggiungi Turno</a>
+            </div>
         </div>
     </div>
-    -->
+
 
     <div style="display:none" class="menu-descrizioni">
         <div class="descrizione">Home</div>
