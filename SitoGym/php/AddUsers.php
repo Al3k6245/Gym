@@ -224,13 +224,13 @@ require "gestioneAddUsers.php";
             <div class="form-add">
                 <div class="immagineprofilo-content">
                     <div>
-                        <div class="text-block">Immagine Profilo</div><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65eabfc4fd62d9c933b1311c_cbum%20temp.webp" loading="lazy" alt="" class="immagineprofilo big">
+                        <div class="text-block">Immagine Profilo</div><img src="myw3schoolsimage.jpg" loading="lazy" alt="" class="immagineprofilo big">
                     </div>
-                    <div class="div-block-8"><a href="#" class="add-foto w-button">+ &nbsp;&nbsp;Foto</a></div>
+                    <div class="div-block-8"><a href="#" class="add-foto w-button" onclick="AddFile('imgProfilo', true)">+ &nbsp;&nbsp;Foto</a></div>
                 </div><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65dd97675fe879d00396195d_Vectors-Wrapper.svg" loading="lazy" width="700" height="100" alt="" class="vectors-wrapper-10">
                 <div class="form-block-2 w-form">
-                    <form id="email-form" name="email-form" data-name="Email Form" method="get" class="form-container" data-wf-page-id="65e6e5aa5619ced63ab2bb7d" data-wf-element-id="14554ff0-479b-3e98-6316-b8a69d741743" aria-label="Email Form">
-                        <div class="text-block-form">Tipo di Utenza</div><select id="Type" name="Type" data-name="Type" class="w-select" onchange="changeUserType()">
+                    <form id="email-form" name="email-form" data-name="Email Form" method="post" enctype="multipart/form-data" action="elaborationAddedUser.php" class="form-container" data-wf-page-id="65e6e5aa5619ced63ab2bb7d" data-wf-element-id="14554ff0-479b-3e98-6316-b8a69d741743" aria-label="Email Form">
+                        <div class="text-block-form">Tipo di Utenza</div><select id="Type" name="Type" data-name="Type" class="w-select" onchange="ChangeUserType()">
                             <option value="Cliente">Cliente</option>
                             <option value="Allenatore">Allenatore</option>
                             <option value="Tecnico">Tecnico</option>
@@ -238,38 +238,51 @@ require "gestioneAddUsers.php";
                         <div class="text-block-form">Dati Personali</div>
                         <div class="sezioneform">
                             <div class="input">
-                                <div class="intestazione-form">Nome</div><input class="input-nomecognome w-input" maxlength="256" name="Nome" data-name="Nome" placeholder="" type="text" id="Nome" required="">
+                                <div class="intestazione-form">Nome</div><input class="input-nomecognome w-input" maxlength="256" name="Nome" data-name="Nome" placeholder="" type="text" id="Nome" required="" onkeyup="AjaxCompilationFormError(this, 'nomeError')">
+                                <div class="error smaller" id="nomeError"></div>
                             </div>
                             <div class="input">
-                                <div class="intestazione-form">Cognome</div><input class="input-nomecognome w-input" maxlength="256" name="Nome-2" data-name="Nome 2" placeholder="" type="text" id="Nome-2" required="">
+                                <div class="intestazione-form">Cognome</div><input class="input-nomecognome w-input" maxlength="256" name="Cognome" data-name="Nome 2" placeholder="" type="text" id="Cognome" required="" onkeyup="AjaxCompilationFormError(this, 'cognomeError')">
+                                <div class="error smaller" id="cognomeError"></div>
                             </div>
                         </div>
                         <div class="sezioneform">
                             <div class="input">
-                                <div class="intestazione-form">Codice Fiscale</div><input class="input-codicefiscale w-input" maxlength="256" name="Nome-3" data-name="Nome 3" placeholder="" type="text" id="Nome-3" required="">
+                                <div class="intestazione-form">Codice Fiscale</div><input class="input-codicefiscale w-input" minlength="16" maxlength="16" name="CodiceFiscale" data-name="Nome 3" placeholder="" type="text" id="CodiceFiscale" required="" onkeyup="ToUpper(this)">
+                                <div class="error smaller" id="codiceFiscaleError"></div>
                             </div>
                         </div>
                         <div class="text-block-form">Dati di Contatto</div>
                         <div class="sezioneform">
                             <div class="input">
-                                <div class="intestazione-form">Numero di Telefono</div><input class="input-numero w-input" maxlength="256" name="Nome-4" data-name="Nome 4" placeholder="" type="tel" id="Nome-4" required="">
+                                <div class="intestazione-form">Numero di Telefono</div><input class="input-numero w-input" minlength="10" maxlength="10" name="NumeroTel" data-name="Nome 4" placeholder="" type="tel" id="NumeroTel" required="" onkeyup="AjaxCompilationFormError(this, 'telefonoError')">
+                                <div class="error smaller" id="telefonoError"></div>
                             </div>
                             <div class="input">
-                                <div class="intestazione-form">E-Mail</div><input class="input-email w-input" maxlength="256" name="Nome-2" data-name="Nome 2" placeholder="" type="email" id="Nome-2" required="">
+                                <div class="intestazione-form">E-Mail</div><input class="input-email w-input"  maxlength="256" name="Mail" data-name="Nome 2" placeholder="" type="email" id="Mail" required="" onchange="AjaxCompilationFormError(this, 'mailError')">
+                                <div class="error smaller" id="mailError"></div>
                             </div>
                         </div>
-                        <div class="text-block-form">Documenti Identificativi</div><a href="#" class="add-documenti w-button">+ Documenti</a>
+                        <div class="text-block-form">Documenti Identificativi</div><a href="#" class="add-documenti w-button" onclick="AddFileToTemp('docIdentificativo', true)">+ Documenti</a>
                         <div id="metodoPagamento"> 
                         <div class="text-block-form">Metodo di Pagamento</div>
                         <div class="sezioneform">
                             <div class="input">
-                                <div class="intestazione-form">Coordinate Bancarie</div><input class="input-iban w-input" maxlength="256" name="Nome-3" data-name="Nome 3" placeholder="IBAN" type="text" id="Nome-3" required="">
+                                <div class="intestazione-form">Coordinate Bancarie</div><input class="input-iban w-input" minlength="27" maxlength="27" name="Iban" data-name="Nome 3" placeholder="IBAN" type="text" id="Nome-3" required="" onkeyup="ToUpper(this)">
                             </div>
+                        </div>     
+                        <div class="text-block-form">Tipo di Abbonamento</div><select id="AbbonamentoType" name="AbbonamentoType" data-name="AbbonamentoType" class="select-field w-select">
+                            <option value="Silver">Silver</option>
+                            <option value="Gold">Gold</option>
+                            <option value="Platinum">Platinum</option>
+                        </select>                   
                         </div>
-                        </div>
-                        <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button">+ Certificazione</a>
+
+                        
+
+                        <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button" onclick="AddFileToTemp('certificatoMedico', true)">+ Certificazione</a>
                         <div id="Azienda">
-                            <!-- SEZIONE PER METTERE L'AZIENDA PARTNER (TECNICO) -------------------------->
+                            <!----------------------------- SEZIONE PER METTERE L'AZIENDA PARTNER (TECNICO) -------------------------->
                         </div>
                         <input type="submit" data-wait="Please wait..." class="addcertificazione centrato w-button" value="Aggiungi Utente">
                     </form>
