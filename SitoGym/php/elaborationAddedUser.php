@@ -1,21 +1,69 @@
 <?php
 session_start();
+/*
+$data_stringa = getDataDiNascita("SCHLSN05B41L840W");
+$timestamp = strtotime($data_stringa);
+$data_convertita = DateTime::createFromFormat('Y-m-d', $timestamp);
+
+$nuova_data = date_add($data_convertita, new DateInterval('P1M'));
+
+echo "Data prima: ".$data_convertita;
+echo "----------- Data dopo 1 mese: ".$nuova_data;
+*/
+//echo date_add(getDataDiNascita("SCHLSN05B41L840W"), new DateInterval('P1M'));
+
 
 if(isset($_POST['Nome']) && isset($_POST['Cognome']) /* etc...*/){
+    $nome = $_POST['Nome'];
+    $cognome = $_POST['Cognome'];
+    $codiceFiscale = $_POST['CodiceFiscale'];
+    $numeroTelefono = $_POST['NumeroTel'];
+    $mail = $_POST['Mail'];
+    $iban = $_POST['Iban'];
+
+    $imgProfilo = NULL;
+    $docIdentificativo = NULL;
+    $certificazione = NULL;
 
     switch($_POST['Type']){
 
         case 'Cliente':
-            $tipoUtente = 'Iscritti';
+            createFolder('Iscritti', $_POST['Nome'], $_POST['Cognome']);
+            mvFileFromTempToUserFolder($_POST['Nome'], $_POST['Cognome'], 'Cliente');        
+
+            if(isset($_SESSION['documenti']['imgProfilo']))
+                $imgProfilo = '../uploads/Iscritti/'.strtoupper($cognome)."_".strtoupper($nome).'/'.$_SESSION['documenti']['imgProfilo']; //session contiene nome file
+            
+            if(isset($_SESSION['documenti']['docIdentificativo']))
+                $docIdentificativo = '../uploads/Iscritti/'.strtoupper($cognome)."_".strtoupper($nome).'/'.$_SESSION['documenti']['docIdentificativo'];
+
+            $abbonamento = $_POST['AbbonamentoType'];
+
+            insertIscrittoIntoDb($nome, $cognome, getDataDiNascita($codiceFiscale), $codiceFiscale, $numeroTelefono, $mail, $imgProfilo, $docIdentificativo, $abbonamento, $iban);
             break;
 
         case 'Allenatore':
-            $tipoUtente = 'Allenatori';
+            createFolder('Allenatori', $_POST['Nome'], $_POST['Cognome']);
+            mvFileFromTempToUserFolder($_POST['Nome'], $_POST['Cognome'], 'Allenatore');
+
+            if(isset($_SESSION['documenti']['imgProfilo']))
+                $imgProfilo = '../uploads/Allenatori/'.strtoupper($cognome)."_".strtoupper($nome).'/'.$_SESSION['documenti']['imgProfilo']; //session contiene nome file
+            
+            if(isset($_SESSION['documenti']['docIdentificativo']))
+                $docIdentificativo = '../uploads/Allenatori/'.strtoupper($cognome)."_".strtoupper($nome).'/'.$_SESSION['documenti']['docIdentificativo'];
+
+            if(isset($_SESSION['documenti']['certificazione']))
+                $certificazione = '../uploads/Allenatori/'.strtoupper($cognome)."_".strtoupper($nome).'/'.$_SESSION['documenti']['certificazione'];
+            
+            insertAllenatoreIntoDb($nome, $cognome, getDataDiNascita($codiceFiscale), $codiceFiscale, $numeroTelefono, $mail, $imgProfilo, $docIdentificativo, $certificazione, $iban);
             break;
     }
 
-    createFolder($tipoUtente, $_POST['Nome'], $_POST['Cognome']);
-    mvFileFromTempToUserFolder($_POST['Nome'], $_POST['Cognome'], $_POST['Type']);
+    foreach($_SESSION['documenti'] as $type => $nomeDoc){   //vado a liberare la sessione in modo che le prossime volte non mi prenda i file sbagliati
+        unset($_SESSION['documenti'][$type]);  
+    }
+
+    header('Location: ../index.php');
 }
 
 
@@ -48,9 +96,8 @@ function mvFileFromTempToUserFolder($nome, $cognome, $userType){
     $filePath = "uploads/";
 
     foreach($_SESSION['documenti'] as $type => $nomeDoc){
-        move_uploaded_file('../temp/'.$nomeDoc, '../uploads/'.$nomeDoc);  //capire perchè non mi sposta il documento nella cartella
+        rename('../temp/'.$nomeDoc, '../uploads/'.$userTypeFolder.'/'.$userFolderName.'/'.$nomeDoc);  
     }
-    
     
 }
 
@@ -92,10 +139,48 @@ function getDataDiNascita($codiceFiscale) {
   
     // Restituisco la data di nascita
     return "$anno-$mesi[$mese]-$giorno";
-  }
-  
-function insertIscrittoIntoDb($nome, $cognome, $dataN, $codF, $numTel, $mail, $pathDocIdentificativo, $pathCertificatoMedico, $tipoAbbonamento){
+}
 
+
+function insertIscrittoIntoDb($nome, $cognome, $dataN, $codF, $numTel, $mail, $pathImgProfilo, $pathDocIdentificativo, $tipoAbbonamento, $iban){
+    $conn = mysqli_connect('localhost','root','','gym');
+
+    $query = "INSERT INTO iscritto (codF, nome, cognome, dataN, numTel, imgProfilo, mail, docIdentificativi, tipoAbbonamento, ScadenzaAbb, IBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_DATE(), INTERVAL 1 MONTH), ?)";
+
+    $stmt = $conn->prepare($query);
+          
+    if ($stmt === false) {
+        //compare una finestra che dà errore
+        echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
+        exit;
+    }
+    
+    $stmt->bind_param("ssssssssss", $codF, $nome, $cognome, $dataN, $numTel, $pathImgProfilo, $mail, $pathDocIdentificativo, $tipoAbbonamento, $iban);
+
+    $stmt->execute();
+    $stmt->close();
+    
+    //$query = "INSERT INTO allenatori (codF, nome, cognome, dataN, numTel, imgProfilo, mail, docIdentificativi) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+}
+
+function insertAllenatoreIntoDb($nome, $cognome, $dataN, $codF, $numTel, $mail, $pathImgProfilo, $pathDocIdentificativo, $certificazione, $iban){
+    $conn = mysqli_connect('localhost','root','','gym');
+
+    $query = "INSERT INTO allenatori (codF, nome, cognome, dataN, numTel, imgProfilo, mail, docIdentificativi, attCertificazione, IBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($query);
+          
+    if ($stmt === false) {
+        //compare una finestra che dà errore
+        echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
+        exit;
+    }
+    
+    $stmt->bind_param("ssssssssss", $codF, $nome, $cognome, $dataN, $numTel, $pathImgProfilo, $mail, $pathDocIdentificativo, $certificazione, $iban);
+
+    $stmt->execute();
+    $stmt->close();
+    
 }
   
 

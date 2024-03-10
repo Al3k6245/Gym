@@ -224,9 +224,10 @@ require "gestioneAddUsers.php";
             <div class="form-add">
                 <div class="immagineprofilo-content">
                     <div>
-                        <div class="text-block">Immagine Profilo</div><img src="myw3schoolsimage.jpg" loading="lazy" alt="" class="immagineprofilo big">
+                        <div class="text-block">Immagine Profilo</div>
+                        <img src="myw3schoolsimage.jpg" loading="lazy" alt="" id="imgProfilo" class="immagineprofilo big">
                     </div>
-                    <div class="div-block-8"><a href="#" class="add-foto w-button" onclick="AddFile('imgProfilo', true)">+ &nbsp;&nbsp;Foto</a></div>
+                    <div class="div-block-8"><a href="#" class="add-foto w-button" onclick="AddFileToTemp('imgProfilo', true)">+ &nbsp;&nbsp;Foto</a></div>
                 </div><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65dd97675fe879d00396195d_Vectors-Wrapper.svg" loading="lazy" width="700" height="100" alt="" class="vectors-wrapper-10">
                 <div class="form-block-2 w-form">
                     <form id="email-form" name="email-form" data-name="Email Form" method="post" enctype="multipart/form-data" action="elaborationAddedUser.php" class="form-container" data-wf-page-id="65e6e5aa5619ced63ab2bb7d" data-wf-element-id="14554ff0-479b-3e98-6316-b8a69d741743" aria-label="Email Form">
@@ -247,7 +248,7 @@ require "gestioneAddUsers.php";
                         </div>
                         <div class="sezioneform">
                             <div class="input">
-                                <div class="intestazione-form">Codice Fiscale</div><input class="input-codicefiscale w-input" minlength="16" maxlength="16" name="CodiceFiscale" data-name="Nome 3" placeholder="" type="text" id="CodiceFiscale" required="" onkeyup="ToUpper(this)">
+                                <div class="intestazione-form">Codice Fiscale</div><input class="input-codicefiscale w-input" minlength="16" maxlength="16" name="CodiceFiscale" data-name="Nome 3" placeholder="" type="text" id="CodiceFiscale" required="" onkeyup="ToUpper(this)" onchange="AjaxCompilationFormError(this, 'codiceFiscaleError')">
                                 <div class="error smaller" id="codiceFiscaleError"></div>
                             </div>
                         </div>
@@ -269,18 +270,24 @@ require "gestioneAddUsers.php";
                             <div class="input">
                                 <div class="intestazione-form">Coordinate Bancarie</div><input class="input-iban w-input" minlength="27" maxlength="27" name="Iban" data-name="Nome 3" placeholder="IBAN" type="text" id="Nome-3" required="" onkeyup="ToUpper(this)">
                             </div>
-                        </div>     
-                        <div class="text-block-form">Tipo di Abbonamento</div><select id="AbbonamentoType" name="AbbonamentoType" data-name="AbbonamentoType" class="select-field w-select">
-                            <option value="Silver">Silver</option>
-                            <option value="Gold">Gold</option>
-                            <option value="Platinum">Platinum</option>
-                        </select>                   
+                        </div>                
                         </div>
 
+                        <div id="abbonamento">
+                            <div class="text-block-form">Tipo di Abbonamento</div><select id="AbbonamentoType" name="AbbonamentoType" data-name="AbbonamentoType" class="select-field w-select">
+                                <option value="Basic">Basic</option>
+                                <option value="Silver">Silver</option>
+                                <option value="Gold">Gold</option>
+                                <option value="Platinum">Platinum</option>
+                            </select> 
+                        </div>
                         
-
-                        <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button" onclick="AddFileToTemp('certificatoMedico', true)">+ Certificazione</a>
+                        <div id="certificazione">
+                            <!-- <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button" onclick="AddFileToTemp('certificazione', true)">+ Certificazione</a> -->
+                        </div> 
+                        
                         <input type="submit" data-wait="Please wait..." class="addcertificazione centrato w-button" value="Aggiungi Utente">
+                        
                     </form>
                 </div>
             </div>

@@ -75,7 +75,7 @@ if(!isset($_SESSION['iscritto'])){
                        
                     </div>
                     <div class="tabella-preset tabella">
-                        <!--
+                       
                         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
                             <div class="immagineprofilo"></div>
                             <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
@@ -96,7 +96,7 @@ if(!isset($_SESSION['iscritto'])){
                             -->
                     </div>
             </section>
-    -->
+
 
  <!--
             <section class="sezione" id="Tecnici">

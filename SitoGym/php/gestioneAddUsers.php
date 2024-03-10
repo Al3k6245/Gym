@@ -9,6 +9,10 @@ if(!isset($conn)){
     }
 }
 
+if(!isset($_SESSION['errori'])){   //questa variabile di sessione serve per vedere se ci sono errori DURANTE la compilazione del form
+    $_SESSION['errori'] = 0;
+}
+
 //----------------------------------------------------------------- GESTIONE RICHIESTE AJAX -----------------------------------------------------------------------------
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -23,7 +27,16 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         switch($_GET['azione']){
 
             case 'displayError':
-                echo CheckErrors($_GET['field'], $_GET['fieldValue']);
+
+                if($_GET['isValid'] == 'false'){
+                    echo "Campo non valido";
+                }
+                else{
+                    echo "";
+                }
+                
+                echo $_SESSION['errori'];
+                
                 break;
         }
     }
@@ -36,28 +49,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 function SaveDocumentTemp($file, $type){
     $_SESSION['documenti'][$type] = $file['name'];   //devo salvare anche nella cartella temp nel server se no poi quando compilo il form non ce l'ho più
     move_uploaded_file($file['tmp_name'], '../temp/'.$file['name']);
-}
-
-function CheckErrors($fieldName, $fieldValue){
-
-    if($fieldName == "Nome" || $fieldName == "Cognome"){
-        if(ctype_alpha($fieldValue) || empty($fieldValue))
-            return "";
-
-        return "Campo non valido";
-    }
-    else if($fieldName == "NumeroTel" ){
-        if(ctype_digit($fieldValue) || empty($fieldValue))
-            return "";
-
-        return "Campo non valido";
-    }
-    else if($fieldName = "Mail"){
-        if(strpos($fieldValue, "@") || empty($fieldValue))  //funzione che restituisce true o false in base all'esistenza del carattere specificato come secondo parametro nella stringa
-            return "";
-
-        return "Campo non valido";
-    }   
 }
 
 ?>
