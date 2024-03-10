@@ -96,7 +96,7 @@ function showMembers($conn){
 
             print "
             <div class='badge'>
-            <div class='immagineprofilo'></div>
+            <img src='"."'  alt='ImmagineProfilo' class='immagineprofilo'>
             <div class='datipersonali'>
                 <div class='tabella-intestazioni cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
                 <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
