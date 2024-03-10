@@ -47,7 +47,7 @@ function mvFileFromTempToUserFolder($nome, $cognome, $userType){
     
     $filePath = "uploads/";
 
-    foreach($_SESSION['documenti'] as $type => $nomeDoc){
+    foreach($_SESSION['documenti'] as $type => $nomeDoc){  
         rename('../temp/'.$nomeDoc, '../uploads/'.$userTypeFolder.'/'.$userFolderName.'/'.$nomeDoc);  //capire perchè non mi sposta il documento nella cartella
     }
     
