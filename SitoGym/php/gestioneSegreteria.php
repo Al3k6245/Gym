@@ -433,17 +433,17 @@ function Research($input, $conn){
             </div>
             <div  class='tabella-testo'>".$row['ScadenzaAbb']."</div>
             <div class='action'>
-            <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'>Button Text</a>".loadDownloadButton($row['docIdentificativi'])."
+            <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'></a>".loadDownloadButton($row['docIdentificativi'])."
             </div>
             <div class='tabella-testo'>".$row['DataN']."</div>
             <div class='action'>
-            <a class='icon allerta w-button'>Button Text</a>
-            <a class='icon pericolo w-button'>Button Text</a>
+            <a class='icon allerta w-button'></a>
+            <a class='icon pericolo w-button'></a>
             </div>
             <div class='action'>
-            <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(0,".$counter.")'>Button Text</a>
-            <a href='mailto:".$row['mail']."' class='icon useremail w-button'>Button Text</a>
-            <a id='$counter' class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'>Button Text</a>
+            <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(0,".$counter.")'></a>
+            <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
+            <a id='$counter' class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'></a>
             </div>
             ";
                 saveFiscalCodeOnSession($row['codF'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e     altre features
@@ -457,12 +457,12 @@ function Research($input, $conn){
                 </div>
             </div>
                 <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
-                    <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')">Button Text</    a>'.loadDownloadButton($row['docIdentificativi']).'</div>
-                        <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button"     onclick="AjaxViewTrainerShifts('.$counter.')">Button Text</a></div>
+                    <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')"></a>'.loadDownloadButton($row['docIdentificativi']).'</div>
+                        <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button"     onclick="AjaxViewTrainerShifts('.$counter.')"></a></div>
                         <! //STATO->
                             <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
                             <! //SOLITI BOTTONI->
-                                <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#"  class="icon userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')">Button Text</a><a href="mailto:'.$row['mail'].'" class="icon useremail w-button">Button Text</a><a href="" class="icon userremove w-button">Button Text</a></div>';
+                                <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#"  class="icon userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a><a href="mailto:'.$row['mail'].'" class="icon useremail w-button"></a><a href="" class="icon userremove w-button"></a></div>';
             
                 saveFiscalCodeOnSession($row['codF'], $counter, 'allenatori');
             }
