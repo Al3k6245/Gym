@@ -2,18 +2,18 @@ function ChangeUserType(){
     let userSelection = document.getElementById("Type").value;
 
     let sezioneAbbonamento = document.getElementById("abbonamento");
-    let sezioneCertificazione = document.getElementById("certificazione");
+    let sezioneCertificazione = document.getElementById("certificazionediv");
     
     switch(userSelection){
 
         case "Cliente":
-            sezioneAbbonamento.innerHTML = '<div class="text-block-form">Tipo di Abbonamento</div><select id="AbbonamentoType" name="AbbonamentoType" data-name="AbbonamentoType" class="select-field w-select"><option value="Silver">Silver</option><option value="Gold">Gold</option><option value="Platinum">Platinum</option></select>';
+            sezioneAbbonamento.innerHTML = '<div class="text-block-form">Tipo di Abbonamento</div><select id="AbbonamentoType" name="AbbonamentoType" data-name="AbbonamentoType" class="select-field w-select"><option value="Basic">Basic</option><option value="Silver">Silver</option><option value="Gold">Gold</option><option value="Platinum">Platinum</option></select>';
             sezioneCertificazione.innerHTML = "";
             break;
 
         case "Allenatore":
             sezioneAbbonamento.innerHTML = "";
-            sezioneCertificazione.innerHTML = '<div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button" onclick=AddFileToTemp("certificazione", true)>+ Certificazione</a> ';
+            sezioneCertificazione.innerHTML = '<div class="text-block-form">Certificazione</div><a href="#" id="certificazione" class="addcertificazione w-button" onclick=AddFileToTemp("certificazione",true)>+ Certificazione</a> ';
             break;
     }
     
@@ -28,7 +28,6 @@ function AddFileToTemp(type) {
     input.name = 'images';
     input.id = 'file';
     input.style.display = 'none';
-
     
     document.body.appendChild(input);
 
@@ -47,6 +46,8 @@ function AddFileToTemp(type) {
 
         AjaxAddDocument(type);
 
+        if(type =!'imgProfilo')
+            document.getElementById(type).className = "add-documenti inserito w-button";
         //Rimuovi l'input dopo aver letto il file
         document.body.removeChild(input); 
     });
@@ -115,7 +116,7 @@ function AjaxCompilationFormError(field, errorField){  //field serve per sapere 
         }
     };
 
-    xmlhttp.open("GET", "gestioneAddUsers.php?azione=displayError&isValid=" + isValid, true);
+    xmlhttp.open("GET", "gestioneAddUsers.php?azione=displayError&isValid=" + isValid + "&field=" + field.id, true);
     xmlhttp.send();
 }
 

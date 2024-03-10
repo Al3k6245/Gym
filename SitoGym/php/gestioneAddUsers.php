@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($conn)){
-    $conn = mysqli_connect('localhost','segreteria','password','gym');
+    $conn = mysqli_connect('localhost','root','','gym');
     
     if(!$conn){
         die("Connessione fallita: " . mysqli_connect_error());
@@ -34,8 +34,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 else{
                     echo "";
                 }
-                
-                echo $_SESSION['errori'];
                 
                 break;
         }

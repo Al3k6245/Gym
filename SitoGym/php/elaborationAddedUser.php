@@ -1,17 +1,8 @@
 <?php
 session_start();
-/*
-$data_stringa = getDataDiNascita("SCHLSN05B41L840W");
-$timestamp = strtotime($data_stringa);
-$data_convertita = DateTime::createFromFormat('Y-m-d', $timestamp);
 
-$nuova_data = date_add($data_convertita, new DateInterval('P1M'));
 
-echo "Data prima: ".$data_convertita;
-echo "----------- Data dopo 1 mese: ".$nuova_data;
-*/
-//echo date_add(getDataDiNascita("SCHLSN05B41L840W"), new DateInterval('P1M'));
-
+//da fare i controlli per confermare la validità del nome ecc...
 
 if(isset($_POST['Nome']) && isset($_POST['Cognome']) /* etc...*/){
     $nome = $_POST['Nome'];
@@ -20,10 +11,13 @@ if(isset($_POST['Nome']) && isset($_POST['Cognome']) /* etc...*/){
     $numeroTelefono = $_POST['NumeroTel'];
     $mail = $_POST['Mail'];
     $iban = $_POST['Iban'];
+    $dataNascita = getDataDiNascita($codiceFiscale);
 
     $imgProfilo = NULL;
     $docIdentificativo = NULL;
     $certificazione = NULL;
+
+    $password = generaPassword();
 
     switch($_POST['Type']){
 
@@ -39,7 +33,11 @@ if(isset($_POST['Nome']) && isset($_POST['Cognome']) /* etc...*/){
 
             $abbonamento = $_POST['AbbonamentoType'];
 
-            insertIscrittoIntoDb($nome, $cognome, getDataDiNascita($codiceFiscale), $codiceFiscale, $numeroTelefono, $mail, $imgProfilo, $docIdentificativo, $abbonamento, $iban);
+            $username = "c".strtolower($cognome).strtolower($nome).substr($dataNascita,0,2).substr($dataNascita,3,2);  //substr 2,4 sono le ultime due cifre dell'anno, mentre 5,7 è il mese.  il carattere iniziale ('C' in questo caso), sta ad indicare che è un cliente
+            
+
+            insertUserIntoDb($username, $password);
+            insertIscrittoIntoDb($username, $nome, $cognome, $dataNascita, $codiceFiscale, $numeroTelefono, $mail, $imgProfilo, $docIdentificativo, $abbonamento, $iban);
             break;
 
         case 'Allenatore':
@@ -54,8 +52,12 @@ if(isset($_POST['Nome']) && isset($_POST['Cognome']) /* etc...*/){
 
             if(isset($_SESSION['documenti']['certificazione']))
                 $certificazione = '../uploads/Allenatori/'.strtoupper($cognome)."_".strtoupper($nome).'/'.$_SESSION['documenti']['certificazione'];
+
+            $username = "a".strtolower($cognome).strtolower($nome).substr($dataNascita,0,2).substr($dataNascita,3,5);
             
-            insertAllenatoreIntoDb($nome, $cognome, getDataDiNascita($codiceFiscale), $codiceFiscale, $numeroTelefono, $mail, $imgProfilo, $docIdentificativo, $certificazione, $iban);
+            
+            insertUserIntoDb($username, $password);
+            insertAllenatoreIntoDb($username, $nome, $cognome, getDataDiNascita($codiceFiscale), $codiceFiscale, $numeroTelefono, $mail, $imgProfilo, $docIdentificativo, $certificazione, $iban);
             break;
     }
 
@@ -66,6 +68,20 @@ if(isset($_POST['Nome']) && isset($_POST['Cognome']) /* etc...*/){
     header('Location: ../index.php');
 }
 
+function generaPassword(){
+    // Caratteri alfanumerici
+    $caratteri = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?';
+    $numeroCaratteri = strlen($caratteri);
+  
+    // Genera una stringa casuale di caratteri
+    $password = '';
+    for ($i = 0; $i < 10; $i++) {
+      $indiceCasuale = rand(0, $numeroCaratteri - 1);
+      $password .= $caratteri[$indiceCasuale];
+    }
+  
+    return $password;
+}
 
 function createFolder($tipoUtente, $nome, $cognome){
     $nome = strtoupper($nome);
@@ -141,11 +157,10 @@ function getDataDiNascita($codiceFiscale) {
     return "$anno-$mesi[$mese]-$giorno";
 }
 
-
-function insertIscrittoIntoDb($nome, $cognome, $dataN, $codF, $numTel, $mail, $pathImgProfilo, $pathDocIdentificativo, $tipoAbbonamento, $iban){
+function insertUserIntoDb($username, $password){
     $conn = mysqli_connect('localhost','root','','gym');
 
-    $query = "INSERT INTO iscritto (codF, nome, cognome, dataN, numTel, imgProfilo, mail, docIdentificativi, tipoAbbonamento, ScadenzaAbb, IBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_DATE(), INTERVAL 1 MONTH), ?)";
+    $query = "INSERT INTO utenti (username, psw) VALUES (?, SHA2(?, 256))";
 
     $stmt = $conn->prepare($query);
           
@@ -155,7 +170,26 @@ function insertIscrittoIntoDb($nome, $cognome, $dataN, $codF, $numTel, $mail, $p
         exit;
     }
     
-    $stmt->bind_param("ssssssssss", $codF, $nome, $cognome, $dataN, $numTel, $pathImgProfilo, $mail, $pathDocIdentificativo, $tipoAbbonamento, $iban);
+    $stmt->bind_param("ss", $username, $password);
+
+    $stmt->execute();
+    $stmt->close();
+}
+
+function insertIscrittoIntoDb($username, $nome, $cognome, $dataN, $codF, $numTel, $mail, $pathImgProfilo, $pathDocIdentificativo, $tipoAbbonamento, $iban){
+    $conn = mysqli_connect('localhost','root','','gym');
+
+    $query = "INSERT INTO iscritto (username, codF, nome, cognome, dataN, numTel, imgProfilo, mail, docIdentificativi, tipoAbbonamento, ScadenzaAbb, IBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, DATE_ADD(CURRENT_DATE(), INTERVAL 1 MONTH), ?)";
+
+    $stmt = $conn->prepare($query);
+          
+    if ($stmt === false) {
+        //compare una finestra che dà errore
+        echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
+        exit;
+    }
+    
+    $stmt->bind_param("sssssssssss", $username, $codF, $nome, $cognome, $dataN, $numTel, $pathImgProfilo, $mail, $pathDocIdentificativo, $tipoAbbonamento, $iban);
 
     $stmt->execute();
     $stmt->close();
@@ -163,10 +197,10 @@ function insertIscrittoIntoDb($nome, $cognome, $dataN, $codF, $numTel, $mail, $p
     //$query = "INSERT INTO allenatori (codF, nome, cognome, dataN, numTel, imgProfilo, mail, docIdentificativi) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 }
 
-function insertAllenatoreIntoDb($nome, $cognome, $dataN, $codF, $numTel, $mail, $pathImgProfilo, $pathDocIdentificativo, $certificazione, $iban){
+function insertAllenatoreIntoDb($username, $nome, $cognome, $dataN, $codF, $numTel, $mail, $pathImgProfilo, $pathDocIdentificativo, $certificazione, $iban){
     $conn = mysqli_connect('localhost','root','','gym');
 
-    $query = "INSERT INTO allenatori (codF, nome, cognome, dataN, numTel, imgProfilo, mail, docIdentificativi, attCertificazione, IBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO allenatori (username, codF, nome, cognome, dataN, numTel, imgProfilo, mail, docIdentificativi, attCertificazione, IBAN) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($query);
           
@@ -176,7 +210,7 @@ function insertAllenatoreIntoDb($nome, $cognome, $dataN, $codF, $numTel, $mail, 
         exit;
     }
     
-    $stmt->bind_param("ssssssssss", $codF, $nome, $cognome, $dataN, $numTel, $pathImgProfilo, $mail, $pathDocIdentificativo, $certificazione, $iban);
+    $stmt->bind_param("sssssssssss", $username, $codF, $nome, $cognome, $dataN, $numTel, $pathImgProfilo, $mail, $pathDocIdentificativo, $certificazione, $iban);
 
     $stmt->execute();
     $stmt->close();

@@ -263,7 +263,7 @@ require "gestioneAddUsers.php";
                                 <div class="error smaller" id="mailError"></div>
                             </div>
                         </div>
-                        <div class="text-block-form">Documenti Identificativi</div><a href="#" class="add-documenti w-button" onclick="AddFileToTemp('docIdentificativo', true)">+ Documenti</a>
+                        <div class="text-block-form">Documenti Identificativi</div><a href="#" id="docIdentificativo" class="add-documenti w-button" onclick="AddFileToTemp('docIdentificativo', true)">+ Documenti</a>
                         <div id="metodoPagamento"> 
                         <div class="text-block-form">Metodo di Pagamento</div>
                         <div class="sezioneform">
@@ -282,8 +282,8 @@ require "gestioneAddUsers.php";
                             </select> 
                         </div>
                         
-                        <div id="certificazione">
-                            <!-- <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button" onclick="AddFileToTemp('certificazione', true)">+ Certificazione</a> -->
+                        <div id="certificazionediv">
+                         <!--   <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button" onclick="AddFileToTemp('certificazione', true)">+ Certificazione</a>  -->
                         </div> 
                         
                         <input type="submit" data-wait="Please wait..." class="addcertificazione centrato w-button" value="Aggiungi Utente">
