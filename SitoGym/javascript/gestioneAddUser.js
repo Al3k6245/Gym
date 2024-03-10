@@ -2,7 +2,6 @@ function ChangeUserType(){
     let userSelection = document.getElementById("Type").value;
 
     let sezionePagamento = document.getElementById("metodoPagamento");
-    let sezioneAzienda = document.getElementById("Azienda");
     
     switch(userSelection){
 
@@ -13,12 +12,6 @@ function ChangeUserType(){
 
         case "Allenatore":
             sezionePagamento.innerHTML = "";
-            sezioneAzienda.innerHTML = "";
-            break;
-
-        case "Tecnico":
-            sezionePagamento.innerHTML = "";
-            sezioneAzienda.innerHTML = '<div class="text-block-form">Azienda Patner</div><div class="sezioneform"><div class="input"><div class="intestazione-form">Nome Azienda</div><input class="input-azienda w-input" maxlength="256" name="Nome-3" data-name="Nome 3" placeholder="TecnoGym" type="text" id="Nome-3" required=""></div></div>';
             break;
     }
 }

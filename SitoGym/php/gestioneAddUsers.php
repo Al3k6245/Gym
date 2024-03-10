@@ -31,35 +31,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
 //-------------------------------------------------------------- FINE GESTIONE RICHIESTE AJAX -------------------------------------------------------------------------
 
-function AddDocument($nome, $cognome, $userType){
 
-if($_FILES['file']['error'] == 0){  //il file è stato caricato correttamente
-
-    switch($userType){
-        case 'Cliente':
-            $userTypeFolder = 'Iscritti';
-            break;
-        case 'Allenatore':
-            $userTypeFolder = 'Allenatori';
-            break;
-        case 'Tecnico':
-            $userTypeFolder = 'Tecnici';
-            break;
-    }
-
-    $userFolderName = strtoupper($cognome)."_".strtoupper($nome); 
-
-    $filePath = "uploads/";
-
-    foreach($_SESSION as $type => $nomeDoc)
-        move_uploaded_file('temp/'.$_SESSION[$type], '../'.$filePath);
-    
-}
-
-}
 
 function SaveDocumentTemp($file, $type){
-    $_SESSION[$type] = $file['name'];   //devo salvare anche nella cartella temp nel server se no poi quando compilo il form non ce l'ho più
+    $_SESSION['documenti'][$type] = $file['name'];   //devo salvare anche nella cartella temp nel server se no poi quando compilo il form non ce l'ho più
     move_uploaded_file($file['tmp_name'], '../temp/'.$file['name']);
 }
 

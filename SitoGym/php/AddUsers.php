@@ -233,7 +233,6 @@ require "gestioneAddUsers.php";
                         <div class="text-block-form">Tipo di Utenza</div><select id="Type" name="Type" data-name="Type" class="w-select" onchange="ChangeUserType()">
                             <option value="Cliente">Cliente</option>
                             <option value="Allenatore">Allenatore</option>
-                            <option value="Tecnico">Tecnico</option>
                         </select>
                         <div class="text-block-form">Dati Personali</div>
                         <div class="sezioneform">
@@ -281,17 +280,8 @@ require "gestioneAddUsers.php";
                         
 
                         <div class="text-block-form">Certificazione</div><a href="#" class="addcertificazione w-button" onclick="AddFileToTemp('certificatoMedico', true)">+ Certificazione</a>
-                        <div id="Azienda">
-                            <!----------------------------- SEZIONE PER METTERE L'AZIENDA PARTNER (TECNICO) -------------------------->
-                        </div>
                         <input type="submit" data-wait="Please wait..." class="addcertificazione centrato w-button" value="Aggiungi Utente">
                     </form>
-                    <div class="w-form-done" tabindex="-1" role="region" aria-label="Email Form success">
-                        <div>Thank you! Your submission has been received!</div>
-                    </div>
-                    <div class="w-form-fail" tabindex="-1" role="region" aria-label="Email Form failure">
-                        <div>Oops! Something went wrong while submitting the form.</div>
-                    </div>
                 </div>
             </div>
         </div>
