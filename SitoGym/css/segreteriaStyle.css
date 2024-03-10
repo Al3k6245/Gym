@@ -3807,6 +3807,8 @@ textarea.w-input, textarea.w-select {
 }
 
 .icon.pericolo {
+  width: 25px;
+  height: 25px;
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65e0b7d172a15345c443ca48_pericolo.png");
   background-size: 25px;
 }
