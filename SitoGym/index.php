@@ -42,7 +42,7 @@ function writeSection(){
                     <a class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori')">Allenatori</a>
                 <div class="search allineato w-form"><input class="search-input w-input"
                         maxlength="256" name="query" placeholder="Search" type="search" id="Ricerca"
-                        required="" onkeyup="AjaxResearch('Ricerca')"><input type="button" class="search-button w-button" value="Search"></div>
+                        required="" onkeyup="AjaxResearch('Ricerca')"></div>
             </div>
 
                 <!-- //PULSANTE CLIENTI -->

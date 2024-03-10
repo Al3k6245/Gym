@@ -98,7 +98,7 @@ function showMembers($conn){
             <div class='badge'>
             <img src='"."'  alt='ImmagineProfilo' class='immagineprofilo'>
             <div class='datipersonali'>
-                <div class='tabella-intestazioni cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
+                <div class='tabella-intestazioni-dashboard cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
                 <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
             </div>
         </div>
@@ -287,7 +287,7 @@ function displayTrainers($conn){
         print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
         <div class="immagineprofilo"></div>
         <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
-            <div class="tabella-intestazioni cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
+            <div class="tabella-intestazioni-dashboard cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
             <div class="tabella-intestazioni abbonamento">Trainer</div>
         </div>
     </div>
@@ -427,7 +427,7 @@ function Research($input, $conn){
                 <div class='badge'>
                 <div class='immagineprofilo'></div>
                 <div class='datipersonali'>
-                    <div class='tabella-intestazioni cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
+                    <div class='tabella-intestazioni-dashboard cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
                     <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
                 </div>
             </div>
@@ -452,7 +452,7 @@ function Research($input, $conn){
                 print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
                 <div class="immagineprofilo"></div>
                 <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
-                    <div class="tabella-intestazioni cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
+                    <div class="tabella-intestazioni-dashboard cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
                     <div class="tabella-intestazioni abbonamento">Trainer</div>
                 </div>
             </div>
