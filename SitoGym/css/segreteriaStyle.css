@@ -3794,10 +3794,14 @@ textarea.w-input, textarea.w-select {
 }
 
 .icon.download {
+  width: 25px;
+  height: 40px;
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65df14488054d84c7d80640d_Download.png");
 }
 
 .icon.allerta {
+  width: 20px;
+  height: 30px;
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65e0b7d1d2ca9d0929f6a20c_allerta.png");
   background-size: 20px;
 }
@@ -3808,10 +3812,14 @@ textarea.w-input, textarea.w-select {
 }
 
 .icon.userdescrizioni {
+  width: 25px;
+  height: 25px;
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65e0b7d28436d01dfac1e880_UserDescription.png");
 }
 
 .icon.useremail {
+  width: 25px;
+  height: 25px;
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65e0b7d21b68ce8fbf2f2f4e_AddMail.png");
 }
 
