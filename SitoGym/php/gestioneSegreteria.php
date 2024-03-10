@@ -12,67 +12,39 @@ if(!isset($conn)){
 // ------------------------------------------------------- GESTIONE DELLE RICHIESTE AJAX ----------------------------------------------------------------------------
 
 if($_SERVER["REQUEST_METHOD"] == "GET"){   
+// ------------------------------------------------------- GESTIONE DELLE RICHIESTE AJAX ----------------------------------------------------------------------------
+
+if($_SERVER["REQUEST_METHOD"] == "GET"){   
 
     if(isset($_GET['azione'])){
 
-        switch($_GET['azione']){
-
-            case 'delMem':
-                deleteMember($_GET['index'], $conn);
-                showMembers($conn);
-                break;
-
-            case 'viewUserInfo':
-                displayInfo($_GET['userType'], $_GET['index'], $conn);
-                break;
-
-            case 'closeUserInfo':
-                echo '';
-                break;
-                
-            case 'changeSection':
-                
-                switch($_GET['section']){
-                    
-                    case 'Clienti':
-                        showMembers($conn);
-                        $_SESSION['sezioneAttuale'] = 'Clienti';
-                        break;
-                        
-                    case 'Allenatori':
-                        displayTrainers($conn);
-                        $_SESSION['sezioneAttuale'] = 'Allenatori';
-                        break;
-                    }
-                
-
-                break;
-            
-            case 'viewShifts':
-                displayShifts($_GET['index'], $conn);
-                break;
-            
-            case 'deleteShift':
-                deleteShift($_GET['shiftDay'], $_GET['trainerIndex'], $conn);
-                break;
-
-            case 'addShift':
-                addShift($_GET['trainerIndex'], $conn);
-                break;
-
-            case 'search':
-                Research($_GET['input'], $conn);
-                break;
-        }
+    switch($_GET['azione']){
+        case 'delMem':
+            deleteMember($_GET['index'], $conn);
+            showMembers($conn);
+            break;
+        case 'downloadFile':
+            downloadFile(getFromDbFilePath($_GET['index'],$conn));
+            break;
+        case 'viewUserInfo':
+            displayInfo($_GET['index'], $conn);
+            break;
+        case 'closeUserInfo':
+            echo '';
+            break;
     }
-}  
+        
+}
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES['file']) && isset($_POST['index'])){
+    addDocument($_POST['userType'],$_POST['index'], $conn);
     addDocument($_POST['userType'],$_POST['index'], $conn);
 }
 else{
     //implementare codice per far capire che il caricamento non è andato a buon fine
 }
+
+// ----------------------------------------------------------------- FINE GESTIONE RICHIESTE AJAX --------------------------------------------------------------------
 
 // ----------------------------------------------------------------- FINE GESTIONE RICHIESTE AJAX --------------------------------------------------------------------
 
@@ -92,6 +64,7 @@ function showMembers($conn){
     if($result){
         while($row = $result->fetch_assoc()){
 
+            //-------------------------------------------------------------- RIGA ISCRITTO ----------------------------------------------------------------------
             //-------------------------------------------------------------- RIGA ISCRITTO ----------------------------------------------------------------------
 
             print "
@@ -128,6 +101,8 @@ function showMembers($conn){
 
 function saveFiscalCodeOnSession($fiscalCode, $counter, $userType){
     $_SESSION[$userType][$counter] = $fiscalCode;
+function saveFiscalCodeOnSession($fiscalCode, $counter, $userType){
+    $_SESSION[$userType][$counter] = $fiscalCode;
 }
 
 function deleteMember($index, $conn){
@@ -135,21 +110,27 @@ function deleteMember($index, $conn){
     
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $_SESSION['iscritto'][$index]);
+    $stmt->bind_param("s", $_SESSION['iscritto'][$index]);
 
     $stmt->execute(); 
     $stmt->close();
 
     //eliminazione dalla sessione
     unset($_SESSION['iscritto'][$index]);
+    unset($_SESSION['iscritto'][$index]);
     $counter = 1;
+    foreach ($_SESSION['iscritto'] as $key => $value) {
     foreach ($_SESSION['iscritto'] as $key => $value) {
         $key = $counter;
         $counter++;
     }
 
     //eliminazione della cartella dell'utente all'interno della cartella /uploads/iscritto 
+
+    //eliminazione della cartella dell'utente all'interno della cartella /uploads/iscritto 
 }
 
+function addDocument($userType ,$index, $conn){
 function addDocument($userType ,$index, $conn){
 
     if($_FILES['file']['error'] == 0){  //il file è stato caricato correttamente
@@ -193,6 +174,9 @@ function addDocument($userType ,$index, $conn){
         $stmt->close();
 
         move_uploaded_file($_FILES['file']['tmp_name'], '../'.$filePath);
+
+        echo $filePath;
+        echo $_SESSION['Utenti'][$index];
     
         // ---------------------------- QUERY PER CARICARE IL PERCORSO DEL DOCUMENTO NEL DATABASE ----------------------------------------------
         $query = "UPDATE $table SET docIdentificativi = '$filePath' WHERE codF = ?";
@@ -201,14 +185,20 @@ function addDocument($userType ,$index, $conn){
     
         if ($stmt === false) {
             //compare una finestra che dà errore
+            //compare una finestra che dà errore
             echo "Prepare failed: (" . $conn->errno . ") " . $conn->error;
             exit;
         }
         
         $stmt->bind_param("s", $_SESSION[$table][$index]);
+        
+        $stmt->bind_param("s", $_SESSION[$table][$index]);
 
         $stmt->execute();
         $stmt->close();
+
+        //aggiungo il pulsante download se non è già stato caricato prima
+        
 
         //aggiungo il pulsante download se non è già stato caricato prima
         
@@ -248,8 +238,11 @@ function displayInfo($user, $index, $conn){
     $row = $result->fetch_assoc();
     
     // ------------------------------------------------ SCHEDA INFORMAZIONI  --------------------------------------------------------------------------
+    
+    // ------------------------------------------------ SCHEDA INFORMAZIONI  --------------------------------------------------------------------------
 
     print '<div data-w-id="1ead45e8-3280-9d48-6405-e79982937b5c" class="hoversection">
+    <div class="hoversection-container"><img src="'.$row['imgProfilo'].'" loading="lazy" width="Auto" alt="" class="fotoprofilo">
     <div class="hoversection-container"><img src="'.$row['imgProfilo'].'" loading="lazy" width="Auto" alt="" class="fotoprofilo">
     <a data-w-id="859845ff-4b55-b293-93ca-957b1f255837" class="icon exit w-button" onclick="AjaxCloseDescription()"></a>
         <div class="name">'.$row['cognome'].' '.$row['nome'].'</div>
