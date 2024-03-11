@@ -4220,7 +4220,7 @@ textarea.w-input, textarea.w-select {
   width: 700px;
 }
 
-.hoversection.small {
+.hoversection.small, .hoversection.small-abbonamento {
   height: 200px;
 }
 
