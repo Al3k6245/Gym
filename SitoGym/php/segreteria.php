@@ -124,19 +124,11 @@ function onLoadSection(){
 </div>
 
   <!------------------------------------------------------- MENU DI NAVIGAZIONE LATERALE ---------------------------------------------------------------->
-    <div style="display:none" class="menu-descrizioni">
-        <div class="descrizione">Home</div>
-        <div class="descrizione">AddCliente</div>
-    </div>
-    <nav data-w-id="93085ae0-f7f2-eb6d-a80c-8ff237c72caf" class="menu-icone">
-        <div class="notifications-3"><img src="https://assets-global.website-files.com/65db228c551539358abcad8e/65db2680c536bfa0459743bc_Vectors-Wrapper.svg" loading="lazy" width="24" height="24" alt="" class="vectors-wrapper-2" />
-            <div class="badge-4">
-                <div class="text-21">9</div>
-            </div>
-        </div><a href="#" class="menu-sezioni _0 w-button"></a><a href="#" class="menu-sezioni _1 w-button"></a>
-    </nav>
-    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=65db228c551539358abcad8e" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-    <script src="https://assets-global.website-files.com/65db228c551539358abcad8e/js/webflow.399e61ad1.js" type="text/javascript"></script>
+
+    <div style="display: none;" class="menu-descrizioni"><div class="descrizione">Home</div><div class="descrizione">Users</div></div>
+    <nav data-w-id="93085ae0-f7f2-eb6d-a80c-8ff237c72caf" class="menu-icone"><a href="#DashBoard" class="menu-sezioni _0 w-button w--current"></a><a href="/old-home-2" class="menu-sezioni _3 w-button"></a><a href="#AddAllenatore" class="menu-sezioni logout w-button"></a></nav>
+    <!-- <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=65db228c551539358abcad8e" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://assets-global.website-files.com/65db228c551539358abcad8e/js/webflow.399e61ad1.js" type="text/javascript"></script> -->
 </body>
 
 </html>

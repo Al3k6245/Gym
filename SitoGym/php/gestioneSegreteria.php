@@ -17,11 +17,6 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
 
         switch($_GET['azione']){
 
-            case 'delMem':
-                deleteMember($_GET['index'], $conn);
-                showMembers($conn);
-                break;
-
             case 'viewUserInfo':
                 displayInfo($_GET['userType'], $_GET['index'], $conn);
                 break;
@@ -56,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 break;
             
             case 'deleteShift':
-                deleteShift($_GET['shiftDay'], $_GET['trainerIndex'], $conn);  //da sistemare
+                deleteShift($_GET['shiftDay'], $_GET['trainerIndex'], $conn);  //da sistemare (non funziona) :(
                 break;
 
             case 'addShift':
@@ -148,25 +143,6 @@ function saveFiscalCodeOnSession($username, $counter, $userType){
     $_SESSION[$userType][$counter] = $username;
 }
 
-function deleteMember($index, $conn){
-    $query = "DELETE FROM iscritto WHERE username = ?";
-    
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $_SESSION['iscritto'][$index]);
-
-    $stmt->execute(); 
-    $stmt->close();
-
-    //eliminazione dalla sessione
-    unset($_SESSION['iscritto'][$index]);
-    $counter = 1;
-    foreach ($_SESSION['iscritto'] as $key => $value) {
-        $key = $counter;
-        $counter++;
-    }
-
-    //eliminazione della cartella dell'utente all'interno della cartella /uploads/iscritto 
-}
 
 function addDocument($userType ,$index, $conn){
 
@@ -474,7 +450,6 @@ function getMemberRecord($row, $counter){
         <div class='action'>
         <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
         <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
-        <a class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'></a>
         </div>
         ";
     }
@@ -522,11 +497,11 @@ function getTrainerRecord($row, $counter){
    </div>
     <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
         <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')"></a>'.loadDownloadButton    ($row['docIdentificativi']).'</div>
-            <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.  $counter.')"></a></div>
+            <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni-button w-button" onclick="AjaxViewTrainerShifts('.  $counter.')"></a></div>
             <! //STATO->
                 <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
                 <! //SOLITI BOTTONI->
-                    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon     userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a><a href="mailto:'.$row['mail'].'" class="icon useremail     w-button"></a><a href="" class="icon userremove w-button"></a></div>';
+                    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon     userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a><a href="mailto:'.$row['mail'].'" class="icon useremail     w-button"></a></div>';
 
  }
  else if($_SESSION['loggedUserType'] == 'Allenatore'){
@@ -539,7 +514,7 @@ function getTrainerRecord($row, $counter){
    </div>
     <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
         <div id="certificatoMedico" class="action"></div>
-            <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.  $counter.')"></a></div>
+            <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni-button w-button" onclick="AjaxViewTrainerShifts('.  $counter.')"></a></div>
             <! //STATO->
                 <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
                 <! //SOLITI BOTTONI->

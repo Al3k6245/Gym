@@ -1,16 +1,3 @@
-function AjaxDeleteMember(index){
-    var xmlhttp = new XMLHttpRequest();
-
-    xmlhttp.onreadystatechange = function(){   
-        if(this.readyState == 4 && this.status == 200){
-            document.getElementById("tabella-membri").innerHTML = this.responseText;
-        }
-    };
-
-    xmlhttp.open("GET", "gestioneSegreteria.php?azione=delMem&index=" + index, true);
-    xmlhttp.send();
-}
-
 function AjaxAddDocument(userType, index){
 
     var formData = new FormData();
