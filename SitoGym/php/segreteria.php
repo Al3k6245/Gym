@@ -11,7 +11,10 @@ function writeSection(){
 
 function writeLoggedUserType(){
     return "'".$_SESSION['loggedUserType']."'";
+}
 
+function onLoadSection(){
+    return "'".$_SESSION['sezioneAttuale']."', '".$_SESSION['loggedUserType']."'";
 }
     
 
@@ -29,7 +32,7 @@ function writeLoggedUserType(){
     <script src="../javascript/gestioneAjaxSegreteria.js"></script>
 </head>
 
-<body class="body" onload="changeSection(<?php echo writeSection() ?>)">  
+<body class="body" onload="changeSection(<?php echo onLoadSection() ?>)">  
     <section id="Home" class="content">
         <div class="container-dashboard">
             <div class="container-titolo">
@@ -171,8 +174,7 @@ function writeLoggedUserType(){
 <div class="hoversection small" id="rinnovaAbbonamento" style="display : none"><div class="hoversection-container">
     <a data-w-id="68bb2142-7955-cadb-9b5d-899d6979142a" class="icon exit w-button" id="leaveButton" onclick="closeRinnovaAbbonamento()"></a>
     <div class="name tecnico">Aggiungi Abbonamento</div>
-</div>
-<div class="aggiungi-abbonamento w-form">
+    <div class="aggiungi-abbonamento w-form">
     <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" action="gestioneSegreteria.php" class="form-3" data-wf-page-id="65db228c551539358abcad94" data-wf-element-id="caec41b9-4f34-3fcd-0de6-8da4dd580731" aria-label="Email Form 2">
         <select id="AbbonamentoType" name="AbbonamentoType" data-name="Abbonamento Type" class="select-field w-select">
             <option value="Basic">Basic</option>
@@ -181,11 +183,31 @@ function writeLoggedUserType(){
             <option value="Platinum">Platinum</option>
         </select>
         <input type="submit" data-wait="Please wait..." class="addcertificazione w-button" value="Rinnova">
-        <input type="hidden" id="customerId" name="index">  <!-- tramite javascript vado ad inserire come value il riferimento indice del cliente -->
-    </form><div class="w-form-done" tabindex="-1">
+        <input type="hidden" id="customerId" name="index"> <!-- tramite javascript vado ad inserire come value il riferimento indice del cliente --> 
+    </form>  
+</div>
 
+
+<div class="hoversection small" id="nuovoAllenamento" style="display : none">
+    <div class="hoversection-container">
+        <a href="#" class="icon exit w-button"></a>
+        <div class="name tecnico">Aggiungi Allenamento</div>
     </div>
-    <div class="w-form-fail" tabindex="-1"></div>
+    <div class="aggiungi-abbonamento w-form">
+        <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" action="segreteria.php" class="form-3" data-wf-page-id="65db228c551539358abcad94" data-wf-element-id="ddb12b6a-512b-6e9c-2be4-00a9bf4969c1" aria-label="Email Form 2">
+            <select id="AbbonamentoType-2" name="AbbonamentoType-2" data-name="Abbonamento Type 2" class="select-field w-select">
+                <option value="Basic-A">Basic-A</option>
+                <option value="Basic-B">Basic-B</option>
+                <option value="Medium-A">Medium-A</option>
+                <option value="Medium-B">Medium-B</option>
+                <option value="Medium-C">Medium-C</option>
+            </select>
+            <input type="submit" data-wait="Please wait..." class="addcertificazione w-button" value="Aggiungi">
+        </form>
+    </div>
+</div> 
+
+
 </div>
 </div>
 
