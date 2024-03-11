@@ -7,7 +7,7 @@ function AjaxDeleteMember(index){
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=delMem&index=" + index, true);
+    xmlhttp.open("GET", "gestioneSegreteria.php?azione=delMem&index=" + index, true);
     xmlhttp.send();
 }
 
@@ -22,7 +22,7 @@ function AjaxAddDocument(userType, index){
         formData.append('userType', userType);
 
         $.ajax({
-            url: 'php/gestioneSegreteria.php', // Specifica la pagina di destinazione
+            url: 'gestioneSegreteria.php', // Specifica la pagina di destinazione
             type: 'POST',
             data: formData,
             contentType: false,
@@ -49,7 +49,7 @@ function AjaxViewDescription(userType, index){   // userType ========>  0 => Cli
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=viewUserInfo&index=" + index + "&userType=" + userType, true);
+    xmlhttp.open("GET", "gestioneSegreteria.php?azione=viewUserInfo&index=" + index + "&userType=" + userType, true);
     xmlhttp.send();
 }
 
@@ -62,7 +62,7 @@ function AjaxCloseDescription(){
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=closeUserInfo", true);
+    xmlhttp.open("GET", "gestioneSegreteria.php?azione=closeUserInfo", true);
     xmlhttp.send();
 }
 
@@ -71,11 +71,23 @@ function AjaxChangeSection(section){
 
     xmlhttp.onreadystatechange = function(){   
         if(this.readyState == 4 && this.status == 200){
+            let clientiSection = document.getElementById("clientiSection");
+            let allenatoriSection = document.getElementById("allenatoriSection");
+
+            if(section == 'Clienti'){
+                clientiSection.className = "container-sezioni selected clienti w-button";
+                allenatoriSection.className = "container-sezioni allenatori w-button";
+            }
+            else{
+                clientiSection.className = "container-sezioni clienti w-button";
+                allenatoriSection.className = "container-sezioni selected allenatori w-button";
+            }
+
             document.getElementById("tabella-membri").innerHTML = this.responseText;
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=changeSection&section=" + section, true);
+    xmlhttp.open("GET", "gestioneSegreteria.php?azione=changeSection&section=" + section, true);
     xmlhttp.send();
 }
 
@@ -88,7 +100,7 @@ function AjaxViewTrainerShifts(index){    //chiamata per visualizzare i turni di
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=viewShifts&index=" + index, true);
+    xmlhttp.open("GET", "gestioneSegreteria.php?azione=viewShifts&index=" + index, true);
     xmlhttp.send();
 }
 
@@ -101,7 +113,7 @@ function AjaxDeleteShift(day, trainerIndex){
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=deleteShift&shiftDay=" + day + "&trainerIndex=" + trainerIndex, true);
+    xmlhttp.open("GET", "gestioneSegreteria.php?azione=deleteShift&shiftDay=" + day + "&trainerIndex=" + trainerIndex, true);
     xmlhttp.send();
 }
 
@@ -114,7 +126,7 @@ function AjaxAddShift(trainerIndex){   //per mostrare l'hoversection di aggiunta
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=addShift&trainerIndex=" + trainerIndex, true);
+    xmlhttp.open("GET", "gestioneSegreteria.php?azione=addShift&trainerIndex=" + trainerIndex, true);
     xmlhttp.send();
 }
 
@@ -129,7 +141,7 @@ function AjaxResearch(inputId){
         }
     };
 
-    xmlhttp.open("GET", "php/gestioneSegreteria.php?azione=search&input=" + inputValue, true);
+    xmlhttp.open("GET", "gestioneSegreteria.php?azione=search&input=" + inputValue, true);
     xmlhttp.send();
 }
 

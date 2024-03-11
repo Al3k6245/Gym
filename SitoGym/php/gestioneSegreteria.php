@@ -64,6 +64,27 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 Research($_GET['input'], $conn);
                 break;
         }
+    }else if(isset($_GET['GiornoSettimana']) && isset($_GET['Orario'])){
+        //aggiungere il turno all'allenatore
+        $giornoSettimana = $_GET['GiornoSettimana'];
+        $oraInizio = substr($_GET['Orario'], 0, 5);
+        $oraFine = substr($_GET['Orario'], 8, 5);
+        $username = $_SESSION['allenatori'][$_GET['index']]; 
+
+        $query = "SELECT codF FROM allenatori WHERE username = ?";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+    
+        $codF = $stmt->get_result()->fetch_assoc()['codF'];
+
+        if(!addTurnoToTrainer($_GET['index'], $giornoSettimana, $oraInizio, $oraFine, $codF, $conn))
+            echo "<script> window.location.href = 'segreteria.php';
+                    alert('Esiste già un turno per il giorno selezionato');
+                    </script>";
+        else
+            header('Location: segreteria.php');
     }
 }  
 
@@ -78,7 +99,7 @@ else{
 
 
 function showMembers($conn){
-    $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail, docIdentificativi FROM iscritto";
+    $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail, docIdentificativi, imgProfilo, username FROM iscritto";
 
     $stmt = $conn->prepare($query);
     $stmt->execute();
@@ -87,37 +108,12 @@ function showMembers($conn){
 
     $counter = 1;   //ai vari pulsanti assegno un numero come id in modo da sapere che riga l'utente sta andando a scegliere
 
-    $userType = 0;   //0 => Cliente   1 => Allenatore    
-
     if($result){
         while($row = $result->fetch_assoc()){
 
             //-------------------------------------------------------------- RIGA ISCRITTO ----------------------------------------------------------------------
-
-            print "
-            <div class='badge'>
-            <img src='"."'  alt='ImmagineProfilo' class='immagineprofilo'>
-            <div class='datipersonali'>
-                <div class='tabella-intestazioni-dashboard cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
-                <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
-            </div>
-        </div>
-        <div  class='tabella-testo'>".$row['ScadenzaAbb']."</div>
-        <div class='action'>
-        <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'></a>".loadDownloadButton($row['docIdentificativi'])."
-        </div>
-        <div class='tabella-testo'>".$row['DataN']."</div>
-        <div class='action'>
-        <a class='icon allerta w-button'></a>
-        <a class='icon pericolo w-button'></a>
-        </div>
-        <div class='action'>
-        <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(0,".$counter.")'></a>
-        <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
-        <a id='$counter' class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'></a>
-        </div>
-        ";
-            saveFiscalCodeOnSession($row['codF'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e altre features
+            getMemberRecord($row, $counter);
+          
             $counter++;
         }
     }
@@ -126,12 +122,12 @@ function showMembers($conn){
 }
 
 
-function saveFiscalCodeOnSession($fiscalCode, $counter, $userType){
-    $_SESSION[$userType][$counter] = $fiscalCode;
+function saveFiscalCodeOnSession($username, $counter, $userType){
+    $_SESSION[$userType][$counter] = $username;
 }
 
 function deleteMember($index, $conn){
-    $query = "DELETE FROM iscritto WHERE codF = ?";
+    $query = "DELETE FROM iscritto WHERE username = ?";
     
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $_SESSION['iscritto'][$index]);
@@ -168,7 +164,7 @@ function addDocument($userType ,$index, $conn){
         }
         
         //-------------------    QUERY PER OTTENERE NOME E COGNOME UTENTE PER POTER SALVARE NELLA CARTELLA GIUSTA IL DOCUMENTO  -------------------------------------
-        $query = "SELECT nome, cognome FROM $table WHERE codF = ?";
+        $query = "SELECT nome, cognome FROM $table WHERE username = ?";
         
         $stmt = $conn->prepare($query);
     
@@ -195,7 +191,7 @@ function addDocument($userType ,$index, $conn){
         move_uploaded_file($_FILES['file']['tmp_name'], '../'.$filePath);
     
         // ---------------------------- QUERY PER CARICARE IL PERCORSO DEL DOCUMENTO NEL DATABASE ----------------------------------------------
-        $query = "UPDATE $table SET docIdentificativi = '$filePath' WHERE codF = ?";
+        $query = "UPDATE $table SET docIdentificativi = '$filePath' WHERE username = ?";
         
         $stmt = $conn->prepare($query);
     
@@ -228,7 +224,7 @@ function displayInfo($user, $index, $conn){
             break;
     }
 
-    $query = "SELECT nome, cognome, DataN, codF, mail, psw, imgProfilo FROM $userTable WHERE codF = ?";
+    $query = "SELECT nome, cognome, DataN, codF, mail, psw, imgProfilo FROM $userTable INNER JOIN utenti ON utenti.username = $userTable.username WHERE $userTable.username = ?";
 
     $stmt = $conn->prepare($query);
 
@@ -259,10 +255,6 @@ function displayInfo($user, $index, $conn){
         <div class="testowhite">'.$row['DataN'].'<br></div>
         <div class="intestazioneblack">Contatti</div>
         <div class="testowhite">'.$row['mail'].'<br></div>
-        <div class="intestazioneblack">Password Account</div>
-        <div class="password">
-            <div data-w-id="78352fc8-7684-5c14-63af-2a5582d1e910" style="filter: blur(0px);" class="testowhite password">'.$row['psw'].'<br></div>
-        </div>
         </div>
     </div>';
 
@@ -270,7 +262,7 @@ function displayInfo($user, $index, $conn){
 }
 
 function displayTrainers($conn){
-    $query = "SELECT codF, nome, cognome, mail, docIdentificativi FROM allenatori";
+    $query = "SELECT codF, nome, cognome, mail, docIdentificativi, username FROM allenatori";
     $stmt = $conn->prepare($query);
 
     $stmt->execute();
@@ -282,25 +274,7 @@ function displayTrainers($conn){
 
     while($row = $result->fetch_assoc()){
 
-        // ---------------------------------------------------------------- RIGA ALLENATORE  -------------------------------------------------------------
-
-        print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
-        <div class="immagineprofilo"></div>
-        <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
-            <div class="tabella-intestazioni-dashboard cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
-            <div class="tabella-intestazioni abbonamento">Trainer</div>
-        </div>
-    </div>
-        <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
-            <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')"></a>'.loadDownloadButton($row['docIdentificativi']).'</div>
-                <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.$counter.')"></a></div>
-                <! //STATO->
-                    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
-                    <! //SOLITI BOTTONI->
-                        <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a><a href="mailto:'.$row['mail'].'" class="icon useremail w-button"></a><a href="" class="icon userremove w-button"></a></div>';
-
-        saveFiscalCodeOnSession($row['codF'], $counter, 'allenatori');
-
+        getTrainerRecord($row, $counter);
         $counter++;
     }   
         
@@ -317,8 +291,8 @@ function loadDownloadButton($docPath){  //carica il pulsante download del file s
 
 function displayShifts($index, $conn){  //mostra i turni di lavoro
     $query = "SELECT nome, cognome, giornoSettimana, oraInizio, oraFine FROM allenatori
-              INNER JOIN turno ON turno.codF = allenatori.codF
-              WHERE allenatori.codF = ?";
+              LEFT JOIN turno ON turno.codF = allenatori.codF
+              WHERE username = ?";
 
     $stmt = $conn->prepare($query);
     
@@ -342,13 +316,12 @@ function displayShifts($index, $conn){  //mostra i turni di lavoro
     $nome = $row['nome'];
     $cognome = $row['cognome'];
 
-    while($row){
-        array_push($queryRows, array($row['giornoSettimana'], $row['oraInizio'], $row['oraFine']));
-        $i++;
-        $row = $result->fetch_assoc();
-    }
-    
-    
+    if($row['giornoSettimana'] != NULL && $row['oraInizio'] != NULL && $row['oraFine'] != NULL)
+        while($row){
+            array_push($queryRows, array($row['giornoSettimana'], $row['oraInizio'], $row['oraFine']));
+            $i++;
+            $row = $result->fetch_assoc();
+        }
     
     // ----------------------------------------------- VISTA PER TURNI ALLENATORE ------------------------------------------------------------------
     print '<div id="hoversection" class="hoversection">
@@ -366,7 +339,28 @@ function displayShifts($index, $conn){  //mostra i turni di lavoro
         </div>
     </div>
     </div>
-    </div>';
+    <div class="aggiungiturno">
+               <div class="addturnoform w-form">
+                    <form id="email-form" name="email-form" data-name="Email Form" method="get" action="segreteria.php" class="addturnoformcontainer" data-wf-page-id="65db228c551539358abcad94" data-wf-element-id="dae9bfdd-ed37-0bac-d5e4-b5ad2583b806" aria-label="Email Form">
+                        <div class="giorno"><label for="Giorno-della-Settimana" class="field-label">Giorno</label><select id="Giorno-della-Settimana" name="GiornoSettimana" data-name="Giorno della Settimana" required="" class="select-giorno w-select">
+                                <option value="Lunedì">Lunedì</option>
+                                <option value="Martedì">Martedì</option>
+                                <option value="Mercoledì">Mercoledì</option>
+                                <option value="Giovedì">Giovedì</option>
+                                <option value="Venerdì">Venerdì</option>
+                                <option value="Sabato">Sabato</option>
+                                <option value="Domenica">Domenica</option>
+                            </select></div>
+                        <div class="orario"><label for="Orario" class="field-label-2">Orario</label><select id="Orario" name="Orario" data-name="Orario" required="" class="select-orario w-select">
+                                <option value="07:00 - 12:00">07:00 - 12:00</option>
+                                <option value="12:00 - 17:00">12:00 - 17:00</option>
+                                <option value="17:00 - 22:00">17:00 - 22:00</option>
+                            </select></div><input type="submit" data-wait="Please wait..." class="aggiungiturnoformsubmit w-button" value="Aggiungi">
+                            <input type="hidden" name="index" value="'.$index.'">
+                    </form>
+                </div> 
+            </div> 
+    </div> ';
 
     $stmt->close();
 }
@@ -385,7 +379,7 @@ function getShifts($queryResult, $trainerIndex){
 }
 
 function deleteShift($day, $trainerIndex, $conn){
-    $query = "DELETE FROM turno JOIN allenatori WHERE codF = ? AND giornoSettimana = ?";  // da risolvere questa query che non funziona
+    $query = "DELETE FROM turno JOIN allenatori WHERE username = ? AND giornoSettimana = ?";  // da risolvere questa query che non funziona
     
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss",$_SESSION['allenatori'][$trainerIndex], $day);
@@ -398,12 +392,68 @@ function displayAddShifts($trainerIndex, $conn){
 
 }
 
+function getMemberRecord($row, $counter){
+    
+    $userType = 0;   //0 => Cliente   1 => Allenatore
+
+            //-------------------------------------------------------------- RIGA ISCRITTO ----------------------------------------------------------------------
+    print "
+    <div class='badge'>
+    <img src='".$row['imgProfilo']."'  alt='ImmagineProfilo'  class='immagineprofilo'>
+    <div class='datipersonali'>
+        <div class='tabella-intestazioni-dashboard cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
+        <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
+    </div>
+    </div>
+    <div id='w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94' class='action'><div id='w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94' class='tabella-testo'>".$row['ScadenzaAbb']."</div><a id='AddCertificato' class='icon add w-button'></a></div>
+    <div class='action'>
+    <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'></a>".loadDownloadButton($row['docIdentificativi'])."
+    </div>
+    <div class='tabella-testo'>".$row['DataN']."</div>
+    <div class='action'>
+    <a class='icon allerta w-button'></a>
+    <a class='icon pericolo w-button'></a>
+    </div>
+    <div class='action'>
+    <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
+    <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
+    <a class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'></a>
+    </div>
+    ";
+    
+    saveFiscalCodeOnSession($row['username'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e altre features
+}
+
+function getTrainerRecord($row, $counter){
+    $userType = 1;
+
+ // ---------------------------------------------------------------- RIGA ALLENATORE  -------------------------------------------------------------
+
+     print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
+     <div class="immagineprofilo"></div>
+     <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
+         <div class="tabella-intestazioni-dashboard cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
+         <div class="tabella-intestazioni abbonamento">Trainer</div>
+     </div>
+    </div>
+     <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
+         <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')"></a>'.loadDownloadButton    ($row['docIdentificativi']).'</div>
+             <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.  $counter.')"></a></div>
+             <! //STATO->
+                 <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
+                 <! //SOLITI BOTTONI->
+                     <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon     userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a><a href="mailto:'.$row['mail'].'" class="icon useremail     w-button"></a><a href="" class="icon userremove w-button"></a></div>';
+
+     saveFiscalCodeOnSession($row['username'], $counter, 'allenatori');
+
+}
+
 function Research($input, $conn){
 
     if($_SESSION['sezioneAttuale'] == 'Clienti')
-        $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail, docIdentificativi FROM iscritto WHERE nome LIKE ? OR cognome LIKE ?";
+        $query = "SELECT nome, cognome, DataN, tipoAbbonamento, ScadenzaAbb, codF, mail, docIdentificativi, imgProfilo, username FROM iscritto WHERE nome LIKE ? OR cognome LIKE ?";
     else
-        $query = "SELECT codF, nome, cognome, mail, docIdentificativi FROM allenatori WHERE nome LIKE ? OR cognome LIKE ?";
+        $query = "SELECT codF, nome, cognome, mail, docIdentificativi, imgProfilo, username FROM allenatori WHERE nome LIKE ? OR cognome LIKE ?";
 
     $bindParameter = $input.'%';
 
@@ -421,56 +471,34 @@ function Research($input, $conn){
     if($result){
         while($row = $result->fetch_assoc()){
 
-            //-------------------------------------------------------------- RIGA ISCRITTO ----------------------------------------------------------------------
         if($_SESSION['sezioneAttuale'] == 'Clienti'){
-                print "
-                <div class='badge'>
-                <div class='immagineprofilo'></div>
-                <div class='datipersonali'>
-                    <div class='tabella-intestazioni-dashboard cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
-                    <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
-                </div>
-            </div>
-            <div  class='tabella-testo'>".$row['ScadenzaAbb']."</div>
-            <div class='action'>
-            <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'></a>".loadDownloadButton($row['docIdentificativi'])."
-            </div>
-            <div class='tabella-testo'>".$row['DataN']."</div>
-            <div class='action'>
-            <a class='icon allerta w-button'></a>
-            <a class='icon pericolo w-button'></a>
-            </div>
-            <div class='action'>
-            <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(0,".$counter.")'></a>
-            <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
-            <a id='$counter' class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'></a>
-            </div>
-            ";
-                saveFiscalCodeOnSession($row['codF'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e     altre features
-            }
-            else{
-                print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
-                <div class="immagineprofilo"></div>
-                <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
-                    <div class="tabella-intestazioni-dashboard cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
-                    <div class="tabella-intestazioni abbonamento">Trainer</div>
-                </div>
-            </div>
-                <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
-                    <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')"></a>'.loadDownloadButton($row['docIdentificativi']).'</div>
-                        <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button"     onclick="AjaxViewTrainerShifts('.$counter.')"></a></div>
-                        <! //STATO->
-                            <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
-                            <! //SOLITI BOTTONI->
-                                <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#"  class="icon userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a><a href="mailto:'.$row['mail'].'" class="icon useremail w-button"></a><a href="" class="icon userremove w-button"></a></div>';
-            
-                saveFiscalCodeOnSession($row['codF'], $counter, 'allenatori');
-            }
+            getMemberRecord($row,$counter);    
+        }
+        else{
+            getTrainerRecord($row, $counter);            
+        }
             $counter++;
         }
     }
 
     $stmt->close();
+}
+
+function addTurnoToTrainer($index, $giorno, $oraInizio, $oraFine, $codF, $conn){
+    $query = "INSERT INTO turno (giornoSettimana, oraInizio, oraFine, codF) VALUES (?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param("ssss", $giorno, $oraInizio, $oraFine, $codF);
+
+    $stmt->execute();
+
+    if(mysqli_errno($conn) === 1062)  //questo errore indica chiave primaria duplicata, impossibile aggiungere
+        return false;
+    
+    $stmt->close();
+    
+    return true;
 }
 
 

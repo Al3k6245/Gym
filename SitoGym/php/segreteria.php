@@ -1,13 +1,6 @@
 <?php
 require('gestioneSegreteria.php');
 
-/*
-if(!isset($_SESSION['iscritto'])){
-    //conterrà i codici fiscali degli utenti
-    $_SESSION['iscritto'] = "";
-    unset($_SESSION['iscritto']);
-} */
-
 if(!isset($_SESSION['sezioneAttuale']))
     $_SESSION['sezioneAttuale'] = 'Clienti';
 
@@ -38,8 +31,8 @@ function writeSection(){
                 <h1 class="h1">Dashboard</h1>
             </div>
             <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
-            <a class="container-sezioni clienti w-button" onclick="changeSection('Clienti')">Clienti</a>
-                    <a class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori')">Allenatori</a>
+            <a id="clientiSection" class="container-sezioni selected clienti w-button" onclick="changeSection('Clienti')">Clienti</a>
+                    <a id="allenatoriSection" class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori')">Allenatori</a>
                 <div class="search allineato w-form"><input class="search-input w-input"
                         maxlength="256" name="query" placeholder="Search" type="search" id="Ricerca"
                         required="" onkeyup="AjaxResearch('Ricerca')"></div>
