@@ -31,7 +31,7 @@ function writeSection(){
                 <h1 class="h1">Dashboard</h1>
             </div>
             <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
-            <a id="clientiSection" class="container-sezioni selected clienti w-button" onclick="changeSection('Clienti')">Clienti</a>
+            <a id="clientiSection" class="container-sezioni clienti w-button" onclick="changeSection('Clienti')">Clienti</a>
                     <a id="allenatoriSection" class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori')">Allenatori</a>
                 <div class="search allineato w-form"><input class="search-input w-input"
                         maxlength="256" name="query" placeholder="Search" type="search" id="Ricerca"
@@ -163,6 +163,26 @@ function writeSection(){
     </div>
 </div>
 
+<div class="hoversection small" id="rinnovaAbbonamento" style="display : none"><div class="hoversection-container">
+    <a data-w-id="68bb2142-7955-cadb-9b5d-899d6979142a" class="icon exit w-button" id="leaveButton" onclick="closeRinnovaAbbonamento()"></a>
+    <div class="name tecnico">Aggiungi Abbonamento</div>
+</div>
+<div class="aggiungi-abbonamento w-form">
+    <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get" action="gestioneSegreteria.php" class="form-3" data-wf-page-id="65db228c551539358abcad94" data-wf-element-id="caec41b9-4f34-3fcd-0de6-8da4dd580731" aria-label="Email Form 2">
+        <select id="AbbonamentoType" name="AbbonamentoType" data-name="Abbonamento Type" class="select-field w-select">
+            <option value="Basic">Basic</option>
+            <option value="Silver">Silver</option>
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
+        </select>
+        <input type="submit" data-wait="Please wait..." class="addcertificazione w-button" value="Rinnova">
+        <input type="hidden" id="customerId" name="index">  <!-- tramite javascript vado ad inserire come value il riferimento indice del cliente -->
+    </form><div class="w-form-done" tabindex="-1">
+
+    </div>
+    <div class="w-form-fail" tabindex="-1"></div>
+</div>
+</div>
 
     <!--Mostra Turni-->
     

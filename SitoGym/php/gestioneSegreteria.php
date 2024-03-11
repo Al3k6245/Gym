@@ -64,7 +64,8 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 Research($_GET['input'], $conn);
                 break;
         }
-    }else if(isset($_GET['GiornoSettimana']) && isset($_GET['Orario'])){
+    }
+    else if(isset($_GET['GiornoSettimana']) && isset($_GET['Orario'])){
         //aggiungere il turno all'allenatore
         $giornoSettimana = $_GET['GiornoSettimana'];
         $oraInizio = substr($_GET['Orario'], 0, 5);
@@ -85,6 +86,12 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                     </script>";
         else
             header('Location: segreteria.php');
+    }
+    else if(isset($_GET["AbbonamentoType"])){
+        //rinnovo la data di scadenza dell'abbonamento al mese prossimo
+        $username = $_SESSION['iscritto'][$_GET['index']];
+        RinnovaAbbonamento($_GET['AbbonamentoType'], $username, $conn);
+        header('Location: segreteria.php');
     }
 }  
 
@@ -224,7 +231,7 @@ function displayInfo($user, $index, $conn){
             break;
     }
 
-    $query = "SELECT nome, cognome, DataN, codF, mail, psw, imgProfilo FROM $userTable INNER JOIN utenti ON utenti.username = $userTable.username WHERE $userTable.username = ?";
+    $query = "SELECT nome, cognome, DataN, codF, mail, psw, imgProfilo, numTel FROM $userTable INNER JOIN utenti ON utenti.username = $userTable.username WHERE $userTable.username = ?";
 
     $stmt = $conn->prepare($query);
 
@@ -255,6 +262,7 @@ function displayInfo($user, $index, $conn){
         <div class="testowhite">'.$row['DataN'].'<br></div>
         <div class="intestazioneblack">Contatti</div>
         <div class="testowhite">'.$row['mail'].'<br></div>
+        <div class="testowhite">+39 '.$row['numTel'].'<br></div>
         </div>
     </div>';
 
@@ -405,7 +413,7 @@ function getMemberRecord($row, $counter){
         <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
     </div>
     </div>
-    <div id='w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94' class='action'><div id='w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94' class='tabella-testo'>".$row['ScadenzaAbb']."</div><a id='AddCertificato' class='icon add w-button'></a></div>
+    <div id='w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94' class='action'><div id='w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94' class='tabella-testo'>".$row['ScadenzaAbb']."</div><a id='AddCertificato' class='icon add w-button' onclick='displayRinnovaAbbonamento(".$counter.")'></a></div>
     <div class='action'>
     <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'></a>".loadDownloadButton($row['docIdentificativi'])."
     </div>
@@ -495,6 +503,20 @@ function addTurnoToTrainer($index, $giorno, $oraInizio, $oraFine, $codF, $conn){
 
     if(mysqli_errno($conn) === 1062)  //questo errore indica chiave primaria duplicata, impossibile aggiungere
         return false;
+    
+    $stmt->close();
+    
+    return true;
+}
+
+function RinnovaAbbonamento($tipoAbbonamento, $username, $conn){
+    $query = "UPDATE iscritto SET tipoAbbonamento = ?, ScadenzaAbb = DATE_ADD(CURDATE(), INTERVAL 1 MONTH) WHERE username = ?";
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param("ss", $tipoAbbonamento, $username);
+
+    $stmt->execute();
     
     $stmt->close();
     

@@ -193,3 +193,16 @@ function addFile(userType, index) {
     //chiamata Ajax per mostrare gli utenti rispettivi delle sezioni
     AjaxChangeSection(sectionName);
   }
+
+  function displayRinnovaAbbonamento(index){
+        let hoversectionRinnovo = document.getElementById("rinnovaAbbonamento");
+        let indexField = document.getElementById("customerId");
+
+        hoversectionRinnovo.style.display = "";
+        indexField.value = index;
+  }
+
+function closeRinnovaAbbonamento(){
+    document.getElementById("rinnovaAbbonamento").style.display = 'none';
+  
+}
