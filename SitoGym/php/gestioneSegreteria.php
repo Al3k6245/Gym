@@ -56,7 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                 break;
             
             case 'deleteShift':
-                deleteShift($_GET['shiftDay'], $_GET['trainerIndex'], $conn);
+                deleteShift($_GET['shiftDay'], $_GET['trainerIndex'], $conn);  //da sistemare
                 break;
 
             case 'addShift':
@@ -95,6 +95,18 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
         $username = $_SESSION['iscritto'][$_GET['index']];
         RinnovaAbbonamento($_GET['AbbonamentoType'], $username, $conn);
         header('Location: segreteria.php');
+    }
+    else if(isset($_GET['Allenamento'])){
+        //dare l'abbonamento all'iscritto
+        $idA = GetIdA($_GET['Allenamento'], $conn);
+        $codF = GetCodF($_SESSION['iscritto'][$_GET['index']], $conn);
+        
+        if(!NuovoAllenamento($idA, $codF, $conn))
+            echo "<script> window.location.href = 'segreteria.php';
+                    alert('Questo allenamento è già stato assegnato a questo utente');
+                    </script>";
+        else
+            header('Location: segreteria.php');
     }
 }  
 
@@ -436,10 +448,6 @@ function deleteShift($day, $trainerIndex, $conn){
     $stmt->close();
 }
 
-function displayAddShifts($trainerIndex, $conn){
-
-}
-
 function getMemberRecord($row, $counter){
     
     $userType = 0;   //0 => Cliente   1 => Allenatore
@@ -491,7 +499,7 @@ function getMemberRecord($row, $counter){
         <div class='action'>
         <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
         <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
-        <a class='icon addallenamento-button w-button' onclick='displayNuovoAllenamento(".$userType.")'>Button Text</a>
+        <a class='icon addallenamento-button w-button' onclick='displayNuovoAllenamento(".$counter.")'>Button Text</a>
         </div>
         ";
     }
@@ -607,6 +615,59 @@ function RinnovaAbbonamento($tipoAbbonamento, $username, $conn){
     $stmt->close();
     
     return true;
+}
+
+function NuovoAllenamento($idA, $codF, $conn){
+    $query = "INSERT INTO eseguire (idA, codF) VALUES(?, ?)";
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param("ss", $idA, $codF);
+
+    $stmt->execute();
+
+    if(mysqli_errno($conn) === 1062)  //questo errore indica chiave primaria duplicata, impossibile aggiungere
+        return false;
+    
+    $stmt->close();
+
+    return true;
+}
+
+function GetIdA($allenamento, $conn){
+    $query = "SELECT idA FROM allenamenti WHERE nome = ?";
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param("s", $allenamento);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $id = $result->fetch_assoc()['idA'];
+
+    $stmt->close();
+
+    return $id;
+}
+
+function GetCodF($username, $conn){
+    $query = "SELECT codF FROM iscritto WHERE username = ?";
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param("s", $username);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $codF = $result->fetch_assoc()['codF'];
+
+    $stmt->close();
+
+    return $codF;
 }
 
 

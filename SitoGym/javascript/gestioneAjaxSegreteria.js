@@ -220,7 +220,7 @@ function closeRinnovaAbbonamento(){
 
 function displayNuovoAllenamento(index){
     let hoversectionAllenamento = document.getElementById("nuovoAllenamento");
-    let indexField = document.getElementById("customerId");
+    let indexField = document.getElementById("customerIdForA");
 
     hoversectionAllenamento.style.display = "";
     indexField.value = index;
