@@ -139,7 +139,7 @@ function showMembers($conn){
 }
 
 
-function saveFiscalCodeOnSession($username, $counter, $userType){
+function saveUsernameOnSession($username, $counter, $userType){
     $_SESSION[$userType][$counter] = $username;
 }
 
@@ -444,8 +444,6 @@ function getMemberRecord($row, $counter){
         </div>
         <div class='tabella-testo'>".$row['DataN']."</div>
         <div class='action'>
-        <a class='icon allerta w-button'></a>
-        <a class='icon pericolo w-button'></a>
         </div>
         <div class='action'>
         <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
@@ -468,8 +466,6 @@ function getMemberRecord($row, $counter){
         </div>
         <div class='tabella-testo'>".$row['DataN']."</div>
         <div class='action'>
-        <a class='icon allerta w-button'></a>
-        <a class='icon pericolo w-button'></a>
         </div>
         <div class='action'>
         <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
@@ -479,7 +475,7 @@ function getMemberRecord($row, $counter){
         ";
     }
     
-    saveFiscalCodeOnSession($row['username'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e altre features
+    saveUsernameOnSession($row['username'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e altre features
 }
 
 function getTrainerRecord($row, $counter){
@@ -521,7 +517,7 @@ function getTrainerRecord($row, $counter){
                     <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon     userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a></div>';
  }
     
-     saveFiscalCodeOnSession($row['username'], $counter, 'allenatori');
+     saveUsernameOnSession($row['username'], $counter, 'allenatori');
 
 }
 

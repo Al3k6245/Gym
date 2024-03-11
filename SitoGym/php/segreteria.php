@@ -38,7 +38,7 @@ function onLoadSection(){
             <div class="container-titolo">
                 <h1 class="h1">Dashboard</h1>
             </div>
-            <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
+            <div class="navigazione">
             <a id="clientiSection" class="container-sezioni clienti w-button" onclick="changeSection('Clienti', <?php echo writeLoggedUserType() ?>)">Clienti</a>
                     <a id="allenatoriSection" class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori', <?php echo writeLoggedUserType() ?>)">Allenatori</a>
                 <div class="search allineato w-form"><input class="search-input w-input"
@@ -48,8 +48,7 @@ function onLoadSection(){
 
                 <!-- //PULSANTE CLIENTI -->
                     <div id="headerTable" class="tabella-preset intestazione">
-                        <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94" class="ordinamento">
-                        <a id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f2-8abcad94"class="icon w-button">Button Text</a>
+                        <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf39f1-8abcad94" class="ordinamento"> 
                         <a id="firstCol" href="#" class="ordinamentoupdown w-button"></a>
                         </div>
                         <div id="secondCol" class="tabella-intestazioni"></div>
@@ -126,7 +125,7 @@ function onLoadSection(){
   <!------------------------------------------------------- MENU DI NAVIGAZIONE LATERALE ---------------------------------------------------------------->
 
     <div style="display: none;" class="menu-descrizioni"><div class="descrizione">Home</div><div class="descrizione">Users</div></div>
-    <nav data-w-id="93085ae0-f7f2-eb6d-a80c-8ff237c72caf" class="menu-icone"><a href="#DashBoard" class="menu-sezioni _0 w-button w--current"></a><a href="/old-home-2" class="menu-sezioni _3 w-button"></a><a href="#AddAllenatore" class="menu-sezioni logout w-button"></a></nav>
+    <nav data-w-id="93085ae0-f7f2-eb6d-a80c-8ff237c72caf" class="menu-icone"><a href="segreteria.php" class="menu-sezioni _0 w-button w--current"></a><a href="AddUsers.php" class="menu-sezioni _3 w-button"></a><a href="SddUsers.php" class="menu-sezioni logout w-button"></a></nav>
     <!-- <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=65db228c551539358abcad8e" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://assets-global.website-files.com/65db228c551539358abcad8e/js/webflow.399e61ad1.js" type="text/javascript"></script> -->
 </body>

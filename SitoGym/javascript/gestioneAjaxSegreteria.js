@@ -162,7 +162,7 @@ function addFile(userType, index) {
         switch(sectionName){
 
             case 'Clienti':
-                columns = ['Nome','Data di Prossimo Pagamento','Certificato Medico','Nascita','Stato','Azioni'];
+                columns = ['Nome','Data di Prossimo Pagamento','Certificato Medico','Nascita','','Azioni'];
                 break;
 
             case 'Allenatori':
@@ -173,7 +173,7 @@ function addFile(userType, index) {
         switch(sectionName){
 
             case 'Clienti':
-                columns = ['Nome','Data di Prossimo Pagamento','','Nascita','Stato','Azioni'];
+                columns = ['Nome','Data di Prossimo Pagamento','','Nascita','','Azioni'];
                 break;
 
             case 'Allenatori':
