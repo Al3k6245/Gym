@@ -17,9 +17,20 @@ $num_rows = $result->num_rows;
 
 // Controllo della password
 if ($num_rows > 0) {
-    $_SESSION['loggedUserType'] = $result->fetch_assoc()['tipo'];
+    $tipoUt = $result->fetch_assoc()['tipo'];
+
+    $_SESSION['loggedUserType'] = $tipoUt;
     $_SESSION['loggedUsername'] = $username;
-    header('Location: ../php/segreteria.php');
+
+
+    echo $tipoUt;
+
+    if($tipoUt != 'Iscritto'){
+        header('Location: ../php/segreteria.php');
+    }   
+    else
+        header('Location: ../php/Clienti-Allenamenti.php');
+
 }
 else
     header('Location: ../index.php?error=invalid');
