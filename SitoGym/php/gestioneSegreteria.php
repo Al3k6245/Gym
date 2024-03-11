@@ -491,7 +491,7 @@ function getMemberRecord($row, $counter){
         <div class='action'>
         <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
         <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
-        <a class='icon addallenamento-button w-button'>Button Text</a>
+        <a class='icon addallenamento-button w-button' onclick='displayNuovoAllenamento(".$userType.")'>Button Text</a>
         </div>
         ";
     }

@@ -216,5 +216,16 @@ function addFile(userType, index) {
 
 function closeRinnovaAbbonamento(){
     document.getElementById("rinnovaAbbonamento").style.display = 'none';
-  
+}
+
+function displayNuovoAllenamento(index){
+    let hoversectionAllenamento = document.getElementById("nuovoAllenamento");
+    let indexField = document.getElementById("customerId");
+
+    hoversectionAllenamento.style.display = "";
+    indexField.value = index;
+}
+
+function closeNuovoAllenamento(){
+    document.getElementById("nuovoAllenamento").style.display = 'none';
 }

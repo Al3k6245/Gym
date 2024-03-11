@@ -171,7 +171,7 @@ function onLoadSection(){
     </div>
 </div>
 
-<div class="hoversection small" id="rinnovaAbbonamento" style="display : none"><div class="hoversection-container">
+<div class="hoversection small-abbonamento" id="rinnovaAbbonamento" style="display : none"><div class="hoversection-container">
     <a data-w-id="68bb2142-7955-cadb-9b5d-899d6979142a" class="icon exit w-button" id="leaveButton" onclick="closeRinnovaAbbonamento()"></a>
     <div class="name tecnico">Aggiungi Abbonamento</div>
     <div class="aggiungi-abbonamento w-form">
@@ -185,10 +185,10 @@ function onLoadSection(){
         <input type="submit" data-wait="Please wait..." class="addcertificazione w-button" value="Rinnova">
         <input type="hidden" id="customerId" name="index"> <!-- tramite javascript vado ad inserire come value il riferimento indice del cliente --> 
     </form>  
-</div>
+</div>  
 
 
-<div class="hoversection small" id="nuovoAllenamento" style="display : none">
+<div class="hoversection small" id="nuovoAllenamento" style="">
     <div class="hoversection-container">
         <a href="#" class="icon exit w-button"></a>
         <div class="name tecnico">Aggiungi Allenamento</div>
