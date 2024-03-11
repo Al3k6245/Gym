@@ -168,19 +168,31 @@ function addFile(userType, index) {
     });
   }
 
-  function changeSection(sectionName){
+  function changeSection(sectionName, userLoggedType){
     let columns;
     
-    switch(sectionName){
+    if(userLoggedType == 'Segreteria')
+        switch(sectionName){
 
-        case 'Clienti':
-            columns = ['Nome','Data di Prossimo Pagamento','Certificato Medico','Nascita','Stato','Azioni'];
-            break;
+            case 'Clienti':
+                columns = ['Nome','Data di Prossimo Pagamento','Certificato Medico','Nascita','Stato','Azioni'];
+                break;
 
-        case 'Allenatori':
-            columns = ['Nome','','Certificato Medico','Turni','','Azioni'];
-            break;
-    }
+            case 'Allenatori':
+                columns = ['Nome','','Certificato Medico','Turni','','Azioni'];
+                break;
+        }
+    else if(userLoggedType == 'Allenatore')
+        switch(sectionName){
+
+            case 'Clienti':
+                columns = ['Nome','Data di Prossimo Pagamento','','Nascita','Stato','Azioni'];
+                break;
+
+            case 'Allenatori':
+                columns = ['Nome','','','Turni','','Azioni'];
+                break;
+        }
     
     //cambia le intestazioni delle varie sezioni
     document.getElementById("firstCol").innerHTML = columns[0];

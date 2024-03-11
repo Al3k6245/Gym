@@ -8,6 +8,11 @@ if(!isset($_SESSION['sezioneAttuale']))
 function writeSection(){
     return "'".$_SESSION['sezioneAttuale']."'";
 }
+
+function writeLoggedUserType(){
+    return "'".$_SESSION['loggedUserType']."'";
+
+}
     
 
 ?>
@@ -31,8 +36,8 @@ function writeSection(){
                 <h1 class="h1">Dashboard</h1>
             </div>
             <div class="navigazione"><a href="#" class="container-sezioni w-button">Overview</a>
-            <a id="clientiSection" class="container-sezioni clienti w-button" onclick="changeSection('Clienti')">Clienti</a>
-                    <a id="allenatoriSection" class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori')">Allenatori</a>
+            <a id="clientiSection" class="container-sezioni clienti w-button" onclick="changeSection('Clienti', <?php echo writeLoggedUserType() ?>)">Clienti</a>
+                    <a id="allenatoriSection" class="container-sezioni allenatori w-button" onclick="changeSection('Allenatori', <?php echo writeLoggedUserType() ?>)">Allenatori</a>
                 <div class="search allineato w-form"><input class="search-input w-input"
                         maxlength="256" name="query" placeholder="Search" type="search" id="Ricerca"
                         required="" onkeyup="AjaxResearch('Ricerca')"></div>

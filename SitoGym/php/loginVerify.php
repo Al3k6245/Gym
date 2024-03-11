@@ -1,4 +1,5 @@
 <?php
+session_start();
 $conn = mysqli_connect("localhost", "root", "", "gym");
 
 // Controllo del nome utente
@@ -16,6 +17,8 @@ $num_rows = $result->num_rows;
 
 // Controllo della password
 if ($num_rows > 0) {
+    $_SESSION['loggedUserType'] = $result->fetch_assoc()['tipo'];
+    $_SESSION['loggedUsername'] = $username;
     header('Location: ../php/segreteria.php');
 }
 else

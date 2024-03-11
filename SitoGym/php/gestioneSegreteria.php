@@ -40,7 +40,10 @@ if($_SERVER["REQUEST_METHOD"] == "GET"){
                         break;
                         
                     case 'Allenatori':
-                        displayTrainers($conn);
+                        if($_SESSION['loggedUserType'] == 'Segreteria')
+                            displayTrainers($conn);
+                        else if($_SESSION['loggedUserType'] == 'Allenatore')
+                            displayLoggedTrainer($_SESSION['loggedUsername'], $conn);
                         $_SESSION['sezioneAttuale'] = 'Allenatori';
                         break;
                     }
@@ -213,8 +216,6 @@ function addDocument($userType ,$index, $conn){
         $stmt->execute();
         $stmt->close();
 
-        //aggiungo il pulsante download se non è già stato caricato prima
-        
     }
    
 }
@@ -270,7 +271,7 @@ function displayInfo($user, $index, $conn){
 }
 
 function displayTrainers($conn){
-    $query = "SELECT codF, nome, cognome, mail, docIdentificativi, username FROM allenatori";
+    $query = "SELECT codF, nome, cognome, mail, docIdentificativi, username, imgProfilo FROM allenatori";
     $stmt = $conn->prepare($query);
 
     $stmt->execute();
@@ -278,13 +279,32 @@ function displayTrainers($conn){
     $result = $stmt->get_result();
 
     $counter = 1;
-    $userType = 1;
 
     while($row = $result->fetch_assoc()){
 
         getTrainerRecord($row, $counter);
         $counter++;
     }   
+        
+    $stmt->close();
+}
+
+function displayLoggedTrainer($username, $conn){
+    $query = "SELECT codF, nome, cognome, mail, imgProfilo, username FROM allenatori WHERE username = ?";
+
+    $stmt = $conn->prepare($query);
+
+    $stmt->bind_param("s", $username);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    $counter = 1;
+
+    $row = $result->fetch_assoc();
+
+    getTrainerRecord($row, $counter);
         
     $stmt->close();
 }
@@ -332,43 +352,63 @@ function displayShifts($index, $conn){  //mostra i turni di lavoro
         }
     
     // ----------------------------------------------- VISTA PER TURNI ALLENATORE ------------------------------------------------------------------
-    print '<div id="hoversection" class="hoversection">
-    <div id="hoversection-container" class="hoversection-container">
-    <a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button" onclick="AjaxCloseDescription()"></a>
-    <div class="name intesta">Turni di </div>
-    <div class="name tecnico">'.$cognome.' '.$nome.'</div>
-    <div class="tabella-interventi">
-        <div class="turni">
-            <div id="w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94" class="tabella-intestazioni minore">Giorno</div>
-            <div id="w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94" class="tabella-intestazioni minore">Orario</div>
+    if($_SESSION['loggedUserType'] == 'Segreteria'){
+        print '<div id="hoversection" class="hoversection">
+        <div id="hoversection-container" class="hoversection-container">
+        <a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button" onclick="AjaxCloseDescription()"></a>
+        <div class="name intesta">Turni di </div>
+        <div class="name tecnico">'.$cognome.' '.$nome.'</div>
+        <div class="tabella-interventi">
+            <div class="turni">
+                <div id="w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94" class="tabella-intestazioni minore">Giorno</div>
+                <div id="w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94" class="tabella-intestazioni minore">Orario</div>
+            </div>
+            <div class="turni righe">
+            '.getShifts($queryRows, $index).'
+            </div>
         </div>
-        <div class="turni righe">
-        '.getShifts($queryRows, $index).'
         </div>
-    </div>
-    </div>
-    <div class="aggiungiturno">
-               <div class="addturnoform w-form">
-                    <form id="email-form" name="email-form" data-name="Email Form" method="get" action="segreteria.php" class="addturnoformcontainer" data-wf-page-id="65db228c551539358abcad94" data-wf-element-id="dae9bfdd-ed37-0bac-d5e4-b5ad2583b806" aria-label="Email Form">
-                        <div class="giorno"><label for="Giorno-della-Settimana" class="field-label">Giorno</label><select id="Giorno-della-Settimana" name="GiornoSettimana" data-name="Giorno della Settimana" required="" class="select-giorno w-select">
-                                <option value="Lunedì">Lunedì</option>
-                                <option value="Martedì">Martedì</option>
-                                <option value="Mercoledì">Mercoledì</option>
-                                <option value="Giovedì">Giovedì</option>
-                                <option value="Venerdì">Venerdì</option>
-                                <option value="Sabato">Sabato</option>
-                                <option value="Domenica">Domenica</option>
-                            </select></div>
-                        <div class="orario"><label for="Orario" class="field-label-2">Orario</label><select id="Orario" name="Orario" data-name="Orario" required="" class="select-orario w-select">
-                                <option value="07:00 - 12:00">07:00 - 12:00</option>
-                                <option value="12:00 - 17:00">12:00 - 17:00</option>
-                                <option value="17:00 - 22:00">17:00 - 22:00</option>
-                            </select></div><input type="submit" data-wait="Please wait..." class="aggiungiturnoformsubmit w-button" value="Aggiungi">
-                            <input type="hidden" name="index" value="'.$index.'">
-                    </form>
+        <div class="aggiungiturno">
+                   <div class="addturnoform w-form">
+                        <form id="email-form" name="email-form" data-name="Email Form" method="get" action="segreteria.php" class="addturnoformcontainer" data-wf-page-id="65db228c551539358abcad94" data-wf-element-id="dae9bfdd-ed37-0bac-d5e4-b5ad2583b806" aria-label="Email Form">
+                            <div class="giorno"><label for="Giorno-della-Settimana" class="field-label">Giorno</label><select id="Giorno-della-Settimana" name="GiornoSettimana" data-name="Giorno della Settimana" required="" class="select-giorno w-select">
+                                    <option value="Lunedì">Lunedì</option>
+                                    <option value="Martedì">Martedì</option>
+                                    <option value="Mercoledì">Mercoledì</option>
+                                    <option value="Giovedì">Giovedì</option>
+                                    <option value="Venerdì">Venerdì</option>
+                                    <option value="Sabato">Sabato</option>
+                                    <option value="Domenica">Domenica</option>
+                                </select></div>
+                            <div class="orario"><label for="Orario" class="field-label-2">Orario</label><select id="Orario" name="Orario" data-name="Orario" required="" class="select-orario w-select">
+                                    <option value="07:00 - 12:00">07:00 - 12:00</option>
+                                    <option value="12:00 - 17:00">12:00 - 17:00</option>
+                                    <option value="17:00 - 22:00">17:00 - 22:00</option>
+                                </select></div><input type="submit" data-wait="Please wait..." class="aggiungiturnoformsubmit w-button" value="Aggiungi">
+                                <input type="hidden" name="index" value="'.$index.'">
+                        </form>
+                    </div> 
                 </div> 
-            </div> 
-    </div> ';
+        </div> ';
+    }
+    else if($_SESSION['loggedUserType'] == 'Allenatore'){
+        print '<div id="hoversection" class="hoversection">
+        <div id="hoversection-container" class="hoversection-container">
+        <a data-w-id="719c2e5e-7bf0-9feb-7db1-81abd048c4fa" href="#" class="icon exit w-button" onclick="AjaxCloseDescription()"></a>
+        <div class="name intesta">Turni di </div>
+        <div class="name tecnico">'.$cognome.' '.$nome.'</div>
+        <div class="tabella-interventi">
+            <div class="turni">
+                <div id="w-node-c7e6837f-7a95-b237-21f6-54d26221d846-8abcad94" class="tabella-intestazioni minore">Giorno</div>
+                <div id="w-node-e12b8708-9b95-3906-6e38-ca730dad28bb-8abcad94" class="tabella-intestazioni minore">Orario</div>
+            </div>
+            <div class="turni righe">
+            '.getShifts($queryRows, $index).'
+            </div>
+        </div>
+        </div>';
+    }
+  
 
     $stmt->close();
 }
@@ -405,29 +445,56 @@ function getMemberRecord($row, $counter){
     $userType = 0;   //0 => Cliente   1 => Allenatore
 
             //-------------------------------------------------------------- RIGA ISCRITTO ----------------------------------------------------------------------
-    print "
-    <div class='badge'>
-    <img src='".$row['imgProfilo']."'  alt='ImmagineProfilo'  class='immagineprofilo'>
-    <div class='datipersonali'>
-        <div class='tabella-intestazioni-dashboard cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
-        <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
-    </div>
-    </div>
-    <div id='w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94' class='action'><div id='w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94' class='tabella-testo'>".$row['ScadenzaAbb']."</div><a id='AddCertificato' class='icon add w-button' onclick='displayRinnovaAbbonamento(".$counter.")'></a></div>
-    <div class='action'>
-    <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'></a>".loadDownloadButton($row['docIdentificativi'])."
-    </div>
-    <div class='tabella-testo'>".$row['DataN']."</div>
-    <div class='action'>
-    <a class='icon allerta w-button'></a>
-    <a class='icon pericolo w-button'></a>
-    </div>
-    <div class='action'>
-    <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
-    <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
-    <a class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'></a>
-    </div>
-    ";
+    if($_SESSION['loggedUserType'] == 'Segreteria'){ 
+        print "
+        <div class='badge'>
+        <img src='".$row['imgProfilo']."'  alt='ImmagineProfilo'  class='immagineprofilo'>
+        <div class='datipersonali'>
+            <div class='tabella-intestazioni-dashboard cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
+            <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
+        </div>
+        </div>
+        <div id='w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94' class='action'><div id='w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94' class='tabella-testo'>".$row['ScadenzaAbb']."</div><a id='AddCertificato' class='icon add w-button' onclick='displayRinnovaAbbonamento(".$counter.")'></a></div>
+        <div class='action'>
+        <a id='AddCertificato' class='icon add w-button' onclick='addFile(".$userType.",".$counter.")'></a>".loadDownloadButton($row['docIdentificativi'])."
+        </div>
+        <div class='tabella-testo'>".$row['DataN']."</div>
+        <div class='action'>
+        <a class='icon allerta w-button'></a>
+        <a class='icon pericolo w-button'></a>
+        </div>
+        <div class='action'>
+        <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
+        <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
+        <a class='icon userremove w-button' onclick='AjaxDeleteMember(".$counter.")'></a>
+        </div>
+        ";
+    }
+    else if($_SESSION['loggedUserType'] == 'Allenatore'){  //per l'allenatore c'è una vista diversa rispetto alla segreteria
+        print "
+        <div class='badge'>
+        <img src='".$row['imgProfilo']."'  alt='ImmagineProfilo'  class='immagineprofilo'>
+        <div class='datipersonali'>
+            <div class='tabella-intestazioni-dashboard cognomenome'>" .$row['nome']. " " .$row['cognome']. "</div>
+            <div class='tabella-intestazioni abbonamento'>" .$row['tipoAbbonamento']."</div>
+        </div>
+        </div>
+        <div id='w-node-_475e6141-6056-4ad2-4100-243a3b8210c1-8abcad94' class='action'><div id='w-node-_82679a38-0fb2-5742-f9ad-975f4748a56f-8abcad94' class='tabella-testo'>".$row['ScadenzaAbb']."</div></div>
+        <div class='action'>
+        
+        </div>
+        <div class='tabella-testo'>".$row['DataN']."</div>
+        <div class='action'>
+        <a class='icon allerta w-button'></a>
+        <a class='icon pericolo w-button'></a>
+        </div>
+        <div class='action'>
+        <a class='icon userdescrizioni w-button' onclick='AjaxViewDescription(".$userType.",".$counter.")'></a>
+        <a href='mailto:".$row['mail']."' class='icon useremail w-button'></a>
+        <a class='icon addallenamento-button w-button'>Button Text</a>
+        </div>
+        ";
+    }
     
     saveFiscalCodeOnSession($row['username'], $counter, 'iscritto');  //salvare il codice fiscale permette di gestire più facilmente l'eliminazione dell'user e altre features
 }
@@ -437,21 +504,40 @@ function getTrainerRecord($row, $counter){
 
  // ---------------------------------------------------------------- RIGA ALLENATORE  -------------------------------------------------------------
 
-     print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
-     <div class="immagineprofilo"></div>
-     <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
-         <div class="tabella-intestazioni-dashboard cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
-         <div class="tabella-intestazioni abbonamento">Trainer</div>
-     </div>
+ if($_SESSION['loggedUserType'] == 'Segreteria'){
+    print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
+    <img src="'.$row['imgProfilo'].'"  alt="ImmagineProfilo"  class="immagineprofilo">
+    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
+        <div class="tabella-intestazioni-dashboard cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
+        <div class="tabella-intestazioni abbonamento">Trainer</div>
     </div>
-     <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
-         <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')"></a>'.loadDownloadButton    ($row['docIdentificativi']).'</div>
-             <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.  $counter.')"></a></div>
-             <! //STATO->
-                 <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
-                 <! //SOLITI BOTTONI->
-                     <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon     userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a><a href="mailto:'.$row['mail'].'" class="icon useremail     w-button"></a><a href="" class="icon userremove w-button"></a></div>';
+   </div>
+    <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
+        <div id="certificatoMedico" class="action"><a id="AddCertificato" class="icon add w-button" onclick="addFile('.$userType.', '.$counter.')"></a>'.loadDownloadButton    ($row['docIdentificativi']).'</div>
+            <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.  $counter.')"></a></div>
+            <! //STATO->
+                <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
+                <! //SOLITI BOTTONI->
+                    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon     userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a><a href="mailto:'.$row['mail'].'" class="icon useremail     w-button"></a><a href="" class="icon userremove w-button"></a></div>';
 
+ }
+ else if($_SESSION['loggedUserType'] == 'Allenatore'){
+    print ' <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a01-8abcad94" class="badge">
+    <img src="'.$row['imgProfilo'].'"  alt="ImmagineProfilo"  class="immagineprofilo">
+    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a03-8abcad94" class="datipersonali">
+        <div class="tabella-intestazioni-dashboard cognomenome">'.$row['cognome'].' '.$row['nome'].'</div>
+        <div class="tabella-intestazioni abbonamento">Trainer</div>
+    </div>
+   </div>
+    <div id="w-node-_0e779d34-7823-49d5-40c4-5ffff40550ee-8abcad94" class="action stars"></div>
+        <div id="certificatoMedico" class="action"></div>
+            <div id="w-node-e2dab09d-b38f-8e66-1aef-091b33b2299f-8abcad94" class="action"><a id="viewTurni" class="icon turni w-button" onclick="AjaxViewTrainerShifts('.  $counter.')"></a></div>
+            <! //STATO->
+                <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a11-8abcad94" class="action"></div>
+                <! //SOLITI BOTTONI->
+                    <div id="w-node-c6f7797d-88a6-66c5-3210-b528f2cf3a16-8abcad94" class="action"><a data-w-id="c6f7797d-88a6-66c5-3210-b528f2cf3a17" href="#" class="icon     userdescrizioni w-button" onclick="AjaxViewDescription('.$userType.','.$counter.')"></a></div>';
+ }
+    
      saveFiscalCodeOnSession($row['username'], $counter, 'allenatori');
 
 }
