@@ -3896,6 +3896,8 @@ textarea.w-input, textarea.w-select {
 }
 
 .icon.turni-button {
+  width: 40px;
+  height: 40px;
   background-image: url("https://assets-global.website-files.com/65db228c551539358abcad8e/65e6d18717075d1f3c993e2e_Turni.png");
 }
 
