@@ -300,7 +300,7 @@ function displayLoggedTrainer($username, $conn){
 
 function loadDownloadButton($docPath){  //carica il pulsante download del file solamente se per lo specifico utente è stato caricato un documento
     if($docPath != NULL)
-        return '<a href="'.$docPath.'" class="icon download w-button" download>Button Text</a>';
+        return '<a href="../'.$docPath.'" class="icon download w-button" download>Button Text</a>';
 
     return "";
 }
