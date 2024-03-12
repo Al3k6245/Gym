@@ -4153,7 +4153,7 @@ textarea.w-input, textarea.w-select {
   background-size: 30px;
   border-top-style: none;
   border-bottom-style: none;
-  top: 95vh;
+  top: 0;
 }
 
 .menu-descrizioni {
